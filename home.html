@@ -1,0 +1,95 @@
+<?php
+session_start();
+
+// If session variable is not set, redirect to login page
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- <h1>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h1>
+    <h1>This is a protected dashboard page.</h1>
+    <a href="logout.php">Log Out</a> -->
+    <header>
+        <a href="#">ROBOAI</a>
+        <!--logo -->
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Post/Categories</a>
+            <a href="#">About Us</a>
+            <a href="#">Contact Us</a>
+        </nav>
+    </header>
+    
+    <form action="search.php" method="GET"> <!--search.php ods the filename where the files are picked and method use GET for search -->
+        <input type="search" name="q" placeholder="search post..."> <!--name='q' where q is the query sent-->
+        <button type="submit">Search</button>
+    </form>
+    <main>
+        <section>
+            <h1>ROBOTICS AND AI TRENDS.</h1>
+            <p>Description</p>
+        </section>
+        <section>
+            <article>
+                <h3>ROBOTICS WITH IN TECH</h3>
+                <img src="images/post1.jpg" alt="Post Image">
+                <ul>
+                <li>Robotics</li>
+                <li>AI</li>
+                </ul>
+                <span>22 likes</span>
+                <span>By Author | date</span>
+                <a href="#">Read more</a>
+            </article>
+             <article>
+                <h3>ROBOTICS and AI Automation</h3>
+                <img src="images/post1.jpg" alt="Post Image">
+                <ul>
+                <li>Automation</li>
+                </ul>
+                <span>22 likes</span>
+                <span>By Author | date</span>
+                <a href="#">Read more</a>
+            </article>
+        </section>
+        <!--sidebar contents-->
+        <aside>
+            <!--all links lead to the post/categories page-->
+            <div>
+                <h5>Categories</h5>
+                <ul>
+                    <li><a href="#">Robotics</a></li>
+                    <li><a href="#">Artifical Intelligence</a></li>
+                    <li><a href="#">Machine Learning</a></li>
+                    <li><a href="#">Automation</a></li>
+                </ul>
+                <h5>Tags</h5>
+                <ul>
+                    <li><a href="#">AI</a></li>
+                    <li><a href="#">Robots</a></li>
+                    <li><a href="#">NLP</a></li>
+                    <li><a href="#">Deep Learning</a></li>
+                </ul>
+            </div>
+        </aside>
+    </main>
+    <!-- <form action="process.php" method="POST">
+        <label for="username">Name:</label>
+        <input type="text" id="username" name="username">
+        <input type="text" id="password" name="password">
+        <button type="submit">Submit</button>
+    </form> -->
+    <footer>ROBOAI Blog 2026 | Home | About | Contact |</footer>
+</body>
+</html>
