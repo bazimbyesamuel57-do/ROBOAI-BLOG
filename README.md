@@ -10,7 +10,7 @@
 
 # PHASE 1:CONCEPTION PHASE
 # ROBOAI-BLOG
-A blog for robotics and AI trends, articles and research, built with PHP and MSQL.
+A blog for robotics and AI trends, articles and research, built with PHP and MYSQL.
 ## Purpose
 RoboAI is a tech blog focused on Robotics and Artificial Intelligence trends. 
 It provides articles and insights on the fast-growing influence of AI and Robotics 
