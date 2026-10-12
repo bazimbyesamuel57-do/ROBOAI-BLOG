@@ -21,25 +21,64 @@ if (!isset($_SESSION['user_id'])) {
     <h1>This is a protected dashboard page.</h1>
     <a href="logout.php">Log Out</a> -->
     <header>
-        <a href="#">ROBOAI</a>
+        <div class="title-area">
+            <p class="site-title">
+                <!-- <a href="#" class="logo">ROBOAI</a> -->
+                <a href="#"><img class="log" src="images/logo.index.png" alt="Roboai Logo"></a>
+            </p>
+        </div>
+        
         <!--logo -->
-        <nav>
-            <a href="#">Home</a>
-            <a href="#">Post/Categories</a>
-            <a href="#">About Us</a>
-            <a href="#">Contact Us</a>
-        </nav>
+        <div class="topnav">
+            <nav>
+                <a class="active" href="#">Home</a>
+                <a href="post_categories.html">Post/Categories</a>
+                <div class="dropdown">
+                    <button class="dropbtn">News&Trends 
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#">News in the Tech world</a>
+                        <!-- <a href="#">link2</a> -->
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="dropbtn">Resources 
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#">AI trends</a>
+                        <a href="#">Robotics trends</a>
+                    </div>
+                </div>
+            
+              
+                
+                    <!-- <div class="dropdown">
+                        <button class="dropbtn"><a href="#">Resources</a></button>
+                        <div class="dropdown-content">
+                            <a href="#">link1</a>
+                            <a href="#">link2</a>
+                        </div>
+                    </div> -->
+
+                <a href="about_us.html">About Us</a>
+                <a href="contact.html">Contact Us</a>
+            </nav>
+        </div>
+        
     </header>
     
-    <form action="search.php" method="GET"> <!--search.php ods the filename where the files are picked and method use GET for search -->
-        <input type="search" name="q" placeholder="search post..."> <!--name='q' where q is the query sent-->
+    <form class="searchtab" action="search.php" method="GET"> <!--search.php ods the filename where the files are picked and method use GET for search -->
+        <input type="text" name="q" placeholder="search post..."> <!--name='q' where q is the query sent-->
         <button type="submit">Search</button>
     </form>
-    <div id="sidenav" class="sidenav"> <!--hover side bar-->
-        <a href="#" id="home">Home</a>
-        <a href="#" id="categories">Categories</a>
+    <!-- <div id="sidenav" class="sidenav"> hover side bar -->
+        <!-- <a href="#" id="home">Home</a>
+        <a href="post_categories.html" id="categories">Categories</a>
         <a href="#" id="posts">Posts</a>
-    </div>
+    </div> -->
     <!-- <div class="Menubar">
         <a href="#home">Menu</a>
         <a href="#news">Categories</a>
@@ -56,33 +95,50 @@ if (!isset($_SESSION['user_id'])) {
         </div>
     </div> -->
     <main>
-        <section>
+        <section id="post-info">
             <h1>ROBOTICS AND AI TRENDS.</h1>
-            <p>Description</p>
+            <h2>Welcome!</h2>
+            <p>This blog shares different learning experience, research and news to new trends regarding AI and Robotics. You can find different ideas.</p>
+            <p>It also shares quality information on how AI and Robotics has affected different sectors like health, environment and economy of countries</p>
         </section>
-        <section>
-            <article>
-                <h3>ROBOTICS WITH IN TECH</h3>
-                <img src="images/post1.jpg" alt="Post Image">
-                <ul>
-                <li>Robotics</li>
-                <li>AI</li>
-                </ul>
-                <span>22 likes</span>
-                <span>By Author | date</span>
-                <a href="#">Read more</a>
+        <section style="margin-top: 50px;">
+            <article class="post-card">
+                <h3 class="post-title">ROBOTICS WITH IN TECH</h3>
+                <img class="img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpW0Lz3aYaiySffew-qaV4DHT53ViKqHgrcYhT0yuBSg&s=10" alt="Post Image" style="padding: 50px; width: 30%; height: 1.7;">
+                <!-- <span class="post-category">Robotics</span>
+                <span class="post-category">AI</span> -->
+                <p class="excerpt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi dignissimos maxime consequatur omnis similique! Nisi unde delectus voluptatibus nihil saepe blanditiis a, maxime eligendi, expedita quasi tempora, culpa voluptatem adipisci? </p>
+                <!-- <span class="post-likes">22 likes</span> -->
+                <span class="post-author">By Author | date</span>
+                <a class="readme" href="post_detail.html">Read more</a>
             </article>
-             <article>
-                <h3>ROBOTICS and AI Automation</h3>
-                <img src="images/post1.jpg" alt="Post Image">
-                <ul>
-                <li>Automation</li>
-                </ul>
-                <span>8 likes</span>
-                <span>By Author | date</span>
-                <a href="#">Read more</a>
+             <article class="post-card">
+                <h3 class="post-title">ROBOTICS IN HEALTH SERVICES</h3>
+                <img class="img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT
+                OL1K7qh5fwMTc6oA9two3WVMfHjhR4eyBxoBjwItyLw&s=10" alt="Post Image" style="padding: 50px; width: 30%; ">
+                <!-- <span class="post-category">Automation</span> -->
+                <p class="excerpt"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque hic vel nulla eligendi veritatis ut, qui expedita. Velit inventore ex, obcaecati est fugiat minus distinctio excepturi voluptatem, tempore optio enim! </p>
+                <!-- <span class="post-likes">8 likes</span> -->
+                <span class="post-author">By Author | date</span>
+                <a class="readme" href="post_detail.html">Read more</a>
             </article>
         </section>
+
+        <div class="card">
+            <h3>Popular Post</h3>
+            <div class="pop"><img class="img" src="https://www.eschoolnews.com/files/2024/02/what-is-the-impact-of-artificial-intelligence-on-students.jpeg" alt="Post Image">
+                <a href="post_detail.html">The times of ai and its effects to Education</a>
+            </div><br>
+            <div class="pop">
+                <img class="img" src="https://i.guim.co.uk/img/media/a4cce7d6113c4d3af2a15861fb8565b141f8488c/0_318_4500_2531/master/4500.jpg?width=700&quality=85&auto=format&fit=max&s=9dbfa478bcfc0f6d513c51997cc67acb" alt="Post Image">
+                <a href="post_detail.html">ROBOTS IN CHINA</a>
+            </div><br>
+            <div class="pop">
+                <img class="img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqjBRasrOA
+                4V_cHLkZHnO-5XIWS7UU2EoNCsxvtlw9eXEjVSomsm0hozRG&s=10" alt="Post Image">
+                <a href="post_detail.html">ETHICAL IMPLICATIONS OF ROBOTS AND AI IN HEALTH CARE</a>
+            </div>
+        </div>
 
         </main>
     <!-- <form action="process.php" method="POST">
@@ -91,6 +147,6 @@ if (!isset($_SESSION['user_id'])) {
         <input type="text" id="password" name="password">
         <button type="submit">Submit</button>
     </form> -->
-    <footer>ROBOAI Blog 2026 | Home | About | Contact |</footer>
+    <footer class="footer">ROBOAI Blog 2026 | Home | <a href="about_us.html">About</a> | <a href="contact.html">Contact</a> |</footer>
 </body>
 </html>

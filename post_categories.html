@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>post/categories</title>
+</head>
+<body>
+
+    <header>
+        <!-- <a href="home.html" class="logo">ROBOAI</a> -->
+         <a href="home.html"><img class="log" src="images/logo.index.png" alt="Roboai Logo"></a>
+    
+        
+    
+
+        <nav class="topnav">
+            <a href="home.html">Home</a>
+            <a class="active" href="post_categories.html">Post/Categories</a>
+            <a href="about_us.html">About Us</a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
+
+   
+        <h1 style="text-align: center;">Posts-Categories</h1>
+    </header>
+
+
+     <form class="searchtab" action="search.php" method="GET"> <!--search.php ods the filename where the files are picked and method use GET for search -->
+        <input type="text" name="q" placeholder="search post..."> <!--name='q' where q is the query sent-->
+        <button type="submit">Search</button>
+    </form>
+    <!-- <div id="sidenav" class="sidenav"> hover side bar -->
+        <!-- <a href="home.html" id="home">Home</a>
+        <a href="post_categories.html" id="categories">Categories</a>
+        <a href="#" id="posts">Posts</a>
+    </div> -->
+
+    <!--button selection container for categories-->
+    <div id="myBtnContainer">
+        <button class="btn active" onclick="filterSelection('all')">Show all</button>
+        <button class="btn" onclick="filterSelection('Robotics')">Robotics</button>
+        <button class="btn" onclick="filterSelection('Automation')">Automation</button>
+        <button class="btn" onclick="filterSelection('Artifical Intelligence')">Artifical Intelligence</button>
+        <button class="btn" onclick="filterSelection('Machine Learning')">Machine Learning</button>
+    </div>
+
+    <!--Post grid , filtered withe buttoms above-->
+    <div class="category">
+        <div class="catRobotics">
+            <div class="content">
+                <article class="post-card">
+                    <h3 class="post-title">ROBOTICS WITH IN TECH</h3>
+                    <a href="#"><img class="img" src="images/post1.jpg" alt="Post Image"></a>
+                    <span class="post-category">Robotics</span>
+                    <span class="post-category">AI</span>
+                    <p class="excerpt">The post talks about the how the impacts Robots in tech </p>
+                    <span class="post-likes">22 likes</span>
+                    <span class="post-author">By Author | date</span>
+                    <a class="readme" href="#">Read more</a>
+                </article>
+            </div>
+        </div>
+        
+        <div class="catRobotics">
+            <div class="content">
+                <article class="post-card">
+                    <h3 class="post-title">ROBOTICS WITH IN TECH</h3>
+                    <a href="#"><img class="img" src="https://www.therobotreport.com/wp-content/uploads/2026/10/firedome-featured-768x499.jpg" alt="Post Image"></a>
+                    <span class="post-category">Robotics</span>
+                    <span class="post-category">AI</span>
+                    <p class="excerpt">The post talks about the how the impacts Robots in tech </p>
+                    <span class="post-likes">22 likes</span>
+                    <span class="post-author">By Author | date</span>
+                    <a class="readme" href="#">Read more</a>
+                </article>
+            </div>
+        </div>
+
+        <div class="catAutomation">
+            <div class="content">
+                <article class="post-card">
+                    <h3 class="post-title">ROBOTICS WITH IN TECH</h3>
+                    <a href="#"><img class="img" src="images/post1.jpg" alt="Post Image"></a>
+                    <!-- <img class="img" src="images/post1.jpg" alt="Post Image"> -->
+                    <span class="post-category">Robotics</span>
+                    <span class="post-category">AI</span>
+                    <p class="excerpt">The post talks about the how the impacts Robots in tech </p>
+                    <span class="post-likes">22 likes</span>
+                    <span class="post-author">By Author | date</span>
+                    <a class="readme" href="#">Read more</a>
+                </article>
+            </div>
+        </div>
+
+        <div class="catAutomation">
+            <div class="content">
+                <article class="post-card">
+                    <h3 class="post-title">ROBOTICS WITH IN TECH</h3>
+                    <!-- <img class="img" src="images/post1.jpg" alt="Post Image"> -->
+                    <a href="#"><img class="img" src="images/post1.jpg" alt="Post Image"></a>
+                    <span class="post-category">Robotics</span>
+                    <span class="post-category">AI</span>
+                    <p class="excerpt">The post talks about the how the impacts Robots in tech </p>
+                    <span class="post-likes">22 likes</span>
+                    <span class="post-author">By Author | date</span>
+                    <a class="readme" href="#">Read more</a>
+                </article>
+            </div>
+        </div>
+
+        <div class="catAi">
+            <div class="content">
+                <article class="post-card">
+                    <h3 class="post-title">ROBOTICS WITH IN TECH</h3>
+                    <!-- <img class="img" src="images/post1.jpg" alt="Post Image"> -->
+                    <a href="#"><img class="img" src="images/post1.jpg" alt="Post Image"></a>
+                    <span class="post-category">Robotics</span>
+                    <span class="post-category">AI</span>
+                    <p class="excerpt">The post talks about the how the impacts Robots in tech </p>
+                    <span class="post-likes">22 likes</span>
+                    <span class="post-author">By Author | date</span>
+                    <a class="readme" href="#">Read more</a>
+                </article>
+            </div>
+        </div>
+
+        <div class="catAi">
+            <div class="content">
+                <article class="post-card">
+                    <h3 class="post-title">ROBOTICS WITH IN TECH</h3>
+                    <!-- <img class="img" src="images/post1.jpg" alt="Post Image"> -->
+                     <a href="#"><img class="img" src="images/post1.jpg" alt="Post Image"></a>
+                    <span class="post-category">Robotics</span>
+                    <span class="post-category">AI</span>
+                    <p class="excerpt">The post talks about the how the impacts Robots in tech </p>
+                    <span class="post-likes">22 likes</span>
+                    <span class="post-author">By Author | date</span>
+                    <a class="readme" href="#">Read more</a>
+                </article>
+            </div>
+        </div>
+        <div class="catMachineLearning">
+            <div class="content">
+                <article class="post-card">
+                    <h3 class="post-title">ROBOTICS WITH IN TECH</h3>
+                    <!-- <img class="img" src="images/post1.jpg" alt="Post Image"> -->
+                    <a href="#"><img class="img" src="images/post1.jpg" alt="Post Image"></a>
+                    <span class="post-category">Robotics</span>
+                    <span class="post-category">AI</span>
+                    <p class="excerpt">The post talks about the how the impacts Robots in tech </p>
+                    <span class="post-likes">22 likes</span>
+                    <span class="post-author">By Author | date</span>
+                    <a class="readme" href="#">Read more</a>
+                </article>
+            </div>
+        </div>
+    </div>
+    
+    <div class="prev-next">
+        <!-- <button><a href="#" class="previous">&laquo; Previous</a></button> -->
+        <button><a href="#" class="next">Next &raquo;</a></button>
+    </div>
+
+     <footer class="footer">ROBOAI Blog 2026 | <a href="home.html">Home</a> | <a href="about_us.html">About</a> | <a href="contact.html">Contact</a> |</footer>
+</body>
+</html>
