@@ -1,14 +1,18 @@
+
+/* Home page */
+
+
+body {
+    /* font-color: yellow; */
+    background-color:rgba(220, 223, 225, 0.4);
+}
+
 /* logo */
 .log {
     /* background-image: url (images/logo.index.png) !important; */
     width: 150px;
     height: auto;
     background-color:#555;
-}
-
-body {
-    /* font-color: yellow; */
-    background-color:rgba(220, 223, 225, 0.4);
 }
 
 /* .h1 {
@@ -194,19 +198,120 @@ p {
     text-align: center;
     margin-top: 10%;
 }
+
+/* homepage */
 /* post card sytling */
+
+body{
+    background-color: inherit;
+}
 * {
     box-sizing:border-box;
     border-width: px;
+
+}
+
+/* slide show */
+.slideshow-container {
+    /* align-content: center; */
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+    /* display: block; */
+    box-sizing: border-box;
+    
+}
+
+/* hide images */
+.slides {
+    display: none;
+}
+
+/* prev and next buttons */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 0;
+    user-select: none;
+}
+
+ /* next button positioned to the right */
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.8)
+}
+
+/* Captiontext */
+.text {
+    color: #f2f2f2;
+    font-size: 15px;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+}
+
+/* number text */
+.number {
+    color: #f2f2f2;
+    font-size: 15px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+}
+
+/* dot/bullets  */
+.dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease-in-out;
+}
+
+.active, .dot:hover {
+    background-color: #717171;
+}
+
+/* the fading - animations */ 
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
 }
 
 
+.home-article {
+    margin: 10px;
+    padding: 10px;
+}
 
 .post-card {
     align-content: center;
     text-align: center;
     background-color:rgba(red, green, blue, alpha);
-    box-shadow: 0 4px 15px rgb(0, 0, 0, 0.1);
+    /* box-shadow: 0 4px 15px rgb(0, 0, 0, 0.1); */
+    /* box-decoration-break: slice; */
     overflow: hidden;
     /* padding: 20px 200px 20px 200px; */
     padding: inherit;
@@ -514,6 +619,10 @@ body {
 
 
 /* Sytling Post-categories page */
+
+body {
+    background-color: inherit;
+}
 /* buttons selectiom */
 
 #myBtnContainer {
@@ -557,6 +666,30 @@ body {
     color:antiquewhite;
 }
 
+.cat-box {
+    padding-right: 100px;
+    margin: 15px;
+}
+
+.img-cat {
+    /* align-content: center; */
+    float: left;
+    /* margin: 10px; */
+    margin-bottom: 15px;
+    margin-top: 15px;
+    margin-left: 15px;
+    object-fit: contain;
+    text-align: left;
+}
+
+.cat-details {
+    text-align: left;
+    margin: 100px;
+    margin-top: 1px;
+    float: right;
+    /* float:none; */
+    padding-right: 130px;
+}
 
 /* styling the postd detail page */
 
@@ -575,40 +708,14 @@ body {
 
 }
 
-#post-details {
+/* #post-details {
     margin-left: 10px;
     margin-right: 10px;
     text-align: justify;
-}
+} */
 
 
 
-.related-articles {
-    margin-bottom: 10%;
-    /* margin: auto; */
-    background-color: rgb(222, 227, 232);
-    background-origin: padding-box;
-    margin-top: 150px;
-    margin-left: 10px;
-    margin-right: 10px
-    
-
-}
-
-.block-header {
-    line-height: 24px;
-    background-color: gray;
-    margin: 0;
-    /* width: auto; */
-    padding: 18px 28px 18px 28px;
-    text-align: justify;
-    font-weight: 5000;
-    font-size: larger;
-    border-bottom: solid beige;
-    text-transform:uppercase;
-    
-
-}
 
 /* .summary-title {
     text-align: right;
@@ -630,11 +737,16 @@ div {
     /* display: block; */
     box-sizing:content-box;
     text-align: justify;
-    float:inherit
+    float: right;
 }
  
 .img-author {
     float:left;
+    /* margin: inherit; */
+    /* margin: 0 auto 24px; */
+    display: block;
+    margin-right: 25px;
+    /* margin-top: 1px; */
 }
 
 .read-more {
@@ -643,4 +755,95 @@ div {
 
 .submit {
     align-content: left;
+}
+
+.block-header {
+    line-height: 24px;
+    background-color: gray;
+    margin: 0;
+    /* width: auto; */
+    padding: 18px 28px 18px 28px;
+    text-align: justify;
+    font-weight: 5000;
+    font-size: larger;
+    border-bottom: solid beige;
+    text-transform:uppercase;
+    
+
+}
+
+.related-articles {
+    margin-bottom: 10%;
+    /* margin: auto; */
+    background-color: rgb(222, 227, 232);
+    background-origin: padding-box;
+    margin-top: 150px;
+    margin-left: 10px;
+    margin-right: 10px
+    
+
+}
+
+.summary-title {
+    /* text-align: center;
+    margin-inline-start: auto; */
+    float: right;
+    display: block;
+    /* padding: 6px 0 0 10px; */
+    padding-left: 10px;
+    padding-right: 100px;
+    /* margin: 100px; */
+    margin-left: 100px;
+    width: 53%;
+}
+
+body {
+    /* text-align: justify; */
+    box-sizing: inherit;
+}
+
+#post-details {
+     text-align: justify;
+     margin: 100px;
+    
+}
+
+.img-p {
+    object-fit: cover;
+    padding: 10px;
+    /* padding-left: 100%; */
+    /* margin: inherit; */
+    margin-bottom: 30px;
+    margin-top: 30px;
+    width:700px;
+    /* border-left-width: 2000%;
+    border-right-width: 150%; */
+    display: block;
+    height: auto;
+    max-width: 100%;
+    /* vertical-align: middle; */
+}
+
+.post-head {
+    text-align: justify;
+    margin: 30px;
+    /* margin-left: 15%;
+    margin-right: 15%; */
+}
+
+#comment-form {
+    margin-top: 100px;
+}
+
+.group-form {
+    resize: vertical;
+    height: 100px;
+}
+
+.group-form input[type="text"], .group-form input[type="email"], .group-form textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
