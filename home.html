@@ -32,7 +32,8 @@ if (!isset($_SESSION['user_id'])) {
         <div class="topnav">
             <nav>
                 <a class="active" href="#">Home</a>
-                <a href="post_categories.html">Post/Categories</a>
+                
+                <a href='post_categories.php'>Post/Categories</a>
                 <div class="dropdown">
                     <button class="dropbtn">News&Trends 
                         <i class="fa fa-caret-down"></i>
@@ -142,13 +143,13 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="home-article">
                     <article class="post-card">
                         <h3 class="post-title">ROBOTICS WITH IN TECH</h3>
-                        <img class="img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpW0Lz3aYaiySffew-qaV4DHT53ViKqHgrcYhT0yuBSg&s=10" alt="Post Image" style="padding: 50px; width: 30%; height: 1.7;">
+                        <img class="img" src="https://th.bing.com/th/id/OIP.c8Z1Wv4tZOEBuIPvwuJcDQHaEx?w=265&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3" alt="Post Image" style="padding: 50px; width: 30%; height: 1.7;">
                         <!-- <span class="post-category">Robotics</span>
                         <span class="post-category">AI</span> -->
                         <p class="excerpt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi dignissimos maxime consequatur omnis similique! Nisi unde delectus voluptatibus nihil saepe blanditiis a, maxime eligendi, expedita quasi tempora, culpa voluptatem adipisci? </p>
                         <!-- <span class="post-likes">22 likes</span> -->
                         <span class="post-author">By Author | date</span>
-                        <a class="readme" href="post_detail.html">Read more</a>
+                        <a class="readme" href="post_detail1.php">Read more</a>
                     </article>
                 </div>
                 <div class="home-article">
@@ -160,7 +161,7 @@ if (!isset($_SESSION['user_id'])) {
                         <p class="excerpt"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque hic vel nulla eligendi veritatis ut, qui expedita. Velit inventore ex, obcaecati est fugiat minus distinctio excepturi voluptatem, tempore optio enim! </p>
                         <!-- <span class="post-likes">8 likes</span> -->
                         <span class="post-author">By Author | date</span>
-                        <a class="readme" href="post_detail.html">Read more</a>
+                        <a class="readme" href="post_detail2.php">Read more</a>
                     </article>
                 </div>
             </section>
@@ -168,11 +169,11 @@ if (!isset($_SESSION['user_id'])) {
             <div class="card">
                 <h3>Popular Post</h3>
                 <div class="pop"><img class="img" src="https://www.eschoolnews.com/files/2024/02/what-is-the-impact-of-artificial-intelligence-on-students.jpeg" alt="Post Image">
-                    <a href="post_detail.html" style="float: left; margin-left: 100px">The times of ai and its effects to Education</a>
+                    <a href="post_detail3.php" style="float: left; margin-left: 100px">The times of ai and its effects to Education</a>
                 </div><br>
                 <div class="pop">
                 <img class="img" src="https://i.guim.co.uk/img/media/a4cce7d6113c4d3af2a15861fb8565b141f8488c/0_318_4500_2531/master/4500.jpg?width=700&quality=85&auto=format&fit=max&s=9dbfa478bcfc0f6d513c51997cc67acb" alt="Post Image">
-                <a href="post_detail.html" style="float: left; margin-left: 100px;">ROBOTS IN CHINA</a>
+                <a href="post_detail4.php" style="float: left; margin-left: 100px;">ROBOTS IN CHINA</a>
                 </div><br>
                 <div class="pop">
                 <img class="img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqjBRasrOA
@@ -188,6 +189,18 @@ if (!isset($_SESSION['user_id'])) {
         <input type="text" id="password" name="password">
         <button type="submit">Submit</button>
     </form> -->
+
+    <!-- <div id="dynamic-content">Loading content...</div>
+
+        <script>
+            // JS fetches the output from your PHP file behind the scenes
+            fetch('post_categories.php')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('dynamic-content').innerHTML = data;
+                });
+        </script> -->
+
     <footer class="footer">ROBOAI Blog 2026 | Home | <a href="about_us.html">About</a> | <a href="contact.html">Contact</a> |</footer>
 </body>
 </html>

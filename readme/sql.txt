@@ -1,0 +1,36 @@
+User table
+-user_id
+-username(unique)
+-email
+-password
+-role
+
+category table
+-category_id
+-category_name(unique)
+
+Sql relationship problem
+- (Error: FOREIGN KEY relationship could not be added!
+#1452 - Cannot add or update a child row: a foreign key constraint fails )
+solution:-delete firs the conflictig data already inserted in the database
+	 -then join the relationship
+Relationships
+posts to comments: post_id-->fk post_id
+users to posts: user_id --> author_id
+categories to posts: category_id --> fk category_id 
+
+
+Sql queries
+UPDATING FOLDER CHANGES IN THE DATABASE(IMAGE\ TO IMAGES\)
+-- 1. preview: which rows would change?
+SELECT post_id, media FROM posts WHERE media LIKE 'image/%';
+
+-- 2. update just one row first, and test it in the browser
+UPDATE posts
+SET media = REPLACE(media, 'image/', 'images/')
+WHERE post_id = 21;
+
+-- 3. if that row's image now shows, update all the others
+UPDATE posts
+SET media = REPLACE(media, 'image/', 'images/')
+WHERE media LIKE 'image/%';

@@ -1,0 +1,16 @@
+linking post pages 
+with php: <?php include('posts.php'); ?>
+
+Image handling
+on changing the image folder name(image\ to images\)
+- the old image directory, image\ : images save donot display anymore
+- the new image directory, images\ : here on these new images work 
+dsplay tasks
+home ->dispaly posts: route:from post_categories.php( display 3 posts and with click 'more' for more posts)
+comments dispaly 4 comments then a 'more' to view more posts
+
+homebar on: post, post_categories, home,about_us, contact_us
+ADMIN -links: Edit- admin/edit.php, admin/delete.php, admincreate.php
+
+Admin section
+Delete page
