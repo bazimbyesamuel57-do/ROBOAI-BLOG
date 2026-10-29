@@ -96,7 +96,7 @@ if (isset($_POST['submit'])) {
                 $category_id, $admin_id, $title, $excerpt, $content, $author_name, $status, $media);
 
             if (mysqli_stmt_execute($stmt)) {
-                header("Location: post_categories.php"); //route
+                header("Location: admin_posts.php"); //route
                 exit;
             } 
             else {

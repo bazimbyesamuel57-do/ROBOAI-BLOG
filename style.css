@@ -129,18 +129,18 @@ p {
 }
 
 /* style search field */
-.searchtab input[type=text] {
+/* .searchtab input[type=text] {
     padding: 12px;
     font-size: 1px solid grey;
     float:left;
     width: 35%;
     background: white;
     margin: 5% 0% 0% 25%; 
-}
+} */
 
-.searchtab button {
-    float: left;
-    width: 15%;
+/* .searchtab button { */
+    /* float: left; */
+    /* width: 15%;
     padding: 10px;
     background: #2196F3;
     color: white;
@@ -148,18 +148,30 @@ p {
     border: 1px solid grey;
     border-left: none;
     cursor: pointer;
-    margin-top: 5%;
+    margin-top: 5%; */
+/* } */
+
+.search {
+    width: 100%;
+    margin: 50%;
 }
 
-.searchtab {
-    background: #0b7dda;
-}
+/* .searchcat {
+    width: 10px;
+    margin-left: 100px;
+    margin-right: 100%;
+} */
 
-.searchtab ::after {
+/* .searchtab {
+    width: 10px; */
+    /* background: #0b7dda; */
+/* } */
+
+/* .searchtab ::after {
     content: "";
     clear: both;
     display: table;
-}
+} */
 
 /*Style sidenav bar */
 #sidenav a {
@@ -622,6 +634,11 @@ body {
 
 body {
     background-color: inherit;
+}
+
+
+.posts22 {
+    margin-top: 500%;
 }
 /* buttons selectiom */
 

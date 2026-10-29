@@ -11,6 +11,7 @@ if (!isset($_SESSION['admin_id'])) {
 }
 else {
     echo "Welcome: {$_SESSION['name']}";
+    
 }
 
 // Left join to fetch all posts

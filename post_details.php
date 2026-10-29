@@ -56,13 +56,13 @@ $content = nl2br(htmlspecialchars($post['content']));
             <div class="title-area">
                 <p class="site-title">
                     <!-- <a href="#" class="logo">ROBOAI</a> -->
-                    <a href="#"><img class="log" src="images/logo.index.png" alt="Roboai Logo"></a>
+                    <a href="home.php"><img class="log" src="images/logo.index.png" alt="Roboai Logo"></a>
                 </p>
             </div>
              <!--logo -->
              <div>
                 <nav class="topnav">
-                    <a href="home.html">Home</a>
+                    <a href="home.php">Home</a>
                     <a href="post_categories.php">Post/Categories</a>
                     <a href="about_us.html">About Us</a>
                     <a href="contact.html">Contact Us</a>

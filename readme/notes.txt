@@ -11,6 +11,20 @@ comments dispaly 4 comments then a 'more' to view more posts
 
 homebar on: post, post_categories, home,about_us, contact_us
 ADMIN -links: Edit- admin/edit.php, admin/delete.php, admincreate.php
+	-
 
 Admin section
 Delete page
+
+
+Home page design
+posts-slideshow : 4posts (Get from databas, 4 newest published posts)
+   -change[php file]
+   -slideshow columns[title, image] - those without images are not add to the slide show[ AND media <> '' in the WHERE]-
+	- the count remains 4, the posts without images are replaced by the next onw with the image	
+    -sql[SELECT post_id, title, media FROM posts WHERE status ='published' AND media <> '' ORDER BY published_on DESC LIMIT 4;]
+
+	-cards: 3 more posts(get from database)
+		-with only few posts display the slide show on and put a placeholder 
+	-sql[SELECT post_id, tile, media, excerpt, author_name, published_onFROM posts WHERE status = 'published' ORDER BY published_on DESC LIMIT 3 OFFSET 4 ]
+	-see more link

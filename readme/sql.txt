@@ -34,3 +34,8 @@ WHERE post_id = 21;
 UPDATE posts
 SET media = REPLACE(media, 'image/', 'images/')
 WHERE media LIKE 'image/%';
+
+
+
+post slide query
+[SELECT post_id, title, media FROM posts WHERE status ='published' AND media <> '' ORDER BY published_on DESC LIMIT 4;]
