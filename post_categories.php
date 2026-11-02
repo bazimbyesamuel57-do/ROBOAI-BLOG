@@ -121,7 +121,7 @@ function pageUrl(int $p, int $cat, string$q) {
             </div>
             <h1 style="text-align: center;">Posts-Categories</h1>
         </header>
-        <div class="search" style="margin-left:80px; margin-right:80px; padding: 100px; width: 50%;">
+        <div class="search" style="margin-left:80px; margin-right:8px; padding: 10px; width: 50%;">
             <!-- search bar with actegory filter -->
              <form class="search" method="GET" action="post_categories.php">
                 <input type="text" name="q" placeholder="search posts..." value="<?= htmlspecialchars($search) ?>" style="width: 50%;">

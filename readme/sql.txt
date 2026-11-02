@@ -39,3 +39,6 @@ WHERE media LIKE 'image/%';
 
 post slide query
 [SELECT post_id, title, media FROM posts WHERE status ='published' AND media <> '' ORDER BY published_on DESC LIMIT 4;]
+
+reset auto increment key
+TRUNCATE TABLE table_name;

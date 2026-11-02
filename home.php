@@ -112,7 +112,7 @@ if ($totalPosts > 4) {
             
         </header>
         
-        <form class="searchtab" action="search.php" method="GET"> <!--search.php ods the filename where the files are picked and method use GET for search -->
+        <form class="searchtab" action="post_categories.php" method="GET"> <!--search.php ods the filename where the files are picked and method use GET for search -->
             <input type="text" name="q" placeholder="search post..."> <!--name='q' where q is the query sent-->
             <button type="submit">Search</button>
         </form>

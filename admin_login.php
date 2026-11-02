@@ -22,9 +22,9 @@ if(isset($_POST['submit'])){
             $_SESSION['admin_id'] = $row['admin_id'];
             $_SESSION['name'] = $row['name'];
 
-        
+                    
             header("Location: admin_posts.php");
-            echo "login successfull!";
+            // echo "login successfull!";
         }
     }
 }

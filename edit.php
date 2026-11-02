@@ -136,23 +136,33 @@ if (isset($_POST['submit'])) {
     ?>
         <div>
             <form action="edit.php?id=<?php echo $id; ?>" method="POST" enctype="multipart/form-data"> <!--multipart/form-data for file uploads-->
-                <!-- <h3>The Post title</h3> -->
-                <input type="text" name="title" placeholder="Give the post title here!" value="<?php echo htmlspecialchars($post['title']); ?>" required><br>
-                <!-- <h3>Excerpt</h3> -->
-                <textarea name="excerpt" placeholder="write the excerpt for the post here!" required><?php echo htmlspecialchars($post['excerpt']); ?></textarea><br>
-                <!-- <h3>Post content</h3> -->
-                <textarea name="content" placeholder="write the post content here!" required><?php echo htmlspecialchars($post['content']); ?></textarea> <br>
-                <input type="text" name="author_name" placeholder="Author name" value="<?php echo htmlspecialchars($post['author_name']); ?>" required><br>
-               
+                <div>
+                    <label>The Post title</label><br>
+                    <input type="text" name="title" placeholder="Give the post title here!" value="<?php echo htmlspecialchars($post['title']); ?>" required><br>
+                </div>
+                <div>
+                    <label>Excerpt</label><br>
+                    <textarea name="excerpt" placeholder="write the excerpt for the post here!" required><?php echo htmlspecialchars($post['excerpt']); ?></textarea><br>
+                </div>
+                <div>
+                    <label>Post content</label><br>
+                    <textarea name="content" placeholder="write the post content here!" required><?php echo htmlspecialchars($post['content']); ?></textarea> <br>
+                    <input type="text" name="author_name" placeholder="Author name" value="<?php echo htmlspecialchars($post['author_name']); ?>" required><br>
+                </div>
+
+                <div>
                 <!-- <input type="file" name="image"> <br> selecting file/ image for the post -->
-                
+                    <label> add Image</label><br>
                     <?php
                         if  (!empty($post['media'])) { ?>
                             <p>Current image:</p>
                             <img src="<?php echo htmlspecialchars($post['media']); ?>" alt="current post image" style="max-width:200px;"><br>
                     <?php } ?>
                     <input type="file" name="image" accept="images/*"><br>
+                </div>
 
+                <div>    
+                    <label>Category</label><br>
                     <select id="category" name ="category_id">
                         <?php 
                         while ($row =mysqli_fetch_assoc($cat_result))
@@ -162,10 +172,9 @@ if (isset($_POST['submit'])) {
                             <?php if ((int) $row['category_id'] === (int) $post['category_id']) echo ' selected'; ?>>
                             <?php echo htmlspecialchars($row['category_name']); ?>
                         </option>
-                         <!-- option selection fetched from the database -->
-                        <!-- <option value="Automation">Automation</option>
-                        <option value="Robotics">Robotics</option> -->
+
                         <?php }  ?> 
+                </div>
                     </select> <br>
                 
                 <select name="status_selection">
@@ -173,7 +182,7 @@ if (isset($_POST['submit'])) {
                     <!-- <option value="select status">--select status--</option> -->
                     <option value="draft"<?php if ($post['status'] === 'draft') echo " selected"; ?>>Draft</option>
                     <option value="published"<?php if ($post['status'] === 'published') echo " selected"; ?>>Published</option>
-                </select>
+                </select><br>
                 <!-- <input type="text" name="admin_username"> -->
                 <button type="submit" value="update post" name="submit">Save</button>
                 <a href="admin_posts.php">Cancel</a>

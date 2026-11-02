@@ -14,6 +14,14 @@ ADMIN -links: Edit- admin/edit.php, admin/delete.php, admincreate.php
 	-
 
 Admin section
+dash board
+
+LIMIT is how many rows, and OFFSET is how many to skip first.
+COUNT(*) gives the total, so the page knows how many pages exist.
+max(1, (int) ...) turns ?page=abc, 0 and -5 into page 1.
+The ORDER BY has to stay, with its tie-breaker. Without a stable order, the same row could appear on two pages.
+Next and Previous appear only when such a page exists.
+href="?page=2" keeps the current file name and changes only the query.
 Delete page
 
 
@@ -28,3 +36,15 @@ posts-slideshow : 4posts (Get from databas, 4 newest published posts)
 		-with only few posts display the slide show on and put a placeholder 
 	-sql[SELECT post_id, tile, media, excerpt, author_name, published_onFROM posts WHERE status = 'published' ORDER BY published_on DESC LIMIT 3 OFFSET 4 ]
 	-see more link
+
+
+adding author infor
+bugs
+The photo path goes into the wrong variable. After the upload you write $media = 'images/authors/' . $new_name;, but the INSERT uses $author_image. That one stays '', so the photo file is saved but the database never records it.
+enctpe is misspelled in the <form> tag. Without enctype="multipart/form-data", the file never reaches $_FILES, so every author is saved without a photo and you get no error.
+The submit button has no name. Your PHP runs only if (isset($_POST['submit'])), so clicking Save does nothing. This is the same problem create.php had at the start.
+The redirect: 'add_author.php?saved=author_id= ?' is a broken address. Use ?saved=1. (If you want the new id, mysqli_insert_id($conn) gives it.)
+The success note is red. It should be green.
+accept="image/author/*" isn’t a valid value. Use image/*.
+<textarea type="text">. A textarea has no type attribute.
+No check after mysqli_prepare. A failed prepare would give a confusing error on the next line.
