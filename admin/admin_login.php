@@ -1,6 +1,20 @@
 <?php
 
-require 'connect.php';
+// require 'connect.php';
+
+$host = "localhost";
+$user = "root";
+$password = "";
+$database = "roboai_blog_db";
+$port = 3307;
+
+$conn =mysqli_connect($host, $user, $password, $database, $port);
+
+if (!$conn ) {
+    die("Connection failed: " . mysqli_connect_error());
+
+}
+
 
 session_start(); // starting the session
 
@@ -23,7 +37,7 @@ if(isset($_POST['submit'])){
             $_SESSION['name'] = $row['name'];
 
                     
-            header("Location: admin_posts.php");
+            header("Location: admin/admin_dashboard.php");
             // echo "login successfull!";
         }
     }
@@ -36,7 +50,7 @@ if(isset($_POST['submit'])){
         <title></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="css/style.css" rel="stylesheet">
+        <link href="admin.css" rel="stylesheet">
     </head>
     <body>
         <form action="admin_login.php" method="POST">

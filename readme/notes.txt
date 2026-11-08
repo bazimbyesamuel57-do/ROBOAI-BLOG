@@ -48,3 +48,18 @@ The success note is red. It should be green.
 accept="image/author/*" isn’t a valid value. Use image/*.
 <textarea type="text">. A textarea has no type attribute.
 No check after mysqli_prepare. A failed prepare would give a confusing error on the next line.
+
+
+
+
+
+
+
+
+
+
+
+
+bootstrap
+-home posts- horizontal cards
+-categories posts -grid cards

@@ -2,7 +2,21 @@
 
 session_start();
 
-require 'connect.php';
+// require 'connect.php';
+
+$host = "localhost";
+$user = "root";
+$password = "";
+$database = "roboai_blog_db";
+$port = 3307;
+
+$conn =mysqli_connect($host, $user, $password, $database, $port);
+
+if (!$conn ) {
+    die("Connection failed: " . mysqli_connect_error());
+
+}
+
 
 // categories dropdown
 $sql ="SELECT category_id, category_name FROM categories ORDER BY category_name";
@@ -23,7 +37,7 @@ if (!$author) {
 
 
 $message = '';
-$image_dir = 'images/';
+$image_dir = '../images/';
 
 // restoring draft saced before going to add-author.php
 $draft = [];
@@ -110,7 +124,7 @@ if (isset($_POST['submit'])) {
                 $message = 'That file is not a real image.';
             } else {
                 $new_name = uniqid('post') . '.' . $ext;
-                if (move_uploaded_file($_FILES['image']['tmp_name'], 'images/' . $new_name)) {
+                if (move_uploaded_file($_FILES['image']['tmp_name'], '../images/' . $new_name)) {
                 $media = 'images/' . $new_name;
                 } else {
                 $message = 'Could not save the image.';
@@ -196,7 +210,7 @@ if (isset($_POST['submit'])) {
         <title>Create Post</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="css/style.css" rel="stylesheet">
+        <link href="admin.css" rel="stylesheet">
     </head>
     <body>
 

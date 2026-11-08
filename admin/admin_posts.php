@@ -1,6 +1,18 @@
 <?php
-require 'connect.php';
+// require 'connect.php';
 
+$host = "localhost";
+$user = "root";
+$password = "";
+$database = "roboai_blog_db";
+$port = 3307;
+
+$conn =mysqli_connect($host, $user, $password, $database, $port);
+
+if (!$conn ) {
+    die("Connection failed: " . mysqli_connect_error());
+
+}
 
 // session_start();
 
@@ -123,6 +135,8 @@ mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 ?>
 
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -140,18 +154,20 @@ $result = mysqli_stmt_get_result($stmt);
 
         <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="#">Dashboard</a>
-            <a href="#">Create Posts</a>
-            <a href="#">Edit posts</a>
-            <a href="#">View posts</a>
+            <a href="admin_dashboard.php">Dashboard</a>
+            <a href="admin_posts.php">Manage Posts</a>
+            <a href="create.php">Create Posts</a>
+            <a href="admin_contactfeed.php">Contact Messages</a>
+            <a href="admin_login.php">Logout</a>
         </div>
 
-        <span onclick="openNav()">&#10143;</span>
+        <!-- <span onclick="openNav()">&#10143;</span> -->
         
 
         <div id="main">
             <h1 style="text-align: center;">Welcome Admin</h1>
-
+            
+            <span onclick="openNav()">&#9776; MENU</span>
             <div>
                 <h1 > Manage Posts</h1>
                 <p><a href="create.php">+ Add a post</a></p>
@@ -250,13 +266,15 @@ $result = mysqli_stmt_get_result($stmt);
             </div>
         </div>
 
+        <footer class="footer">ROBOAI Blog 2026 | <a href=admin-dashboard.php">Dashboard</a> | Manage Posts | <a href="admin_register.php">Register</a> | <a href="admin_login.php">LogOut</a> |</footer>
+
         <script>
             /*sidenave with opacity*/
             function openNav() {
                 /* adding background and setting style. opening nav*/
                 document.getElementById("mySidenav").style.width = "250px";
                 document.getElementById("main").style.marginLeft = "250px";
-                document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+                document.body.style.backgroundColor = "white";
             }
             function closeNav() {
                 /*closinfg nave styling and background*/

@@ -13,8 +13,9 @@ $id = (int) $_GET['id'];
 //requsting for the post from the database
 $stmt = mysqli_prepare($conn,
 // "SELECT post_id FROM posts WHERE post_id = ? AND status = 'published'");
-    "SELECT title, author_name, published_on, media, content
-    FROM posts 
+    "SELECT p.title, p.author_name, p.published_on, p.media, p.content, a.author_image, a.author_bio
+    FROM posts p
+    LEFT JOIN author a ON p.author_id = a.author_id 
     WHERE post_id = ? AND status = 'published'");
 if (!$stmt) {
     die("prepare failed: " . mysqli_error($conn));
@@ -36,6 +37,8 @@ $author = htmlspecialchars($post['author_name']);
 $date = htmlspecialchars($post['published_on']);
 $media = htmlspecialchars($post['media']);
 $content = nl2br(htmlspecialchars($post['content']));
+$author_bio =htmlspecialchars($post['author_bio'] ?? '');
+$author_image = htmlspecialchars($post['author_image'] ?? '');
 
 //showing it
 // echo "<h1>" . htmlspecialchars($post['title']) . "</h1>";
@@ -48,6 +51,9 @@ $content = nl2br(htmlspecialchars($post['content']));
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title; ?></title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
 </head>
     <body>
@@ -65,90 +71,93 @@ $content = nl2br(htmlspecialchars($post['content']));
                     <a href="home.php">Home</a>
                     <a href="post_categories.php">Post/Categories</a>
                     <a href="about_us.html">About Us</a>
-                    <a href="contact.html">Contact Us</a>
+                    <a href="contact.php">Contact Us</a>
                 </nav>
              </div>
         </header>
+        <div class="container" style="max-width: 900px;">
+            <h1><?php echo $title; ?></h1>
+            <p>By <?php echo $author; ?> on <?php echo $date; ?></p>
 
-        <h1><?php echo $title; ?></h1>
-        <p>By <?php echo $author; ?> on <?php echo $date; ?></p>
+            <!-- the image in the post -->
+            <?php if (!empty($media)) { ?>
+                <img src="<?php echo $media; ?>" alt="<?php echo $title; ?>" style="max-width: 100%;">
+            <?php } ?>
 
-        <!-- the image in the post -->
-        <?php if (!empty($media)) { ?>
-            <img src="<?php echo $media; ?>" alt="<?php echo $title; ?>" style="max-width: 100%;">
-        <?php } ?>
+            <div><?php echo $content; ?></div>
 
-        <div><?php echo $content; ?></div>
+            <!-- author bio  -->
+            <div class ="author-box">
+                <?php if (!empty($author_image)) { ?>
+                    <img src="<?php echo $author_image; ?>" alt="<?php echo $author; ?>"
+                    style="width:80px; height:80px; border-radius:50%; object-fit:cover;">
+                <?php } ?>
+                <p><strong>About<?php echo $author; ?></strong></p>
+                <?php if (!empty($author_bio)) { ?>
+                    <p><?php echo $author_bio; ?></p>
+                <?php } ?>
+            </div>
 
-        <p><a href="post_categories.php">&larr; Back to all posts</a></p> 
-
+            <p><a href="post_categories.php">&larr; Back to all posts</a></p> 
+        </div>
 
 
 
         <div id="comment-form">
             <section>
-                <h3>Leave a Comment</h3>
+                <div class="container">
+                    <h3>Leave a Comment</h3>
 
-                <?php 
-                // post messages
-                $messages =[
-                    'empty' => 'Please fill in your name and comment.',
-                    'name_long' => 'Name must be 30 characters or less.',
-                    'comment_long' => 'Name must be 1000 characters or less.',
-                    'bad_email' => 'Please enter a valid email address.',
-                ];
+                    <?php 
+                    // post messages
+                    $messages =[
+                        'empty' => 'Please fill in your name and comment.',
+                        'name_long' => 'Name must be 30 characters or less.',
+                        'comment_long' => 'Name must be 1000 characters or less.',
+                        'bad_email' => 'Please enter a valid email address.',
+                    ];
 
-                if ((isset($_GET['error'])) && isset($messages[$_GET['error']])) {
-                    echo "<p style='color: red;'>" . $messages[$_GET['error']] . "</p>";
-                }
-                ?>
+                    if ((isset($_GET['error'])) && isset($messages[$_GET['error']])) {
+                        echo "<p style='color: red;'>" . $messages[$_GET['error']] . "</p>";
+                    }
+                    ?>
 
                 <!-- comment form to add new comments -->
-                <div>
-                    <form method="POST" action="script.php">
-                        <!--Name input-->
-                        <div class="group-form">
-                            <label for="name">Name:</label>
-                            <input type="text" id="name" name="name" placeholder="Your Name" required maxlength="30">
-                        </div>
-                        <!--Email Inpuut-->
-                        <div class="group-form">
-                            <label for="email">Email:</label>
-                            <input type="email" id="email" name="email" placeholder="your.email@123.example.com" required>
-                        </div>
-                        <!--comment textarea-->
-                        <div class="group-form">
-                            <label for="comment">Comment:</label>
-                            <textarea id="comment" name="comment" placeholder="Write your comment here..." required aria-label="write a comment" maxlength="1000"></textarea>
-                            <input type="hidden" name="post_id" value="<?php echo $id; ?>">
-                        </div>
-                            <button type="submit" style="background-color: lightslategray; color: black;">Post Comment</button>
-                        
-                            <!-- This form sits inside the comment block, hidden until "Reply" is clicked -->
-                            <!-- <input type="text" placeholder="Reply to this comment..." required>
-                            <button type="submit">Reply</button> -->
-                        <!-- <footer> -->
-                            <!-- Inside the comment footer actions -->
-                            <!-- <button class="action-btn delete-btn" aria-label="Delete comment">
-                                Delete
-                            </button> -->
-                            <!-- Active states are usually handled by adding a CSS class via JavaScript -->
-                            <!-- <button class="action-btn like-btn liked" aria-label="Unlike comment">
-                                <span class="count">13 likes</span>
-                            </button>
-                        </footer> -->
-                    </form>
-
+                    <div>
+                    
+                        <form method="POST" action="script.php">
+                            <!--Name input-->
+                            <div class="mb-3">
+                                <label class="form-label" for="name">Name:</label>
+                                <input type="text" id="name" name="name" placeholder="Your Name" required maxlength="30">
+                            </div>
+                            <!--Email Inpuut-->
+                            <div class="group-form">
+                                <label class="form-label" for="email">Email:</label>
+                                <input class="control-form" type="email" id="email" name="email" placeholder="your.email@123.example.com" required>
+                            </div>
+                            <!--comment textarea-->
+                            <div class="group-form">
+                                <label class="form-label" for="comment">Comment:</label>
+                                <textarea class="control-form"  rows="3" id="comment" name="comment" placeholder="Write your comment here..." required aria-label="write a comment"></textarea>
+                                <input type="hidden" name="post_id" value="<?php echo $id; ?>">
+                            </div>
+                                <button type="submit" class="btn mb-3"style="background-color: lightslategray; color: black; margin-top: 30px;">Post Comment</button>
+                            
+                        </form>
+                    </div>
+                
                     <h3>Comments</h3>
 
                         <?php
-
-                        require 'connect.php';
+                        // displaying comments
+                        // require 'connect.php';
                         $c_stmt = mysqli_prepare($conn, 
                             "SELECT Name, Date_Time, Message
                             FROM comments 
                             WHERE post_id = ? 
-                            ORDER BY date_time DESC"); // the query for the data
+                            ORDER BY date_time DESC
+                            LIMIT 8"); // the query for the data
 
                         if (!$c_stmt) {
                             die("Comment query failed:". mysqli_error($conn));

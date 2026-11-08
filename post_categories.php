@@ -6,7 +6,7 @@ require 'connect.php';
 $page = max(1, (int) ($_GET['page'] ?? 1));
 $categoryFilter = (int)($_GET['category'] ?? 0);
 $search =trim($_GET['q'] ?? '');
-$perPage = 10;
+$perPage = 12;
 
 // fetch the categories froom the database for the dropdown
 $catResult = mysqli_query($conn, 
@@ -96,6 +96,10 @@ function pageUrl(int $p, int $cat, string$q) {
         <title>posts</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        
         <link href="style.css" rel="stylesheet">
         
          
@@ -116,26 +120,52 @@ function pageUrl(int $p, int $cat, string$q) {
                     <a href="home.php">Home</a>
                     <a class="active" href="post_categories.php">Post/Categories</a>
                     <a href="about_us.html">About Us</a>
-                    <a href="contact.html">Contact Us</a>
+                    <a href="contact.php">Contact Us</a>
                 </nav>
             </div>
             <h1 style="text-align: center;">Posts-Categories</h1>
         </header>
-        <div class="search" style="margin-left:80px; margin-right:8px; padding: 10px; width: 50%;">
+        <div>
             <!-- search bar with actegory filter -->
-             <form class="search" method="GET" action="post_categories.php">
-                <input type="text" name="q" placeholder="search posts..." value="<?= htmlspecialchars($search) ?>" style="width: 50%;">
-                <button class="searchtab-button" type="submit" >Search</button>
-                <select  name="category" style="width:30%;">
-                    <option value="0" <?=  $categoryFilter === 0 ? 'selected' : '' ?>>All</option>
-                    <?php foreach ($categories as $cat): ?>
-                        <option value="<?= (int)$cat['category_id'] ?>" <?= $categoryFilter === (int)$cat['category_id'] ? 'selected' : '' ?>><?= htmlspecialchars($cat['category_name']) ?></option>
-                    <?php endforeach; ?>
-                </select>
-                <input type="hidden" name="page" value="1">
-                <!-- <button class="searchtab button" type="submit">Search</button> -->
+             <form class="hsearchtab" method="GET" action="post_categories.php">
+                <input class="hsearch" type="text" name="q" placeholder="search posts..." value="<?= htmlspecialchars($search) ?>" style="width: 400px;" required>
+                <button class="hsearch-button" type="submit" >Search</button>
 
-             </form>
+                <input type="hidden" name="category" value="<?= (int)$categoryFilter ?>">
+                <input type="hidden" name="page" value="1">
+            </form>
+            <div class="cat-filter">
+                <label>FIND BY CATEGORIES:</label>
+                <div class="btn-group">
+                    <button class="btn dropdown-toggle" type="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <?php
+                        $current = 'All';
+                        foreach ($categories as $cat) {
+                            if ((int)$cat['category_id'] === $categoryFilter) {
+                                $current = $cat['category_name'];
+                            }
+                        }
+                        echo htmlspecialchars($current);
+                        ?>
+                    </button>
+
+                    <ul class="dropdown-menu" style="max-height:250px; overflow-y:auto;">
+                        <li>
+                            <a class="dropdown-item <?= $categoryFilter === 0 ? 'active' : '' ?>"
+                            href="<?= pageUrl(1, 0, $search) ?>">All</a>
+                        </li>
+                        <?php foreach ($categories as $cat): ?>
+                            <li>
+                                <a class="dropdown-item <?= $categoryFilter === (int)$cat['category_id'] ? 'active' : '' ?>"
+                                href="<?= pageUrl(1, (int)$cat['category_id'], $search) ?>">
+                                    <?= htmlspecialchars($cat['category_name']) ?>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
         </div>
 
         <diV>
@@ -145,7 +175,7 @@ function pageUrl(int $p, int $cat, string$q) {
             </form> -->
 
             <!-- posts card lists -->
-            <div class="posts22">
+            <div class="cat-posts">
                 <?php if  (empty($posts)): ?>
                     <p style="text-align:center; margin-top:40px";>
                         No posts found
@@ -159,40 +189,49 @@ function pageUrl(int $p, int $cat, string$q) {
                             }
                         endif; ?>.
                     </p>
+                
                 <?php else: ?>
-                    <?php foreach ($posts as $row):
-                        $id = $row['post_id'];
-                        $title = htmlspecialchars($row['title']);
-                        $excerpt = htmlspecialchars($row['excerpt'] ?? '');
-                        $author_name = htmlspecialchars($row['author_name'] ?? '');
-                        $published_on =date('d M Y', strtotime($row['published_on']));
-                        $category = htmlspecialchars($row['category_name'] ?? '');
-                        $media = $row['media'];
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3">
+                        <?php foreach ($posts as $row):
+                            $id = $row['post_id'];
+                            $title = htmlspecialchars($row['title']);
+                            $excerpt = htmlspecialchars($row['excerpt'] ?? '');
+                            $author_name = htmlspecialchars($row['author_name'] ?? '');
+                            $published_on =date('d M Y', strtotime($row['published_on']));
+                            $category = htmlspecialchars($row['category_name'] ?? '');
+                            $media = $row['media'];
+                        
+                        ?>
                     
-                    ?>
+                        <div class="col">
 
-                        <div>
-                            <?php if (!empty($media)): ?>
-                                <img src="images/<?= htmlspecialchars($media) ?>"
-                                    alt="<?= $title ?>" style="max-width:100%; float:left;
-                                    margin-right:15px;">
-                            <?php endif; ?>
-
-                            <p>
-                                <a href="post_details.php?id=<?= (int)$id ?>">
-                                    <?= $title ?>
-                                </a>
-                            </p>
-                            <p><?= $excerpt ?></p>
-                            <span>
-                                By <?= $author_name ?>
-                                | <?= $published_on ?>
-                                <?= $category !== '' ? ' | <em>' . $category . '</em>' : '' ?>
-                            </span>
+                            <div class="card h-100">
+                                    <?php if (!empty($media)): ?>
+                                        <img class="card-img-top" style="height:200px; object-fit:cover;" src="<?= htmlspecialchars($media) ?>"
+                                            alt="<?= $title ?>">
+                                    <?php endif; ?>
+                            
+                                <div class="card-body">
+                                    <p class="card-title">
+                                        <a href="post_details.php?id=<?= (int)$id ?>">
+                                            <?= $title ?>
+                                        </a>
+                                    </p>
+                                    <p class="card-text"><?= $excerpt ?></p>
+                                    <span>
+                                        By <?= $author_name ?>
+                                        | <?= $published_on ?>
+                                        <?= $category !== '' ? ' | <em>' . $category . '</em>' : '' ?>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                    <?php endforeach; ?>
+                                        
+                        <?php endforeach; ?>
+                    </div>
+                    
                 <?php endif; ?>                        
-            </div>
+         
              
             <!-- the previous and next pagination -->
             <?php if ($totalPages > 1): ?>

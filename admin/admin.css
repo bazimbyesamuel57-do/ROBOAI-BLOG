@@ -1,0 +1,504 @@
+html {
+  box-sizing: border-box;
+}
+body {
+    /* font-color: yellow; */
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+    background-color:rgba(220, 223, 225, 0.4);
+    margin: 0;
+    
+
+    /* margin-left:15%;
+    margin-right:15%; */
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    max-width: 100%;
+}
+
+main {
+    background-color: inherit;
+    padding: 10px;
+    margin: 0px;
+    align-content: center;
+}
+
+
+/* logo */
+.log {
+    /* background-image: url (images/logo.index.png) !important; */
+    width: 100px;
+    /* padding: 16px; */
+    padding-left: 25px;
+    /* padding-right: 20px; */
+    /* padding-bottom: 16px; */
+    /* height: 60px; */
+    /* margin: 50%; */
+    margin-left: 35%;
+    margin-right: 35%;
+    /* margin-top: 5%; */
+    /* margin-bottom: 5%; */
+
+    /* background-color:#555; */
+    /* align-items: center; */
+}
+
+.log-content {
+    margin-bottom: 5px;
+}
+
+/* .h1 {
+    font-color: yellow;
+}
+
+p {
+    font-color: white;
+} */
+
+/* Logo */
+/* @media screen {
+    max-width: 1150px;
+} */
+/* .title-area { */
+    /* color: burlywood; */
+    /* max-width: 1150px; */
+    /* width: 250px !important;
+    text-align: center; */
+    
+/* } */
+/* .site-header .title-area {
+    float: none;
+    margin: 0 auto;
+} */
+
+/*styling the top nav */
+/* .topnav {
+    background-color: rgb(65, 63, 63);
+    overflow: hidden; */
+    /* margin-left: 10px;
+    margin-right: 10px; */
+    /* text-align: center;
+    
+} */
+
+/* .topnav a {
+    float: left;
+    color:aqua;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+} */
+
+/* .topnav a:hover {
+    background-color: white;
+    color: black;
+} */
+
+/* .topnav a.active {
+    background-color: yellowgreen;
+    color: white;
+} */
+
+/* styling the dropdown links */
+
+/* dropdown button */
+/* .dropbtn { */
+    /* background-color:aqua; */
+    /* color:aqua;
+    padding: inherit;
+} */
+
+ /* position the dropdown -div container */
+/* .dropdown {
+    float: left;
+    overflow: hidden; */
+    /* position: relatve;
+    display: inline-block; */
+/* } */
+/* dropdown button */
+/* .dropdown .dropbtn {
+    border: none;
+    outline: none;
+    color: aqua;
+    padding: 14px 16px;
+    font-size: 17px;
+    text-align: center;
+    background-color: inherit;
+    margin: 0; */
+/* } */
+
+/* dropdown conten hidden by default */
+/* .dropdown-content {
+    display: none;
+    position: absolute; */
+    /* background-color: inherit; */
+    /* min-width: 160px; */
+    /* padding: inherit;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+} */
+
+/* Links inside the dropdown */
+/* .dropdown-content a  {
+  color:inherit;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+} */
+
+/* Change color of dropdown links on hover */
+/* .dropdown-content a:hover {background-color: yellowgreen;} */
+
+/* Show the dropdown menu on hover */
+/* .dropdown:hover .dropdown-content {display: block;} */
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+/* .dropdown:hover .dropbtn {background-color: white;} */
+
+
+
+
+
+/* styling the search feature */
+* {
+    box-sizing: border-box;
+}
+
+/* style search field */
+.searchtab input[type=text] {
+    padding: 12px;
+    font-size: 1px solid grey;
+    float:left;
+    width: 35%;
+    background: white;
+    margin: 5% 0% 0% 25%; 
+}
+
+.searchtab button {
+    /* float: left; */
+    width: 15%;
+    padding: 10px;
+    background: #2196F3;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+    margin-top: 5%; 
+ }
+
+
+.searchtab {
+    width: 10px;
+    padding: 50px;
+    background: #0b7dda;
+}
+
+.hsearchtab {
+    
+    width: 50%;
+    margin-top: 50px;
+    margin-bottom:30px;
+    margin-left: 400px;
+    padding:0px;
+}
+
+.hsearch {
+    margin-left: 0;
+    width: 400px;
+    padding: 15px;
+}
+
+.hsearch-button {
+        /* float: left; */
+    width: 15%;
+    padding: 9px;
+    background: #2196F3;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+    margin-left: -3px; 
+    /* width: 100px; */
+    /* margin-left:255px; */
+}
+
+/* .searchtab ::after {
+    content: "";
+    clear: both;
+    display: table;
+} */
+
+
+
+
+/*Style sidenav bar */
+/* #sidenav a {
+    position: absolute;
+    left: -80px;
+    transition: 0.3s;
+    padding: 14px;
+    width: 100px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    border-radius: 0 5px 5px 5px 0;
+}
+
+#sidenav a:hover {
+    left: 0;
+}
+
+#home {
+    top: 60%;
+    background: brown;
+}
+
+#categories {
+    top: 70%;
+    background-color: blue;
+}
+
+#posts {
+    top: 80%;
+    background-color: red;
+} */
+
+/* blog cover intro information and descriptiom */
+#post-info {
+    text-align: center;
+    margin-top: 0%;
+}
+
+
+/* post card sytling */
+
+body{
+    background-color: inherit;
+    align-content:center;
+}
+* {
+    box-sizing:border-box;
+    border-width: px;
+
+}
+
+/* slide show */
+.slideshow-container {
+    align-content: center;
+    max-width: 1000px;
+    /* width: 100px; */
+    position: relative;
+    margin: auto;
+    /* display: block; */
+    box-sizing: border-box;
+    /* margin:100px; */
+    /* padding-left: 14%;
+    padding-bottom: 16px; */
+    
+    
+}
+
+/* hide images */
+.slides {
+    display: none;
+}
+
+/* prev and next buttons */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -20px;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 0;
+    user-select: none;
+}
+
+ /* next button positioned to the right */
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.8)
+}
+
+/* Captiontext */
+.text {
+    color: #f2f2f2;
+    /* color: red; */
+    font-size: 15px;
+    padding: 8px 12px;
+    position: absolute;
+    /* top: 1px; */
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+    /* margin:0%; */
+}
+
+/* number text */
+.number {
+    color: #f2f2f2;
+    font-size: 15px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+}
+
+/* dot/bullets  */
+.dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease-in-out;
+}
+
+.active, .dot:hover {
+    background-color: #717171;
+}
+
+/* the fading - animations */ 
+.fade {
+    animation-name: fade;
+    animation-duration: 1.2s;
+}
+
+@keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+
+@media only screen and (max-width: 400px) {
+    .text {font-size:11px}
+}
+
+
+
+.img {
+    align-items: left;
+    max-width: auto;
+    /* width: 50%; */
+    width: 350px;
+    /* height: 300px; */
+    height: auto;
+    margin-bottom: 25px;
+    margin-top: 25px;
+    /* object-fit: cover; */
+    /* display: block; */
+    /* display: inline-block; */
+    float: left;
+    object-fit: contain;
+    vertical-align: middle;
+    overflow-clip-margin: content-box;
+    /* overflow: clip; */
+    /* img-size:  */
+}
+
+
+.readme {
+    display: inline-block;
+    color: brown;
+    padding: 10px 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+/* Footer */
+.footer {
+  padding: 20px;
+  text-align: center;
+  background: gray;
+  margin-top: 20px;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 800px) {
+  .leftcolumn, .rightcolumn {
+    width: 100%;
+    padding: 0;
+  }
+}
+/* blog footer */
+
+.footer {
+    text-align: center;
+}
+
+
+/* admin_post page/dashboard */
+/* body {
+    margin:inherit;
+} */
+
+/* Admin side menu */
+/* The side navigation menu */
+.sidenav {
+  height: 650px; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: gray; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: aqua;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: yellowgreen;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+  transition: margin-left .5s;
+  padding: 20px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}

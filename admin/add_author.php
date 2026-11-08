@@ -1,8 +1,22 @@
 <?php 
-require 'connect.php';
+// require '/connect.php';
+
+$host = "localhost";
+$user = "root";
+$password = "";
+$database = "roboai_blog_db";
+$port = 3307;
+
+$conn =mysqli_connect($host, $user, $password, $database, $port);
+
+if (!$conn ) {
+    die("Connection failed: " . mysqli_connect_error());
+
+}
+
 
 $message = '';
-$author_dir = 'images/authors/';
+$author_dir = '../images/authors/';
 $from = $_POST['from'] ?? $_GET['from'] ?? '';
 $from = ($from === 'create') ? 'create' : '';
 
@@ -35,7 +49,7 @@ if (isset($_POST['submit'])) {
             } else {
                 $new_name = uniqid('author_') . '.' . $ext;
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $author_dir . $new_name)) {
-                    $author_image = $author_dir . $new_name;
+                    $author_image = 'images/authors/' . $new_name;
                 } else {
                     $message = 'Could not save the image.';
                 }
@@ -61,7 +75,7 @@ if (isset($_POST['submit'])) {
             }
             $message = 'Error: ' . mysqli_stmt_error($stmt);
             if ($author_image !== ''){
-                unlink($author_image);
+                unlink('images/authors/' .$author_image);
             } 
         }
     }
@@ -73,9 +87,10 @@ if (isset($_POST['submit'])) {
         <title>Add author</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="css/style.css" rel="stylesheet">
+        <link href="admin.css" rel="stylesheet">
     </head>
     <body>
+        <h1>Enter New Author</h1>
         <div>
             <?php
             if (isset($_GET['saved'])) {
@@ -87,11 +102,15 @@ if (isset($_POST['submit'])) {
             }
             ?>
             <form action="add_author.php" method="POST" enctype="multipart/form-data">
+                <label>Name:</label><br>
                 <input type="text" name="author_name" placeholder="Enter Author name..." maxlength="255" value="<?php echo htmlspecialchars($_POST['author_name'] ?? ''); ?>" required><br>
+
+                <label>Biography:</label><br>
                 <textarea name="author_bio" placeholder="Enter author's bio..."><?php echo htmlspecialchars($_POST['author_bio'] ?? ''); ?></textarea><br>
                 <!-- <select>
                     <option></option>
                 </select> -->
+                <label>Insert image:</label><br>
                 <input type="file" name="image" accept="image/*"><br>
                 <input type="hidden" name="from" value="<?php echo htmlspecialchars($from); ?>">
                 <button type="submit" name="submit">Save author</button>

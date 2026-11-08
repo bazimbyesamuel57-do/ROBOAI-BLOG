@@ -54,6 +54,12 @@ if ($totalPosts > 4) {
     <head>
         <meta charset="UTF-8">
         <title>Home</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+        
         <link rel="stylesheet" href="style.css">
     </head>
 
@@ -62,7 +68,7 @@ if ($totalPosts > 4) {
         <h1>This is a protected dashboard page.</h1>
         <a href="logout.php">Log Out</a> -->
         <header>
-            <div class="title-area">
+            <div class="log-content">
                 <p class="site-title">
                     <!-- <a href="#" class="logo">ROBOAI</a> -->
                     <a href="#"><img class="log" src="images/logo.index.png" alt="Roboai Logo"></a>
@@ -94,28 +100,18 @@ if ($totalPosts > 4) {
                             <a href="#">Robotics trends</a>
                         </div>
                     </div>
-                
-                
-                    
-                        <!-- <div class="dropdown">
-                            <button class="dropbtn"><a href="#">Resources</a></button>
-                            <div class="dropdown-content">
-                                <a href="#">link1</a>
-                                <a href="#">link2</a>
-                            </div>
-                        </div> -->
-
                     <a href="about_us.html">About Us</a>
-                    <a href="contact.html">Contact Us</a>
+                    <a href="contact.php">Contact Us</a>
                 </nav>
             </div>
             
         </header>
-        
-        <form class="searchtab" action="post_categories.php" method="GET"> <!--search.php ods the filename where the files are picked and method use GET for search -->
-            <input type="text" name="q" placeholder="search post..."> <!--name='q' where q is the query sent-->
-            <button type="submit">Search</button>
-        </form>
+        <div>
+            <form class="hsearchtab" action="post_categories.php" method="GET"> <!--search.php ods the filename where the files are picked and method use GET for search -->
+                <input class="hsearch" type="text" name="q" placeholder="search post..." style="width:400px;" required> <!--name='q' where q is the query sent-->
+                <button class="hsearch-button" type="submit">Search</button>
+            </form>
+        </div>
         <!-- <div id="sidenav" class="sidenav"> hover side bar -->
             <!-- <a href="#" id="home">Home</a>
             <a href="post_categories.html" id="categories">Categories</a>
@@ -148,20 +144,21 @@ if ($totalPosts > 4) {
                 </div>
 
                 <!-- slide show -->
+                <div class="container" style="max-width:900px">
 
-                <div>
-                    <!-- welcome placeholder if no posts -->
-                    <?php if ($slideCount === 0): ?>
+                    <div style=" align-content: center;">
+                        <!-- welcome placeholder if no posts -->
+                        <?php if ($slideCount === 0): ?>
 
-                        <div class="slideshow-container">
-                            <div class="slides fade">
-                                <div class="number">1/1</div>
-                                <div style="text-align:center; padding:600px; background:#f0f0f0;">
-                                    <h2>Welcome to ROBOAI Blog</h2>
-                                    <p>No posts yet -check back soon!</p>
+                            <div class="slideshow-container">
+                                <div class="slides fade">
+                                    <div class="number">1/1</div>
+                                    <div style="text-align:center; padding:60px; background:#f0f0f0;">
+                                        <h2>Welcome to ROBOAI Blog</h2>
+                                        <p>No posts yet, check back soon!</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         <?php else: ?>
                             <div class="slideshow-container">
                                 
@@ -171,79 +168,83 @@ if ($totalPosts > 4) {
                                             <?= $i + 1 ?>/<?= $slideCount ?>
                                         </div>
                                         <a href="post_details.php?id=<?= (int)$slide['post_id'] ?>">
-                                            <img src="images/<?= htmlspecialchars($slide['media']) ?>" alt="<?= htmlspecialchars($slide['title']) ?>" style="max-width: 100%;">
+                                            <img src="<?= htmlspecialchars($slide['media']) ?>" alt="<?= htmlspecialchars($slide['title']) ?>" style="width: 100%; height:350px; object-fit:cover;">
                                         </a>
-                                        <div class="text">
+                                        <div class="text" style="bottom: 30px;">
                                             <?=  htmlspecialchars($slide['title']) ?>
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
+                                
+                                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
 
-                                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
-                                <a class="next" onclick="plusSlides(1)">&#10095;</a>
-                            </div><br>
-
-                            <!-- dots per slide generated automatically -->
-                            <div style="text-align:center">
-                                <?php for ($d = 1; $d <= $slideCount; $d++): ?>
-                                    <span class="dot" onclick="currentslide(<?= $d ?>)"></span>
-                                <?php endfor; ?>
-                            </div>
-
-                    <?php endif; ?>
-
+                                <!-- dots per slide generated automatically -->
+                                <div style="text-align:center">
+                                    <?php for ($d = 1; $d <= $slideCount; $d++): ?>
+                                        <span class="dot" onclick="currentslide(<?= $d ?>)"></span>
+                                    <?php endfor; ?>
+                                </div>
+                            </div> 
+                        <?php endif; ?>
+                            
+                    
 
                     <!-- Post cards (appear when there is more than 4 posts-->
                     <?php if ($totalPosts > 4 && $cardCount > 0): ?>
 
-                        <section style="margin-top:50px;">
+                        <section class="mt-4">
+                            <div class="row row-cols-3 g-2">
                             <?php foreach ($cards as $card): ?>
-                                <div class="home-arcticle">
-                                    <article class="post-card">
-
-                                        <h3 class="post-title">
-                                            <?= htmlspecialchars($card['title']) ?>
-                                        </h3>
-
+                                <div class="col" style="min-width:0;">
+                                    <article class="card h-100">
+                                        <div>
                                         <?php if (!empty($card['media'])): ?>
-                                            <img class="img" 
-                                            src="images/<?= htmlspecialchars($card['media']) ?>" alt="<?= htmlspecialchars($card['title']) ?>" 
-                                            style="padding:50px; max-width:100%;">
+                                            <img class="card-img-top" 
+                                            src="<?= htmlspecialchars($card['media']) ?>" alt="<?= htmlspecialchars($card['title']) ?>" 
+                                            style=" object-fit: cover; height:160px;">
 
                                         <?php else: ?>
-                                            <div style="width:30%; padding:20px;  background:#eee; display:inline-block; text-align:center;">
+                                            <div class="d-flex align-items-center justify-content-center bg-light" style="height: 160px;">
                                                 No image
                                             </div>
                                         <?php endif; ?>
+                                        </div>
 
-                                        <p class="excerpt">
-                                            <?=  htmlspecialchars($card['excerpt'] ?? '') ?>
-                                        </p>
-                                        <span class="post-author">
-                                            By <?=  htmlspecialchars($card['author_name'] ?? '') ?>|<?= date('d M Y', strtotime($card['published_on'])) ?>
-                                        </span>
-                                        <a class="readme" href="post_details.php?id=<?= (int)$card['post_id'] ?>">
-                                            Read more
-                                        </a>
-                                
+                                        <div class="card-body">
+                                            <span class="post-author">
+                                                By <?=  htmlspecialchars($card['author_name'] ?? '') ?> | <?= date('d M Y', strtotime($card['published_on'])) ?>
+                                            </span><br>
+
+                                            <h3 class="post-title h5 mt-2">
+                                                <?= htmlspecialchars($card['title']) ?>
+                                            </h3>
+
+                                            <p class="excerpt card-text">
+                                                <?=  htmlspecialchars($card['excerpt'] ?? '') ?>
+                                            </p>
+                                            
+                                            <a class="readme" href="post_details.php?id=<?= (int)$card['post_id'] ?>">
+                                                Read more
+                                            </a>
+                                        </div>
                                     </article>
                                 </div>
                             <?php endforeach; ?>
-                            
-                            
-                            <!-- see more link, takes you to the posts_categories list -->
+                        </div>
+                        </section>
+                    <?php endif; ?>
+                </div>
+                      <!-- see more link, takes you to the posts_categories list -->
                             <div style="text-align:center; margin-top:20px;">
                                 <a href="post_categories.php" class="see-more-btn">
                                     See More Posts &rarr;
                                 </a>
                             </div>
-
-                        </section>
-                    <?php endif; ?>
                     
-                </div>
-                <br>
+            </div>
+            <br>
 
         </main>
 
@@ -282,8 +283,8 @@ if ($totalPosts > 4) {
                     dots[slideIndex - 1].className += " active";
  
             }
-            //auto slide every 3 seconds
-            setInterval(() => plusSlides(1), 3000);
+            //auto slide every 2 seconds
+            setInterval(() => plusSlides(1), 2000);
         </script>
     </body>
 </html>

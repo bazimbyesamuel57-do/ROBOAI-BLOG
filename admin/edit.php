@@ -1,6 +1,21 @@
 <?php
 
-require 'connect.php';
+// require 'connect.php';
+
+
+
+$host = "localhost";
+$user = "root";
+$password = "";
+$database = "roboai_blog_db";
+$port = 3307;
+
+$conn =mysqli_connect($host, $user, $password, $database, $port);
+
+if (!$conn ) {
+    die("Connection failed: " . mysqli_connect_error());
+
+}
 // if id is sent
 if (!isset($_GET['id'])) {
     die("No post selected.");
@@ -34,7 +49,7 @@ if (!$cat_result) {
 }
 
 $message = '';
-$image_dir = 'images/';
+$image_dir = '../images/';
 
 if (isset($_POST['submit'])) {
     // $post_id = (int) ($_POST['post_id'] ?? 0);
@@ -75,7 +90,7 @@ if (isset($_POST['submit'])) {
             } else {
                 $new_name = uniqid('post') . '.' . $ext;
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $image_dir . $new_name)) {
-                $new_media = $image_dir . $new_name;
+                $new_media = 'images/' . $new_name;
                 $media = $new_media;
                 } else {
                 $message = 'Could not save the image.';
@@ -124,6 +139,8 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="admin.css">
+
     <title>Edit post</title>
 </head>
     <body>
