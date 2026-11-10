@@ -1,0 +1,87 @@
+ROBOAI Blog: Project Log
+Raw material for the Phase 2 presentation and the Phase 3 abstract. Facts and checklists only; write the final texts in your own words. Items marked TODO need your input.
+
+1. Overview
+Project type: Blog / Content Platform (Task 2)
+Theme: Robotics and AI news and trends
+Roles: visitors read posts and send contact messages; one admin area (create, edit, delete posts; read contact messages)
+Repo link: TODO
+Phase 1 concept: TODO (note your original feature list so you can compare)
+2. Tech stack
+Backend: PHP (mysqli, prepared statements), XAMPP
+Database: MySQL / MariaDB, roboai_blog_db, port 3307
+Frontend: HTML, CSS (own style.css / admin.css), Bootstrap 5.0.2 (cards, grid, dropdown), JavaScript (slideshow, admin side menu)
+Tools: phpMyAdmin, Git (TODO: confirm), browser dev tools
+3. Features built
+Public site
+home.php: slideshow (latest posts with images) plus post cards in a Bootstrap grid
+post_categories.php: paginated post grid, category dropdown filter, text search (title and excerpt), filters kept across pages
+post_details.php: full post, author box (photo and bio), comments
+contact.php: contact form with validation, saved to contact_us
+about_us.html
+Admin area (/admin)
+admin_login.php / admin_register.php: hashed passwords (password_hash / password_verify), session started on login
+admin_dashboard.php: latest posts overview and side menu
+admin_posts.php: post table, filters (title, author, category, status, date), pagination, edit and delete
+create.php: new post with image upload, author selection, new or existing category, draft or published status
+add_author.php: new author with photo, returns to create.php with the draft kept in the session
+edit.php: update a post, replace the image (old file deleted)
+delete.php: delete the post and its image file (comments removed by ON DELETE CASCADE)
+admin_contactfeed.php: list of contact messages
+4. Data model (tables)
+posts: post_id, category_id, admin_id, author_id, title, excerpt, content, author_name, status, published_on, media
+categories: category_id, category_name
+author: author_id, author_name, author_bio, author_image
+admin: admin_id, name, email, password (hash)
+comments: TODO (add columns)
+contact_us: contact_us_id, firstname, lastname, email, subject
+Relations: category 1-n posts, author 1-n posts, admin 1-n posts, post 1-n comments (cascade delete)
+5. Challenges and solutions (use for the "challenges" slide and the abstract)
+Challenge	Cause	Solution
+Images broke after moving files into admin/	Relative paths resolved against the new folder	Root-relative URLs for display (/ROBOAI/images/...); ../images/ for saving files on disk; DB stores images/...
+Upload failed with "No such file or directory"	Mixed up disk paths and URL paths	Separate disk path from the value stored in the DB
+Cards not laid out in a grid	Wrongly closed row div; later box-sizing: inherit made Bootstrap columns overflow	Fixed the markup; added html { box-sizing: border-box; }
+Plain-text passwords and SQL built from user input	First version of login and register	Prepared statements and password_hash / password_verify
+Form never saved to the DB	Submit button had no name attribute	Added name="submit"
+Native dropdown opened upwards and was too long	Browser decides the direction of a <select>	Bootstrap dropdown with a max height and scroll
+Post "view" link broken in admin	Relative link pointed inside admin/	../post_details.php
+TODO: add any further problems you remember.		
+6. Changes from the original plan
+TODO: compare with your Phase 1 concept. Examples to check: features dropped or added (categories, authors, contact form, image upload), authentication approach, styling framework.
+
+7. Open items before the final submission
+Session protection on all admin pages and a logout.php (planned, not yet done)
+Restrict or remove public admin_register.php
+At least one AJAX / DOM feature (see section 9)
+Test: empty database, long text, special characters, <script> in comments (XSS)
+Cross-browser check (two browsers) and a mobile width check
+README, blog.sql, default admin credentials documented
+Remove unused CSS, commented-out code and test data
+8. Screenshot checklist (Phase 2)
+[ ] Home page with slideshow and cards
+[ ] Post list with category dropdown open
+[ ] Post detail with author box and comments
+[ ] Admin login page
+[ ] Admin post table with filters
+[ ] Create post form
+[ ] Contact form and the admin contact messages page
+[ ] phpMyAdmin Designer view (ERD)
+9. Check against the assignment
+Assignment asks for at least one dynamic client-side feature (AJAX / DOM scripting). Current candidates: slideshow (DOM). Consider comments via fetch, or a "load more posts" button.
+Phase 2: max 10 slides (title, system design, 2-3 feature slides, tech stack, challenges, status and next steps).
+Phase 3: 2-page abstract, ZIP of the code, GitHubLink.txt, Phase 1 and Phase 2 files.
+Abstract format: DIN A4, margins 2 cm, Arial 11 pt, headings 12 pt, line spacing 1.5, justified, 6 pt after paragraphs.
+File naming: Name-FirstName_MatrNo_Course_P1_S, _P2_S, _P3_S.
+The affidavit is completed on myCampus before submitting.
+10. Export kit
+Database dump (run in the XAMPP mysql\bin folder):
+
+mysqldump -u root -P 3307 roboai_blog_db > blog.sql
+ERD: phpMyAdmin > database > More > Designer, then take a screenshot. Git basics:
+
+git init
+git add .
+git commit -m "Describe what changed"
+git remote add origin <your-repo-url>
+git push -u origin main
+README sections: project description, requirements (XAMPP, PHP version), setup (import blog.sql, set DB credentials, folder name ROBOAI), admin login details, known limitations. Database credentials: use placeholders in the repo, not real passwords.

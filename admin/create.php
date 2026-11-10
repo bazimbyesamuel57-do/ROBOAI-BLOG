@@ -210,9 +210,27 @@ if (isset($_POST['submit'])) {
         <title>Create Post</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <link href="admin.css" rel="stylesheet">
     </head>
     <body>
+        <header>
+            <div class="log-content">
+                <p class="site-title">
+                    <!-- <a href="#" class="logo">ROBOAI</a> -->
+                    <a href="#"><img class="log" src="/ROBOAI/images/logo.index.png" alt="Roboai Logo"></a>
+                </p>
+            </div>
+            <button style="float:right; margin-right:10px;">
+                <a href="admin_login.php">Logout</a>
+            </button>
+        </header>
+
+        <div>
+            <h1 style="text-align: center;">Create Post</h1>
+        </div>
 
         <?php
         if (isset($_GET['saved'])) {
@@ -222,27 +240,27 @@ if (isset($_POST['submit'])) {
             echo '<p style="color:red;">' . htmlspecialchars($message) . '</p>';
         }
         ?>
-        <div>
+        <div class="container" style="max-width:800px;">
             <form action="create.php" method="POST" enctype="multipart/form-data"> <!--multipart/form-data for file uploads-->
-                <div>
-                    <label>Post title</label><br>
-                    <input type="text" name="title" placeholder="Give the post title here!" value="<?php echo htmlspecialchars($_POST['title'] ?? $draft['title'] ?? ''); ?>" required><br>
+                <div class="mb-3">
+                    <label class="form-label">Post title</label><br>
+                    <input class="form-control" type="text" name="title" placeholder="Give the post title here!" value="<?php echo htmlspecialchars($_POST['title'] ?? $draft['title'] ?? ''); ?>" required><br>
                 </div>
                 
-                <div>
-                    <label>Excerpt</label><br>
-                    <textarea name="excerpt" placeholder="write the excerpt for the post here!" required><?php echo htmlspecialchars($_POST['excerpt'] ?? $draft['excerpt'] ?? ''); ?></textarea><br>
+                <div class="mb-3">
+                    <label class="form-label">Excerpt</label><br>
+                    <textarea class="form-control" rows="6" name="excerpt" placeholder="write the excerpt for the post here!" required><?php echo htmlspecialchars($_POST['excerpt'] ?? $draft['excerpt'] ?? ''); ?></textarea><br>
                 </div>
                 
-                <div>
-                    <label>Enter Post Content</label><br>
-                    <textarea name="content" placeholder="write the post content here!" required><?php echo htmlspecialchars($_POST['content'] ?? $draft['content'] ?? ''); ?></textarea> <br>
+                <div class="mb-3">
+                    <label class="form-label">Enter Post Content</label><br>
+                    <textarea class="form-control" rows="9" name="content" placeholder="write the post content here!" required><?php echo htmlspecialchars($_POST['content'] ?? $draft['content'] ?? ''); ?></textarea> <br>
                 </div>
 
-                <div>
-                    <label>Choose Author</label><br>
-                    <select name="author_id">
-                        <option value="">--choose an author--</option>
+                <div class="mb-2">
+                    <label class="form-label">Choose Author</label><br>
+                    <select class="form-select form-select-lg mb-2" name="author_id">
+                        <option selected>--choose an author--</option>
                             <?php while ($a = mysqli_fetch_assoc($author)) { ?>
                                 <option value="<?php echo $a['author_id']; ?>"
                                 <?php if ($chosen_author === (int) $a['author_id']) echo ' selected'; ?>>
@@ -255,15 +273,15 @@ if (isset($_POST['submit'])) {
                     <!-- <input type="text" name="author_name" placeholder="Author name" required><br> -->
                 </div>
 
-                <div>
-                    <label>Insert image</label><br>
-                    <input type="file" name="image"> <br> <!--selecting file/ image for the post-->
+                <div class="mb-2">
+                    <label class="form-label">Insert image</label><br>
+                    <input class="form-control" type="file" name="image" multiple> <br> <!--selecting file/ image for the post-->
                 </div>
 
                 <div>
-                    <label>Select category</label><br>
-                    <select id="category" name="category_id">
-                        <option>--select category--</option>
+                    <label class="form-label">Select category</label><br>
+                    <select class="form-select form-select-lg mb-2" id="category" name="category_id">
+                        <option selected>--select category--</option>
                         <?php
                         while ($row =mysqli_fetch_assoc($result))
                             { ?>
@@ -274,14 +292,14 @@ if (isset($_POST['submit'])) {
                          <!--option selection fetched from the database-->
                         <?php }  ?> 
                     </select> <br>
-                    <label>Or Enter category</label><br>
-                    <input type="text" name="new_category_name" placeholder="A category is not under the list" value="<?php echo htmlspecialchars($_POST['new_category_name'] ?? $draft['new_category_name'] ?? ''); ?>"><br>
+                    <label class="form-label">Or Enter category</label><br>
+                    <input class="form-control" type="text" name="new_category_name" placeholder="A category is not under the list" value="<?php echo htmlspecialchars($_POST['new_category_name'] ?? $draft['new_category_name'] ?? ''); ?>"><br>
                 </div>    
                 
-                <div>
-                    <label>Status</label><br>
+                <div class="mb-2">
+                    <label class="form-label">Status</label><br>
                     <?php $savedStatus = $_POST['status_selection'] ?? $draft['status_selection'] ?? 'draft'; ?>
-                    <select name="status_selection">
+                    <select class="form-select form-select-lg mb-2" name="status_selection">
                         <!-- <option value="default">--select--</option> -->
                         <option value="draft" <?php if ($savedStatus === 'draft') echo 'selected'; ?>>Draft</option>
                         <option value="published" <?php if ($savedStatus === 'published') echo 'selected'; ?>>Published</option>
@@ -294,8 +312,7 @@ if (isset($_POST['submit'])) {
         </div>
 
         <div>
-
+            <footer class="footer">ROBOAI Blog 2026 | Dashboard | <a href="admin_posts.php">Manage Posts</a> | <a href="admin_register.php">Register</a> | <a href="admin_login.php">LogOut</a> |</footer>
         </div>
-    
     </body>
 </html>

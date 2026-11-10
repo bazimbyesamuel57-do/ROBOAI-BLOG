@@ -10,6 +10,30 @@
     // exit;
 
     require 'connect.php'; // the file that creates $conn / connection
+
+    $is_ajax = ($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '') ===
+    'XMLHttpRequest'; $messages = [
+    'empty'        => 'Please fill in your name and comment.',
+    'name_long'    => 'Name must be 30 characters or less.',
+    'comment_long' => 'Comment must be 1000 characters or less.',
+    'bad_email'    => 'Please enter a valid email address.',
+];
+
+function respond($is_ajax, $post_id, $code = '', $data = []) {
+    global $messages;
+    if ($is_ajax) {
+        header('Content-Type: application/json');
+        if ($code === '') {
+            echo json_encode(['ok' => true] + $data);
+        } else {
+            echo json_encode(['ok' => false, 'error' => $messages[$code] ?? 'Something went wrong.']);
+        }
+    } else {
+        $url = "post_details.php?id=$post_id" . ($code !== '' ? "&error=$code" : '');
+        header("Location: $url");
+    }
+    exit;
+}
 //making the $_POST safe to read
      if($_SERVER['REQUEST_METHOD'] !=='POST') {
         ECHO "Please fill in the form.";
@@ -21,31 +45,35 @@
     $comment =trim($_POST['comment']);
     $post_id = (int) $_POST['post_id'];
 
-    // spaces only name/ omment
+    // spaces only name/ comment
     if ($name === '' || $comment === '') {
+        respond($is_ajax, $post_id, 'empty');
         // die("please write an appropriate name,. <a href='javascript:history.back()'>GO back</a>");
         header("Location: post_details.php?id=$post_id&error=empty");
         exit;
     }
 
-    //rejecting names and comments that are too long
+    // rejecting names and comments that are too long
     if (mb_strlen($name) > 30) {
         // die("must be 30 characters or less. <a href='javascript:history.back()'> Go back</a>");
-        header("Location: post_details.php?id=$post_id&error=name_long");
-        exit;
+        // header("Location: post_details.php?id=$post_id&error=name_long");
+        // exit;
+        respond($is_ajax, $post_id, 'name_long');
     }
 
     if (mb_strlen($comment) > 1000) {
         // die("1Must be 1000 characters or less. <a href='javascript:history.back()'> Go back</a>");
-        header("Location: post_details.php?id=$post_id&error=comment_long");
-        exit;
+        // header("Location: post_details.php?id=$post_id&error=comment_long");
+        // exit;
+        respond($is_ajax, $post_id, 'comment_long');
+
     }
 
     // validating email
     if (!filter_var($email,  FILTER_VALIDATE_EMAIL)) {
-        // die("Please enter a valid email address. <a href='javascript:history.back()'>Go back</a>"); // validate email with go back
-        header("Location: post_details.php?id=$post_id&error=bad_email");
-        exit;
+        // header("Location: post_details.php?id=$post_id&error=bad_email");
+        // exit;
+        respond($is_ajax, $post_id, 'bad_email');
     }
 
     //the insert statement to the database
@@ -62,22 +90,23 @@
     // mysqli_stmt_execute($stmt);
 
 
-   
+//  vistor goes back to the page
     // if (mysqli_stmt_execute($stmt)) {
-    //     echo "saved!"; 
-    // }
+    //     header("Location: post_details.php?id=$post_id");
+    //     exit;
+    // } 
     // else {
     //     echo "Error: " . mysqli_stmt_error($stmt);
     // }
-
-//  vistor goes back to the page
     if (mysqli_stmt_execute($stmt)) {
-        header("Location: post_details.php?id=$post_id");
-        exit;
-    } 
-    else {
-        echo "Error: " . mysqli_stmt_error($stmt);
-    }
+    respond($is_ajax, $post_id, '', [
+        'name'    => $name,
+        'comment' => $comment,
+        'date'    => date('Y-m-d H:i:s'),
+    ]);
+} else {
+    echo "Error: " . mysqli_stmt_error($stmt);
+}
 
 //     if (empty($_POST["email"])) {
 //     $emailErr = "Email is required";

@@ -116,7 +116,7 @@ if (isset($_POST['submit'])) {
                 if ($new_media !== '' && $old !== '') {
                     $old_file = $image_dir . basename($old);
                     if (is_file($old_file)) {
-                        unlink($old_file); // canging the file link
+                        unlink($old_file); // changing the file link
                     }
                 }
             
@@ -124,7 +124,7 @@ if (isset($_POST['submit'])) {
                 exit;
             } else {
                 if ($new_media !== '') {
-                    unlink($new_media); // if upadate fails remove the thn new upload
+                    unlink('../' . $new_media); // if upadate fails remove the thn new upload
                 }
                 $message = 'Error: ' . mysqli_stmt_error($u_stmt);
             }
@@ -139,48 +139,64 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="admin.css">
 
     <title>Edit post</title>
 </head>
     <body>
+        <header>
+            <div class="log-content">
+                <p class="site-title">
+                    <!-- <a href="#" class="logo">ROBOAI</a> -->
+                    <a href="#"><img class="log" src="/ROBOAI/images/logo.index.png" alt="Roboai Logo"></a>
+                </p>
+            </div>
+            <button style="float:right; margin-right:10px;">
+                <a href="admin_login.php">Logout</a>
+            </button>
+        </header>
 
+        <div>
+            <h1 style="text-align: center;">EDIT POST</h1>
+        </div>
     <?php
     // error displayed on the screen
     if ($message !== '') {
-        echo '<p style:"color: red;">' . htmlspecialchars($message) .'</p>';
+        echo '<p style="color: red;">' . htmlspecialchars($message) .'</p>';
     }
     ?>
-        <div>
+        <div class="container" style=" max-width: 800px;">
             <form action="edit.php?id=<?php echo $id; ?>" method="POST" enctype="multipart/form-data"> <!--multipart/form-data for file uploads-->
-                <div>
-                    <label>The Post title</label><br>
-                    <input type="text" name="title" placeholder="Give the post title here!" value="<?php echo htmlspecialchars($post['title']); ?>" required><br>
+                <div class="mb-3">
+                    <label class="form-label">The Post title</label><br>
+                    <input class="form-control" type="text" name="title" placeholder="Give the post title here!" value="<?php echo htmlspecialchars($post['title']); ?>" required><br>
                 </div>
-                <div>
-                    <label>Excerpt</label><br>
-                    <textarea name="excerpt" placeholder="write the excerpt for the post here!" required><?php echo htmlspecialchars($post['excerpt']); ?></textarea><br>
+                <div class="mb-3">
+                    <label class="form-label">Excerpt</label><br>
+                    <textarea class="form-control" rows="4" name="excerpt" placeholder="write the excerpt for the post here!" required><?php echo htmlspecialchars($post['excerpt']); ?></textarea><br>
                 </div>
-                <div>
-                    <label>Post content</label><br>
-                    <textarea name="content" placeholder="write the post content here!" required><?php echo htmlspecialchars($post['content']); ?></textarea> <br>
-                    <input type="text" name="author_name" placeholder="Author name" value="<?php echo htmlspecialchars($post['author_name']); ?>" required><br>
+                <div class="mb-3">
+                    <label class="form-label">Post content</label><br>
+                    <textarea class="form-control" rows="4" name="content" placeholder="write the post content here!" required><?php echo htmlspecialchars($post['content']); ?></textarea> <br>
+                    <input class="form-control" type="text" name="author_name" placeholder="Author name" value="<?php echo htmlspecialchars($post['author_name']); ?>" required><br>
                 </div>
 
-                <div>
+                <div class="mb-3">
                 <!-- <input type="file" name="image"> <br> selecting file/ image for the post -->
-                    <label> add Image</label><br>
+                    <label class="form-label"> add Image</label><br>
                     <?php
                         if  (!empty($post['media'])) { ?>
                             <p>Current image:</p>
-                            <img src="<?php echo htmlspecialchars($post['media']); ?>" alt="current post image" style="max-width:200px;"><br>
+                            <img src="/ROBOAI/<?php echo htmlspecialchars($post['media']); ?>" alt="current post image" style="max-width:200px;"><br>
                     <?php } ?>
-                    <input type="file" name="image" accept="images/*"><br>
+                    <input class="form-control" type="file" name="image" accept="image/*"><br>
                 </div>
 
-                <div>    
-                    <label>Category</label><br>
-                    <select id="category" name ="category_id">
+                <div class="mb-3">    
+                    <label class="form-label">Category</label><br>
+                    <select class="form-select" id="category" name ="category_id">
                         <?php 
                         while ($row =mysqli_fetch_assoc($cat_result))
                             { ?>
@@ -191,19 +207,23 @@ if (isset($_POST['submit'])) {
                         </option>
 
                         <?php }  ?> 
-                </div>
                     </select> <br>
+                </div>
                 
-                <select name="status_selection">
-                <!-- <h3>Status</h3> -->
-                    <!-- <option value="select status">--select status--</option> -->
-                    <option value="draft"<?php if ($post['status'] === 'draft') echo " selected"; ?>>Draft</option>
-                    <option value="published"<?php if ($post['status'] === 'published') echo " selected"; ?>>Published</option>
-                </select><br>
+                <div class="mb-3">
+                    <select class="form-select" name="status_selection">
+                    <!-- <h3>Status</h3> -->
+                        <!-- <option value="select status">--select status--</option> -->
+                        <option value="draft"<?php if ($post['status'] === 'draft') echo " selected"; ?>>Draft</option>
+                        <option value="published"<?php if ($post['status'] === 'published') echo " selected"; ?>>Published</option>
+                    </select><br>
+                </div>
                 <!-- <input type="text" name="admin_username"> -->
                 <button type="submit" value="update post" name="submit">Save</button>
                 <a href="admin_posts.php">Cancel</a>
             </form>
         </div>
+
+                <footer class="footer">ROBOAI Blog 2026 | Dashboard | <a href="admin_posts.php">Manage Posts</a> | <a href="admin_register.php">Register</a> | <a href="admin_login.php">LogOut</a> |</footer>
     </body>
 </html>

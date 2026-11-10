@@ -57,7 +57,7 @@ $cardCount = 0;
 
 $cardsql = "SELECT post_id, title, media, excerpt, author_name, published_on
             FROM posts
-            WHERE status = 'published' AND media <> ''
+            -- WHERE status = 'published' AND media <> ''
             ORDER BY published_on DESC
             LIMIT 4";
 
@@ -175,7 +175,7 @@ $cardsql = "SELECT post_id, title, media, excerpt, author_name, published_on
                         <div class="slideshow-container">
                                 <div style="text-align:center; padding:60px; background:#f0f0f0;">
                                     <!-- <h2>Welcome to ROBOAI Blog</h2> -->
-                                    <p>No posts yet, check back soon!</p>
+                                    <p>No posts yet,<a href="create.php">Create Post</a></p>
                                 </div>
                         </div>
                         
@@ -185,7 +185,7 @@ $cardsql = "SELECT post_id, title, media, excerpt, author_name, published_on
 
                         <section class="container my-4">
                             <?php foreach ($cards as $card): ?>
-                                <div class="card mb-3" style="width: 800px;">
+                                <div class="card mb-3" style="max-width: 800px;">
                                     <article class="row g-0">
                                         <div class="col-md-3">
                                         <?php if (!empty($card['media'])): ?>
@@ -194,13 +194,13 @@ $cardsql = "SELECT post_id, title, media, excerpt, author_name, published_on
                                             style=" object-fit: cover; max-height:250px;">
 
                                         <?php else: ?>
-                                            <div class="d-flex align-items:center; justify-contemt bg-light h-100 p-4">
+                                            <div class="d-flex align-items-center; justify-content bg-light h-100 p-4">
                                                 <p>No image</p>
                                             </div>
                                         <?php endif; ?>
                                         </div>
 
-                                        <div class="col-md-8">
+                                        <div class="col-md-9">
                                             <div class="card-body">
                                                 <span class="post-author card-text">
                                                     By <?=  htmlspecialchars($card['author_name'] ?? '') ?> | <?= date('d M Y', strtotime($card['published_on'])) ?>
@@ -214,7 +214,7 @@ $cardsql = "SELECT post_id, title, media, excerpt, author_name, published_on
                                                     <?=  htmlspecialchars($card['excerpt'] ?? '') ?>
                                                 </p>
                                                 
-                                                <a class="readme" href="post_details.php?id=<?= (int)$card['post_id'] ?>">
+                                                <a class="readme" href="../post_details.php?id=<?= (int)$card['post_id'] ?>">
                                                     Read more
                                                 </a>
                                             </div>

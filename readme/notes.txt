@@ -49,8 +49,14 @@ accept="image/author/*" isn’t a valid value. Use image/*.
 <textarea type="text">. A textarea has no type attribute.
 No check after mysqli_prepare. A failed prepare would give a confusing error on the next line.
 
-
-
+style tables
+-table borders
+	-border-width - sets the width of the border
+	-border-style - sets the style of the border (required)
+	-border-color - sets the color of the border
+collapse table borders
+ 	-use the border-collapse property, its values- separate
+						     - collapse
 
 
 
@@ -63,3 +69,16 @@ No check after mysqli_prepare. A failed prepare would give a confusing error on 
 bootstrap
 -home posts- horizontal cards
 -categories posts -grid cards
+
+
+styling links
+The four link states are:
+
+	- :link - a normal, unvisited link
+	- :visited - a link the user has visited
+	- :hover - a link when the user mouses over it
+	- :active - a link the moment it is clicked
+
+rules for styling them
+-:hover must come after :link and :visited
+-:active must come after :hover

@@ -26,7 +26,7 @@ if (!$conn ) {
     
 // }
 
-$per_page = 10;
+$per_page = 5;
 $page = max(1, (int) ($_GET['page'] ?? 1));
 $offset = ($page - 1) * $per_page;
 
@@ -39,7 +39,7 @@ $f_published_on = trim($_GET['published_on'] ?? '');
 
 // leaving values that are not valid
 if($f_status !== 'draft' && $f_status !== 'published') {
-    $f_staus = '';
+    $f_status = '';
 }
 $d =DateTime::createfromFormat('Y-m-d', $f_published_on);
 if (!$d || $d->format('Y-m-d') !== $f_published_on) {
@@ -142,12 +142,22 @@ $result = mysqli_stmt_get_result($stmt);
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Add post</title>
+        <title>Manage Posts</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <!-- <link rel="stylesheet" href="style.css"> -->
         <link rel="stylesheet" href="admin.css">
     </head>
     <body>
-        <button style="float:right;">
+
+        <div class="log-content">
+                <p class="site-title">
+                    <!-- <a href="#" class="logo">ROBOAI</a> -->
+                    <a href="#"><img class="log" src="/ROBOAI/images/logo.index.png" alt="Roboai Logo"></a>
+                </p>
+        </div>
+        <button style="float:right; margin-right:10px;">
             <a href="admin_login.php">Logout</a>
         </button>
 
@@ -165,15 +175,23 @@ $result = mysqli_stmt_get_result($stmt);
         
 
         <div id="main">
-            <h1 style="text-align: center;">Welcome Admin</h1>
+            <!-- <h1 style="text-align: center;">Admin</h1> -->
+            <h1 style="text-align: center;" > Manage Posts</h1>
             
             <span onclick="openNav()">&#9776; MENU</span>
-            <div>
-                <h1 > Manage Posts</h1>
-                <p><a href="create.php">+ Add a post</a></p>
+            <div class="top-link">
+                <span>
+                    <a href="admin_dashboard.php">Dashboard</a>
+                </span>
+                <span style="margin-left: 250px">
+                    <a href="create.php">&plus; Add a post</a>
+                </span>
+                <span style="margin-left: 100px;">
+                    <a  href="admin_contactfeed.php">Contact us Messages</a>
+                </span>
             </div>
 
-            <div>
+            <div class="container">
                 <?php
                 if (isset($_GET['updated'])) {
                     echo '<p style="color:green;">Post updated.</p>';
@@ -182,18 +200,18 @@ $result = mysqli_stmt_get_result($stmt);
                     echo '<p style="color:green;">Post deleted.</p>';
                 }
                 if (isset($_GET['created'])) {
-                    echo '<p stle="color:green;">Post created.</p>';
+                    echo '<p style="color:green;">Post created.</p>';
                 }
                 ?>
 
-                <form method="GET" action="admin_posts.php">
+                <form class="admin-filter" method="GET" action="admin_posts.php">
                     <input type="text" name="title" placeholder="Title" 
                         value="<?php echo htmlspecialchars($f_title); ?>">
 
                     <input type="text" name="author_name" placeholder="author Name"
                         value="<?php echo htmlspecialchars($f_author_name); ?>">
 
-                    <select name="category_id">
+                    <select class="category" name="category_id">
                         <option value="0"> All categories</option>
                         <?php while ($c = mysqli_fetch_assoc($cat_result)) { ?>
                             <option value="<?php echo $c['category_id']; ?>"
@@ -203,70 +221,73 @@ $result = mysqli_stmt_get_result($stmt);
                         <?php } ?>
                     </select>
 
-                    <select name="status">
+                    <select class="status" name="status">
                         <option value="">All statuses</option>
                         <option value="draft"<?php if ($f_status === 'draft') echo ' selected'; ?>>Draft</option>
                         <option value="published"<?php if ($f_status === 'published') echo ' selected'; ?>>Published</option>
                     </select>
 
-                    <input type="date" name="published_on" value="<?php echo htmlspecialchars($f_published_on); ?>">
+                    <input type="date" name="published_on" value="<?php echo htmlspecialchars($f_published_on); ?>"><br>
 
-                    <button type="submit">Filter</button>
-                    <a href="admin_posts.php">Reset</a>
+                    <button style="background-color:lightgray; width:100px; margin-top: 1px;" type="submit">Filter</button>
+                    <a style="color: red; margin-left: 10px;" href="admin_posts.php">Reset</a>
 
                 </form>
-
-                <?php if  ($total == 0) { ?>
-                    <?php if ($filters) { ?>               
-                        <p> There is no post match.<a href="admin_posts.php">Reset</a></p>
+                    <?php if  ($total == 0) { ?>
+                        <?php if ($filters) { ?>               
+                            <p> There is no post match.<a href="admin_posts.php">Reset</a></p>
+                        <?php } else { ?>
+                            <p>No posts yet.</p>
+                        <?php } ?>    
+                    <?php } elseif ($page > $total_pages) { ?>
+                        <p>No more posts <a href="<?php echo page_link($filters, 1); ?>">Back to first page</a></p>
                     <?php } else { ?>
-                        <p>No posts yet.</p>
-                    <?php } ?>    
-                <?php } elseif ($page > $total_pages) { ?>
-                    <p>No more posts <a href="<?php echo page_link($filters, 1); ?>">Back to first page</a></p>
-                <?php } else { ?>
-                    <p><?php echo $total; ?> post(s) found</p>
-            
-                    <table border="1">
-                        <tr>
-                            <th>Title</th>
-                            <th>Author Name</th>
-                            <th>Published on</th>
-                            <th>status</th>
-                            <th>Category</th>
-                            <th>Actions</th>
-                        </tr>
-                        
-                        <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($row['title']); ?></td>
-                                <td><?php echo htmlspecialchars($row['author_name']); ?></td>
-                                <td><?php echo htmlspecialchars($row['published_on']); ?></td>
-                                <td><?php echo htmlspecialchars($row['status']); ?></td>
-                                <td><?php echo htmlspecialchars($row['category_name'] ?? 'No category'); ?></td>
-                                <td>
-                                    <a href="post_details.php?id=<?php echo $row['post_id']; ?>">view posts</a>
-                                    <a href="edit.php?id=<?php echo $row['post_id']; ?>">Edit</a>
-                                    <!-- <a href="delete.php?id=<?php echo $row['post_id']; ?>">Delete</a> -->
-                                    <form method="POST" action="delete.php"
-                                        onsubmit="return confirm('Delete post. This cannot be undone.');">
-                                        <input type="hidden" name="post_id" value="<?php echo $row['post_id']; ?>">
-                                        <button type="submit">Delete</button>
-                                    </form>
-                                </td>
-
+                        <p style="margin-left: 50px;"><?php echo $total; ?> post(s) found</p>
+                    <div>
+                        <table border="1" class="table table-hover">
+                            <tr style="background-color: aquamarine;">
+                                <th>Title</th>
+                                <th>Author Name</th>
+                                <th>Published on</th>
+                                <th>status</th>
+                                <th>Category</th>
+                                <th>Actions</th>
                             </tr>
-                        <?php } ?>
-                    </table>
+                            
+                            <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($row['title']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['author_name']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['published_on']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['status']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['category_name'] ?? 'No category'); ?></td>
+                                    <td>
+                                        <a href="../post_details.php?id=<?php echo $row['post_id']; ?>">view posts</a><br>
+                                        <a href="edit.php?id=<?php echo $row['post_id']; ?>">Edit</a>
+                                        <form method="POST" action="delete.php"
+                                            onsubmit="return confirm('Delete post. This cannot be undone.');">
+                                            <input type="hidden" name="post_id" value="<?php echo $row['post_id']; ?>">
+                                            <button type="submit">Delete</button>
+                                        </form>
+                                    </td>
 
-                    <p>Page <?php echo $page; ?> of <?php echo $total_pages; ?></p>
-                    <?php if ($page > 1) { ?><a href="<?php echo page_link($filters, $page -1); ?>">Prev</a><?php } ?>
-                    <?php if ($page < $total_pages) { ?><a href="<?php echo page_link($filters, $page + 1); ?>">Next</a><?php } ?>
+                                </tr>
+                            <?php } ?>
+                        </table>
+                    </div>
+                <div class="pageCount">
+                    <p style="text-align: center;">Page <?php echo $page; ?> of <?php echo $total_pages; ?></p>
+                    <div class="next-prev">
+                        <?php if ($page > 1) { ?><a style="color: brown;" href="<?php echo page_link($filters, $page -1); ?>">Prev |</a><?php } ?>
+                        <?php if ($page < $total_pages) { ?><a style="color:brown" href="<?php echo page_link($filters, $page + 1); ?>">Next</a><?php } ?>
+                    </div>
+                </div>
                 <?php } ?>
+                
             </div>
         </div>
 
-        <footer class="footer">ROBOAI Blog 2026 | <a href=admin-dashboard.php">Dashboard</a> | Manage Posts | <a href="admin_register.php">Register</a> | <a href="admin_login.php">LogOut</a> |</footer>
+        <footer class="footer">ROBOAI Blog 2026 | <a href="admin_dashboard.php">Dashboard</a> | Manage Posts | <a href="admin_register.php">Register</a> | <a href="admin_login.php">LogOut</a> |</footer>
 
         <script>
             /*sidenave with opacity*/

@@ -62,5 +62,7 @@ if (!$contact_result) {
             <?php } ?>
         </div>
 
+
+              <footer class="footer">ROBOAI Blog 2026 | Dashboard | <a href="admin_posts.php">Manage Posts</a> | <a href="admin_register.php">Register</a> | <a href="admin_login.php">LogOut</a> |</footer>
     </body>
 </html>

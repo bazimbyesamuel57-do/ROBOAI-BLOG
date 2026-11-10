@@ -92,7 +92,7 @@ $author_image = htmlspecialchars($post['author_image'] ?? '');
                     <img src="<?php echo $author_image; ?>" alt="<?php echo $author; ?>"
                     style="width:80px; height:80px; border-radius:50%; object-fit:cover;">
                 <?php } ?>
-                <p><strong>About<?php echo $author; ?></strong></p>
+                <p><strong>About <?php echo $author; ?></strong></p>
                 <?php if (!empty($author_bio)) { ?>
                     <p><?php echo $author_bio; ?></p>
                 <?php } ?>
@@ -100,8 +100,6 @@ $author_image = htmlspecialchars($post['author_image'] ?? '');
 
             <p><a href="post_categories.php">&larr; Back to all posts</a></p> 
         </div>
-
-
 
         <div id="comment-form">
             <section>
@@ -113,7 +111,7 @@ $author_image = htmlspecialchars($post['author_image'] ?? '');
                     $messages =[
                         'empty' => 'Please fill in your name and comment.',
                         'name_long' => 'Name must be 30 characters or less.',
-                        'comment_long' => 'Name must be 1000 characters or less.',
+                        'comment_long' => 'Comment must be 1000 characters or less.',
                         'bad_email' => 'Please enter a valid email address.',
                     ];
 
@@ -125,7 +123,7 @@ $author_image = htmlspecialchars($post['author_image'] ?? '');
                 <!-- comment form to add new comments -->
                     <div>
                     
-                        <form method="POST" action="script.php">
+                        <form id="comment-form-js" method="POST" action="script.php">
                             <!--Name input-->
                             <div class="mb-3">
                                 <label class="form-label" for="name">Name:</label>
@@ -145,19 +143,20 @@ $author_image = htmlspecialchars($post['author_image'] ?? '');
                                 <button type="submit" class="btn mb-3"style="background-color: lightslategray; color: black; margin-top: 30px;">Post Comment</button>
                             
                         </form>
+                        <p id="comment-error" style="color: red;"></p>
                     </div>
                 
-                    <h3>Comments</h3>
-
+                    <div class="comment-section">
                         <?php
                         // displaying comments
                         // require 'connect.php';
+                        $per_load = 6;
                         $c_stmt = mysqli_prepare($conn, 
                             "SELECT Name, Date_Time, Message
                             FROM comments 
                             WHERE post_id = ? 
-                            ORDER BY date_time DESC
-                            LIMIT 8"); // the query for the data
+                            ORDER BY date_time DESC, Comments_id DESC
+                            LIMIT $per_load"); // the query for the data
 
                         if (!$c_stmt) {
                             die("Comment query failed:". mysqli_error($conn));
@@ -166,27 +165,40 @@ $author_image = htmlspecialchars($post['author_image'] ?? '');
                         mysqli_stmt_execute($c_stmt);
                         $c_result = mysqli_stmt_get_result($c_stmt);
 
-                        // $result = mysqli_query($conn, $sql);
+                        $count_stmt = mysqli_prepare($conn, "SELECT COUNT(*) AS total FROM comments WHERE post_id = ?");
+                            if (!$count_stmt) {
+                                die("comment query failed: " . mysqli_error($conn));
+                            }
+                        mysqli_stmt_bind_param($count_stmt,"i", $id);
+                        mysqli_stmt_execute($count_stmt);
 
-                        // if (!$result) {
-                        //     die("Query failed: " . mysqli_error($conn));
-                        // }
-
-                        while ($row = mysqli_fetch_assoc($c_result)) {
-                            $c_name = htmlspecialchars($row["Name"]);
-                            $c_date_time = $row["Date_Time"];
-                            $c_comment = htmlspecialchars($row["Message"]);
-                            // $comment = $row["Message"];
-                            echo "<p><strong>$c_name</strong> ($c_date_time)<br>$c_comment</p>";
-                            // echo $row["Name"] . ":" . $row["Date_Time"] . $row["Message"] . "<br>";
-                            // the mysqli_fetch_assoc() outputs one row per loop turn as an array. when no rows left it returens false 
-                            //and the while stops
-
-
-                        }
-
-
+                        $count_result = mysqli_stmt_get_result($count_stmt);
+                        $total_comments = (int) mysqli_fetch_assoc($count_result) ['total'];
+                        // echo $total_comments;
+                        $shown = 0;
                         ?>
+                        <div class="comments-section">
+                            <h3>Comments(<span id="comment-count"><?php echo $total_comments; ?></span>)</h3>
+
+                            <div id="comment-list">
+                                <?php while ($row = mysqli_fetch_assoc($c_result)) {
+                                    $shown++; ?>
+                                    <p>
+                                        <strong><?php echo htmlspecialchars($row["Name"]); ?></strong>
+                                        (<?php echo htmlspecialchars($row["Date_Time"]); ?>)<br>
+                                        <?php echo htmlspecialchars($row["Message"]); ?>
+                                        <!-- // $comment = $row["Message"]; -->
+                                        <!-- echo "<p><strong>$c_name</strong> ($c_date_time)<br>$c_comment</p>"; -->
+                                    </p>
+                                <?php } ?>
+                            </div>
+                        </div>
+                        <?php if ($shown < $total_comments) { ?>
+                            <button type="button" id="read-more" data-post="<?php echo $id; ?>"
+                                    data-offset="<?php echo $shown; ?>">Read more</button>
+                        <?php } ?>
+                        <p id="comments-status"></p>
+                    </div>
                 </div>
                     
             </section>
@@ -194,5 +206,90 @@ $author_image = htmlspecialchars($post['author_image'] ?? '');
         <div>
             <footer class="footer">ROBOAI Blog 2026 | Home | About | Contact |</footer>
         </div>
+
+
+        <script>
+            const form = document.getElementById('comment-form-js');
+            //stop the normal reload
+            form.addEventListener('submit', async(e) => {
+                e.preventDefault();
+                
+                // sending in the background, all fields
+                const res = await fetch('script.php', {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: {'X-Requested-with': 'XMLHttpRequest'}
+                });
+                // read php's JSON
+                const data = await res.json();
+                const list = document.getElementById('comment-list')
+                const error = document.getElementById('comment-error');
+                const totalCount = document.getElementById('comment-count')
+
+                error.textContent = '';
+
+
+                if (data.ok) {
+                    totalCount.textContent = parseInt(totalCount.textContent, 10) + 1;
+                    const item = document.createElement('p');
+                    const nameTag = document.createElement('strong');
+                    nameTag.textContent = data.name;
+                    item.appendChild(nameTag)
+                    item.append('(' + data.date + ')')
+                    item.appendChild(document.createElement('br'))
+                    item.append(data.comment)
+                    list.prepend(item)
+                    form.reset()
+                } else {
+                    error.textContent =data.error;
+                }
+                console.log(data);
+            });
+
+            const readMore = document.getElementById('read-more');
+            const status = document.getElementById('comments-status');
+
+            if (readMore) {
+                readMore.addEventListener('click', async () => {
+                    readMore.disabled = true;
+                    status.textContent = '';
+
+            try {
+                const list = document.getElementById('comment-list');
+                const offset = list.children.length;
+
+                const url = 'load_comments.php?post_id=' + encodeURIComponent(readMore.dataset.post)
+                        + '&offset=' + offset;
+                const response = await fetch(url);
+                const data = await response.json();
+                if (!data.ok) {
+                    throw new Error(data.error || 'Request failed');
+                }
+
+                data.comments.forEach(function (c) {
+                    const p = document.createElement('p');
+                    const strong = document.createElement('strong');
+                    strong.textContent = c.name;
+                    p.appendChild(strong);
+                    p.appendChild(document.createTextNode(' (' + c.date + ') '));
+                    p.appendChild(document.createElement('br'));
+                    p.appendChild(document.createTextNode(c.comment));
+                    list.appendChild(p);
+                });
+
+                if (data.has_more) {
+                    readMore.disabled = false;
+                } else {
+                    readMore.remove();
+                    status.textContent = 'No more comments.';
+                }
+                    } catch (error) {
+                        readMore.disabled = false;
+                        status.textContent = 'Could not load more comments. Try again.';
+                    }
+                });
+            }
+
+        </script>
     </body>
 </html>

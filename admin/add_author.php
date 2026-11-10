@@ -87,11 +87,27 @@ if (isset($_POST['submit'])) {
         <title>Add author</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <link href="admin.css" rel="stylesheet">
     </head>
     <body>
-        <h1>Enter New Author</h1>
+        <header>
+            <div class="log-content">
+                <p class="site-title">
+                    <!-- <a href="#" class="logo">ROBOAI</a> -->
+                    <a href="#"><img class="log" src="/ROBOAI/images/logo.index.png" alt="Roboai Logo"></a>
+                </p>
+            </div>
+            <button style="float:right; margin-right:10px;">
+                <a href="admin_login.php">Logout</a>
+            </button>
+        </header>
         <div>
+            <h1 style="text-align: center;">Enter New Author</h1>
+        </div>
+
+        <div class="container" style="width:800px;">
             <?php
             if (isset($_GET['saved'])) {
                 echo '<p style="color:green;">Author added. You can choose them below.</p>';
@@ -102,20 +118,29 @@ if (isset($_POST['submit'])) {
             }
             ?>
             <form action="add_author.php" method="POST" enctype="multipart/form-data">
-                <label>Name:</label><br>
-                <input type="text" name="author_name" placeholder="Enter Author name..." maxlength="255" value="<?php echo htmlspecialchars($_POST['author_name'] ?? ''); ?>" required><br>
-
-                <label>Biography:</label><br>
-                <textarea name="author_bio" placeholder="Enter author's bio..."><?php echo htmlspecialchars($_POST['author_bio'] ?? ''); ?></textarea><br>
+                <div class="mb-3">
+                    <label class="form-label">Name:</label><br>
+                    <input class="form-control" type="text" name="author_name" placeholder="Enter Author name..." maxlength="255" value="<?php echo htmlspecialchars($_POST['author_name'] ?? ''); ?>" required><br>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Biography:</label><br>
+                    <textarea class="form-control form-control-lg" row="8" name="author_bio" placeholder="Enter author's bio..."><?php echo htmlspecialchars($_POST['author_bio'] ?? ''); ?></textarea><br>
+                </div>
                 <!-- <select>
                     <option></option>
                 </select> -->
-                <label>Insert image:</label><br>
-                <input type="file" name="image" accept="image/*"><br>
+                <div class="mb-3">
+                <label class="form-label">Insert image:</label><br>
+                <input class="form-control" type="file" name="image" accept="image/*"><br>
                 <input type="hidden" name="from" value="<?php echo htmlspecialchars($from); ?>">
+                </div>
+
                 <button type="submit" name="submit">Save author</button>
                 <a href="<?php echo $from === 'create' ? 'create.php' : 'admin_posts.php'; ?>">Cancel</a>
             </form>
         </div>
+
+
+        <footer class="footer">ROBOAI Blog 2026 | Dashboard | <a href="admin_posts.php">Manage Posts</a> | <a href="admin_register.php">Register</a> | <a href="admin_login.php">LogOut</a> |</footer>
     </body>
 </html>

@@ -35,8 +35,8 @@ mysqli_stmt_bind_param($d_stmt, 'i', $post_id);
 
 if (mysqli_stmt_execute($d_stmt)) {
     // now the deletion of the file
-    if ($post['media'] !== '') {
-        $file = 'images/' . basename($post['media']);
+    if (!empty($post['media'])) {
+        $file = '../images/' . basename($post['media']);
         if (is_file($file)) {
             unlink($file);
         }

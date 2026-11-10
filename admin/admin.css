@@ -291,25 +291,25 @@ body{
 }
 
 /* slide show */
-.slideshow-container {
+/* .slideshow-container {
     align-content: center;
-    max-width: 1000px;
+    max-width: 1000px; */
     /* width: 100px; */
-    position: relative;
-    margin: auto;
+    /* position: relative;
+    margin: auto; */
     /* display: block; */
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
     /* margin:100px; */
     /* padding-left: 14%;
     padding-bottom: 16px; */
     
-    
-}
+/*     
+} */
 
 /* hide images */
-.slides {
+/* .slides {
     display: none;
-}
+} */
 
 /* prev and next buttons */
 .prev, .next {
@@ -502,3 +502,143 @@ body{
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
+
+
+
+
+
+/* admin_posts page*/
+
+body.admin_posts {
+  box-sizing: inherit;
+}
+
+.top-link {
+  /* text-align: center; */
+  margin-left: 100px;
+  margin-top: 50px;
+  margin-bottom: 100px ;
+  font-weight:300;
+  font-size: large;
+  /* a:link{
+    text-decoration: none;
+  } */
+  a:link, a:visited {
+  background-color: rgb(191, 180, 180);
+  color: black;
+  /* border: 2px solid green; */
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+}
+/* the form */
+.admin-filter {
+  margin-left:50px;
+  /* margin-right: 100px; */
+  /* float: right; */
+}
+
+input[type=text] {
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+select.category {
+  padding: 12px;
+
+}
+
+select.status {
+  padding: 12px;
+
+}
+
+input[type=date] {
+  padding: 10px;
+}
+
+/* table */
+table {
+  border-collapse: collapse;
+  width: 400px;
+  height:50px;
+  margin-left: 30px;
+  margin-right: 40px;
+}
+
+td {
+  text-align: left;
+}
+
+th, td {
+  padding: 6px;
+}
+
+div.tablecontainer {
+  overflow-x: auto;
+}
+
+p, h1, h2 {
+  font-family: inherit;
+}
+
+/* .pageCount {
+  align-content: center;
+  float: left;
+  margin-top: 5px;
+
+} */
+
+/* .pageNum {
+  a:link {
+    color: brown;
+    margin-left: auto;
+  } */
+  /* margin-left: 50px; */
+  /* margin-right: 30px; */
+/* } */
+
+/* .next-prev {
+  a:link {
+    color: brown;
+    text-align: center;
+  }
+} */
+
+/* .prev {
+  text-align: justify;
+}
+.next {
+  text-align: center;
+} */
+/* stying links due to unvisited, visited, hover and active */
+.container {
+  /*unvisitor*/
+  a:link {
+    color: blue;
+    text-decoration: none;
+  }
+  /* visited */
+  a:visited {
+    color: green;
+    text-decoration: none;
+  }
+   /* hover */
+  a:hover {
+    color: maroon;
+    text-decoration: none;
+  }
+  /* selected */
+  a:active {
+      color: rgb(30, 231, 30);
+      text-decoration: none;
+  }
+}
+
+
+
+
+/* styling the create page */
