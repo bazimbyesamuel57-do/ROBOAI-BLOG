@@ -68,14 +68,16 @@ if ($totalPosts > 4) {
         <h1>This is a protected dashboard page.</h1>
         <a href="logout.php">Log Out</a> -->
         <header>
-            <div class="log-content">
-                <p class="site-title">
-                    <!-- <a href="#" class="logo">ROBOAI</a> -->
-                    <a href="#"><img class="log" src="images/logo.index.png" alt="Roboai Logo"></a>
-                </p>
+        <div class="blog-header">
+            <div class="logo">
+                <!-- <a href="#" class="logo">ROBOAI</a> -->
+                <a href="#"><img style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
             </div>
-            
-            <!--logo -->
+            <!-- <div class="log-auth">
+                <a class="log-auth-btn" href="admin_login.php">Logout</a>
+            </div> -->
+        </div>
+          
             <div class="topnav">
                 <nav>
                     <a class="active" href="#">Home</a>
@@ -195,16 +197,16 @@ if ($totalPosts > 4) {
                     <?php if ($totalPosts > 4 && $cardCount > 0): ?>
 
                         <section class="mt-4">
-                            <div class="row row-cols-3 g-2">
+                            <div class="row row-cols-3 g-3">
                             <?php foreach ($cards as $card): ?>
                                 <div class="col" style="min-width:0;">
                                     <article class="card h-100">
                                         <div>
                                         <?php if (!empty($card['media'])): ?>
-                                            <img class="card-img-top" 
-                                            src="<?= htmlspecialchars($card['media']) ?>" alt="<?= htmlspecialchars($card['title']) ?>" 
-                                            style=" object-fit: cover; height:160px;">
-
+                                            <div class="img-zoom">
+                                                <img class="card-img-top" 
+                                                src="<?= htmlspecialchars($card['media']) ?>" alt="<?= htmlspecialchars($card['title']) ?>">
+                                            </div>
                                         <?php else: ?>
                                             <div class="d-flex align-items-center justify-content-center bg-light" style="height: 160px;">
                                                 No image
@@ -249,7 +251,7 @@ if ($totalPosts > 4) {
         </main>
 
 
-        <footer class="footer">ROBOAI Blog 2026 | Home | <a href="about_us.html">About</a> | <a href="contact.html">Contact</a> |</footer>
+        <footer class="footer">ROBOAI Blog 2026 | Home | <a href="about_us.html">About</a> | <a href="contact.php">Contact</a> |</footer>
 
         <script>
             let slideIndex = 1;

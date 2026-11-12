@@ -47,6 +47,7 @@ Native dropdown opened upwards and was too long	Browser decides the direction of
 Post "view" link broken in admin	Relative link pointed inside admin/	../post_details.php
 TODO: add any further problems you remember.		
 6. Changes from the original plan
+ "Post body is stored and displayed as plain text; line breaks are kept; HTML is escaped". Keep your own wording, since it will go into your Phase 2 tech-stack slide as well.
 TODO: compare with your Phase 1 concept. Examples to check: features dropped or added (categories, authors, contact form, image upload), authentication approach, styling framework.
 
 7. Open items before the final submission
@@ -85,3 +86,217 @@ git commit -m "Describe what changed"
 git remote add origin <your-repo-url>
 git push -u origin main
 README sections: project description, requirements (XAMPP, PHP version), setup (import blog.sql, set DB credentials, folder name ROBOAI), admin login details, known limitations. Database credentials: use placeholders in the repo, not real passwords.
+
+
+Checklist for a complete README
+
+Section	What it needs	Source
+Project description	Purpose of the blog and the main features	Phase 1 concept
+Tech stack	PHP, MySQL, Bootstrap 5, JavaScript with fetch, XAMPP	Phase 2 tech-stack slide
+Requirements	XAMPP, PHP version, MySQL port (yours is 3307), the project folder name ROBOAI	Reproducibility
+Setup steps	Import schema.sql, check the connection settings, open the site	Reproducibility
+Demo login	An admin email and password for the corrector. Never real credentials	Assignment: "mention any default credentials"
+Features list	What a visitor can do and what an admin can do	Phase 2 status slide
+Decisions	Post body is plain text with line breaks (HTML escaped)	Tutor's feedback
+Known limitations	Admin session protection pending, no tags, no likes	Honest status
+Facts from today that belong in it (in your own words):
+
+Visitors can post comments without a page reload (fetch, JSON answer from script.php).
+Older comments load 6 at a time (load_comments.php, button "Read more").
+The comment count updates live.
+The comment text is escaped on output, so scripts in comments show as plain text.
+Admin passwords are hashed (password_hash), and the queries use prepared statements.
+The admin area: login, register, dashboard, post management with filters and pagination.
+Post body format: plain text.
+
+1. It describes the plan, not the current project
+
+The corrector will test what the README says. Several statements no longer match your build, and that could cost marks under "solution fulfils intended objective":
+
+README says	Current reality
+Visitors can like a post	Not built
+Admin: manage tags, flag comments, view blog stats	Not built
+"Single hard-coded admin, no user registration"	Admins are stored in the database, with a register page
+"Admin password stored hashed in server-side config"	Hashed in the admin table (password_hash)
+"Admin panel accessible only after successful login"	Not yet enforced (session protection pending)
+Data model: Post.body, author, date, image_path, Tag, POST_TAGS	Your table has content, author_name, published_on, media, an author table, and contact_us; no tags
+2. What the Assignments require is missing: how to run it, required settings, sample data, and the demo login.
+
+3. Formatting: your tables have collapsed into one line each (| Backend | PHP | | Database | MySQL |). They need one row per line to show up as tables on GitHub.
+
+Suggested structure
+
+Project title and description (keep the Purpose text, it is still accurate)
+Requirements (XAMPP, PHP version, MySQL port 3307, folder name ROBOAI)
+Setup (import schema.sql, check the connection settings, start Apache and MySQL, open the site, admin URL)
+Demo admin login
+Implemented features (public: list, search, categories, detail, comments with AJAX and "Read more", contact form; admin: login, dashboard, post CRUD with images, authors, contact messages)
+Technical decisions (plain-text post body, prepared statements, hashed passwords, fetch for comments)
+Current data model (use your real tables)
+Known limitations / next steps (session protection, likes, tags, comment moderation)
+Original plan (Phase 1): move what you pasted here, labelled as the original concept, so the tutor sees the change between plan and result. It is also useful material for your reflection
+
+creating the calender
+
+Design
+The calendar grid is drawn by JavaScript, so the month never needs to be typed by hand.
+Days that have posts are marked. The post data comes from the posts table (published_on), so it shows your real posts and never goes stale. The only hardcoded part is the card itself.
+Clicking any day shows the posts of that day below the calendar, as links to the post page. A day without posts shows "No posts on this day."
+Steps
+
+The card's HTML (this step)
+PHP: send the posts to JavaScript as JSON
+JavaScript: draw the month grid
+Mark days that have posts
+Click a day to list its posts
+
+
+Step 1: the card's HTML
+
+Add a card to admin_dashboard.php, above or below the post cards. It needs these parts, each with an id so JavaScript can find it:
+
+Part	Id	Content
+Month title	cal-title	e.g. "November 2026"
+Previous button	cal-prev	"‹"
+Next button	cal-next	"›"
+Weekday header	none	Mon Tue Wed Thu Fri Sat Sun (7 cells)
+Day grid	cal-grid	empty; JavaScript fills it
+Posts of the selected day	cal-posts	initially "Click a day to see its posts."
+For the layout, use a Bootstrap card (card, card-header, card-body). A 7-column grid is easiest with CSS:
+
+.cal-grid, .cal-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    text-align: center;
+}
+
+
+
+SECOND TAKE
+ROBOAI Blog: Project Log (updated)
+Raw material for the Phase 2 presentation, the README and the Phase 3 abstract. Facts and checklists only; write the final texts in your own words. TODO marks items that need your input.
+
+1. Tutor feedback on Phase 1 (30.09.2026) and how it was addressed
+Feedback	Status
+Feature set too large; build a minimal version first (post list, post detail, visitor comments, admin login, basic CRUD)	Minimal version works. Likes, tags, settings and comment moderation are stretch goals
+Wireframes missing (post detail, comment form, admin management)	TODO: original wireframes plus new ones from the real screens
+Repository was a skeleton; no schema.sql with seed data; post body format undefined	Code is on GitHub and committed regularly; database file added. TODO: check schema.sql has structure and sample data. Body format decided: plain text
+Embed ER and flow diagrams in the main document	TODO
+2. Decisions
+Post body format: plain text. Output is nl2br(htmlspecialchars($content)). Line breaks are kept, HTML is escaped. Reason: simplest, safe from script injection, fits a textarea. HTML or an editor (e.g. TinyMCE) is a possible future improvement.
+Scheduling dropped from the dashboard calendar to keep the scope small (tutor advice).
+Calendar data comes from the database, not typed in; only the card is a fixed UI element.
+Admin session protection postponed until the admin pages were finished. TODO before the final submission: session check on every admin page, a real logout.php, restrict or remove public admin_register.php.
+3. Admin pages review (checklist applied to every page)
+Paths: logo and CSS paths work from admin/; links to public pages use ../.
+Connection works from inside admin/.
+Links between admin pages use the right file names.
+Images shown from the database start with /ROBOAI/.
+Fixes made along the way:
+
+post_details.php links from admin pages changed to ../post_details.php?id=...
+Broken HTML fixed: unbalanced div in admin_posts.php, stray quotes in attributes, class typos in the "No image" placeholder, wrong footer link
+Typos that silently broke behaviour: $f_staus, stle instead of style
+Card layout: max-width instead of fixed width, Bootstrap columns adding up to 12
+Dashboard shows the 4 latest posts of any status, with an empty-state link to create a post
+4. Login and registration (security)
+Before	After
+Password never checked, any email logged in	password_verify() against a hash
+Plain-text passwords in the database	password_hash() when registering; column is VARCHAR(255)
+SQL built by pasting user input	Prepared statements with ? placeholders
+No error shown on failed login	Same message for wrong email or wrong password
+No exit after redirect	exit after every header()
+Session not renewed	session_regenerate_id(true) on login
+Register page: validation (empty fields, minimum 8 characters), $error shown above the form, redirect to login with ?registered=1. Lessons: a prepared statement needs ? placeholders for bind_param; the variable $password was overwritten by the form value, so the form value is now $pass.
+
+5. Comments with AJAX (post_details.php, script.php)
+Flow: form submit is intercepted, fetch posts the form data in the background with the header X-Requested-With: XMLHttpRequest, script.php answers in JSON, JavaScript adds the new comment at the top of the list without a reload. PHP side (script.php):
+
+$is_ajax detects the header; a respond() function answers with JSON for fetch and with the old redirect for a normal form post, so the form still works without JavaScript
+Four validation rules (empty, name over 30 characters, comment over 1000, invalid email), each with its own respond() call
+Success answer contains name, comment and date JavaScript side: preventDefault, fetch with FormData, res.json(), comment built with createElement and textContent (never innerHTML), form.reset(), error text in #comment-error. Security note: inserting text with textContent means a comment containing <script> is shown as plain text.
+6. "Read more" for comments (load_comments.php)
+Page shows 6 comments (LIMIT 6), a total count query decides whether the button appears.
+load_comments.php?post_id=ID&offset=N returns the next 6 comments as JSON plus has_more.
+JavaScript takes the offset from list.children.length (the live number of comments on the page), so comments posted through the form do not cause duplicates.
+Same ORDER BY date_time DESC, Comments_id DESC on the page and in load_comments.php, so the order matches.
+Live comment count in the heading: <span id="comment-count"> raised by one after a successful post.
+Removed the unused show_comments.php.
+7. Dashboard calendar card (admin_dashboard.php)
+Data flow: PHP query SELECT post_id, title, status, DATE(published_on) AS day FROM posts -> grouped in $posts_by_day[$row['day']][] -> printed into the page with json_encode(..., JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) -> JavaScript object postsByDay. JavaScript parts:
+
+viewYear / viewMonth start at today
+renderCalender() clears the grid, sets the title, adds blank cells (firstWeekday), then one li per day (daysInMonth)
+Key per cell: YYYY-MM-DD with padStart; if postsByDay[key] exists, class has-posts
+Previous / next buttons change month and year (wrap at 0 and 11) and redraw
+Click on a day shows the posts of that day as links (../post_details.php?id=) with their status; empty days show "No posts on this day."
+Today is outlined: todayKey compared with key Concepts used: Date (months count from 0, getDay() is the weekday, day 0 of next month is the last day of this month), event listeners, DOM creation, JSON.
+8. Challenges and solutions (for the "challenges" slide and the abstract)
+Challenge	Cause	Solution
+Images and links broke after moving files into admin/	Relative paths	/ROBOAI/... for display, ../ for disk paths and public links
+Login accepted any password	Password never compared	password_verify, hashed storage
+Fatal error "number of variables must match parameters"	SQL string had values pasted in instead of ?	VALUES(?, ?, ?)
+Validation silently disabled	Edit left three checks commented out and four calls inside one if	One if per rule, each with its own respond()
+AJAX call returned a page instead of JSON	Header name or value spelled differently from what PHP expected	Exact X-Requested-With: XMLHttpRequest
+Whole script stopped working	One syntax error (missing comma, duplicate const, stray bracket)	Read the first line of the Console error; check brackets
+"Read more" repeated the same comments	Offset never changed	Offset from the live list length
+Console error "message channel closed"	A browser extension, not the project	Tested in a private window
+Calendar did not draw	todayKey defined after the first call to the function	Define constants before the function that uses them
+9. Plan (Phase 1) vs built
+Plan	Built
+List, search, category filter, detail	Done (dropdown filter)
+Comments	Done with AJAX and "Read more"
+About, contact information	Done; contact became a form saved to contact_us with an admin page
+Single hard-coded admin, no registration	Changed: admin accounts in the database, register page
+Post CRUD	Done, with image upload, authors, draft or published status, filters and pagination
+Likes, tags, comment flagging, stats, settings	Not built (stretch goals)
+Logout, panel only after login	Pending (session protection)
+Not in plan	Dashboard calendar card, authors table, contact form with admin feed
+10. Open items before Phase 2 and the final submission
+[ ] Wireframes (original plus new), embed ER and flow diagrams in the document
+[ ] schema.sql with structure and seed data; add a demo admin
+[ ] README rewrite (see section 11)
+[ ] Session protection for all admin pages, real logout, restrict admin_register.php
+[ ] Final test run: empty database, long text, special characters, <script> in a comment, two browsers, phone width
+[ ] Remove unused code and commented-out blocks; optional: rename renderCalender to renderCalendar
+[ ] Ask the tutor in the Course Feed whether Phase 2 needs the half-page text as well as the slides
+[ ] Live sessions: 26.11.2026 and 10.12.2026, 20:00 (German time)
+11. README rewrite plan
+Sections: title and description, requirements (XAMPP, PHP version, MySQL port 3307, folder name ROBOAI), setup (import schema.sql, connection settings, start Apache and MySQL, admin URL), demo admin login, implemented features, technical decisions (plain text, prepared statements, hashed passwords, fetch), current data model (tables: posts, categories, author, admin, comments, contact_us), known limitations, original Phase 1 plan (kept as history).
+
+12. Screenshot checklist (Phase 2)
+[ ] Home page with slideshow and cards
+[ ] Post list with the category dropdown open
+[ ] Post detail with author box, comments, "Read more" button
+[ ] A comment appearing without reload (before and after)
+[ ] Admin login page
+[ ] Admin dashboard with the calendar and a selected day
+[ ] Admin post table with filters
+[ ] Create post form
+[ ] Contact form and admin contact messages
+[ ] ER diagram from phpMyAdmin Designer
+13. Export and Git kit
+mysqldump -u root -P 3307 roboai_blog_db > schema.sql
+git add .
+git commit -m "Describe what changed"
+git push
+Use placeholders for database credentials in the repo; document the demo login in the README.
+
+
+## 14. Styling: card and image hover effects (style.css)
+
+**Goal:** the whole card grows slightly on hover, but the picture zooms only when the pointer is over the picture itself, not when it is over the rest of the card.
+
+**How it works**
+- Card: `.card` has `transition: transform 0.3s ease, box-shadow 0.3s ease`. `.card:hover` applies `transform: scale(1.04)` and a larger shadow. The transition sits on the normal state, so the card also animates back.
+- Image: each card image sits in a wrapper `<div class="img-zoom">`. The wrapper has `overflow: hidden` and works as a frame that clips the zoomed image. The image has `transition: transform 0.4s ease`. The rule `.img-zoom:hover img { transform: scale(1.06) }` makes the zoom depend on hovering the frame, not on hovering the card.
+- Rounded corners: the frame inherits the top corner radius of the card so the zoomed image does not show square corners.
+- Accessibility: `@media (prefers-reduced-motion: reduce)` switches the transitions off for users who prefer less motion.
+
+**Lessons / problems solved**
+- `overflow: hidden` on the image itself does nothing; the clipping must be on a parent element.
+- The hover must target the wrapper (`.img-zoom:hover img`), not the card (`.card:hover .card-img-top`), to get the "image only" behaviour.
+- A global `img { height: 160px; object-fit: cover }` rule affected every image on the site (logo, slideshow); it was replaced by a rule scoped to `.card-img-top`.
+- Duplicate rules and an unused `overflow` rule were removed during cleanup.
+Also add one line to your list of files changed: style.css (hover and zoom), and to the screenshots checklist: "card hovered" and "image zoomed".

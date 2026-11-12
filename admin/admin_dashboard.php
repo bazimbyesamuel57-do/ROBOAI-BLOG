@@ -69,7 +69,26 @@ $cardsql = "SELECT post_id, title, media, excerpt, author_name, published_on
     $cardCount = count($cards); // number of of post cards(1, 2, or 3 )
 // }
 
+
+
+// calendar
+$calResult = mysqli_query($conn, "SELECT post_id, title, status, DATE(published_on) AS day FROM posts ORDER BY published_on");
+if (!$calResult) {
+    die("calendar query; " . mysqli_error($conn));
+}
+
+$posts_by_day = [];
+While ($row = mysqli_fetch_assoc($calResult)) {
+    $posts_by_day[$row['day']] [] = [
+        'post_id' => $row['post_id'],
+        'title' => $row['title'],
+        'status' => $row['status']
+    ];
+    // echo $row['title'] . ' was posted on ' . $row['day'] . '<br>';
+}
+// print_r($posts_by_day); echo '</prev>'; 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -89,17 +108,16 @@ $cardsql = "SELECT post_id, title, media, excerpt, author_name, published_on
         <!-- <h1>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h1>
         <h1>This is a protected dashboard page.</h1>
         <a href="logout.php">Log Out</a> -->
-        <header>
-            <div class="log-content">
-                <p class="site-title">
-                    <!-- <a href="#" class="logo">ROBOAI</a> -->
-                    <a href="#"><img class="log" src="/ROBOAI/images/logo.index.png" alt="Roboai Logo"></a>
-                </p>
-            </div>
 
-            <button style="float:right;">
-                <a href="admin_login.php">Logout</a>
-            </button>
+        <header class="blog-header">
+            <div class="logo">
+                <!-- <a href="#" class="logo">ROBOAI</a> -->
+                <a href="#"><img style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
+            </div>
+            <div class="log-auth">
+                <a class="log-auth-btn" href="admin_login.php">Logout</a>
+            </div>
+        </header>
 
             <div id="mySidenav" class="sidenav">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -109,48 +127,7 @@ $cardsql = "SELECT post_id, title, media, excerpt, author_name, published_on
                 <a href="admin_contactfeed.php">Contact Messages</a>
                 <a href="admin_login.php">Logout</a>
             </div>
-
-        <!-- <span onclick="openNav()">&#10143;</span> -->
             
-            <!-- <div class="sidebar"> -->
-                <!-- <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a> -->
-                <!-- <a href="admin_dashboard.php">Dashboard</a>
-                <a href="admin_posts.php">Manage Posts</a>
-                <a href="create.php">Create Posts</a>
-                <a href="admin_contactfeed.php">Contact Messages</a>
-                <a href="admin_login.php">Logout</a>
-            </div> -->
-
-            <!-- <div class="topnav">
-                <nav>
-                    <a class="active" href="admin_dashboard.php">Dashboard</a>
-                    
-                    <a href='admin_posts.php'>Manage Posts</a> -->
-                    <!-- <div class="dropdown">
-                        <button class="dropbtn">News&Trends 
-                            <i class="fa fa-caret-down"></i>
-                        </button>
-                        <div class="dropdown-content">
-                            <a href="#">News in the Tech world</a> -->
-                            <!-- <a href="#">link2</a> -->
-                        <!-- </div> -->
-                    <!-- </div> -->
-
-                    <!-- <div class="dropdown">
-                        <button class="dropbtn">Resources 
-                            <i class="fa fa-caret-down"></i>
-                        </button>
-                        <div class="dropdown-content">
-                            <a href="#">AI trends</a>
-                            <a href="#">Robotics trends</a>
-                        </div>
-                    </div> -->
-                    <!-- <a href="admin_register.php">Register</a>
-                    <a href="contact.php">Contact Us</a>
-                </nav>
-            </div> -->
-            
-        </header>
         <!-- <div> -->
             <!-- <form class="hsearchtab" action="admin_posts.php" method="GET"> search.php ods the filename where the files are picked and method use GET for search -->
                 <!-- <input class="hsearch" type="text" name="q" placeholder="search post..." style="width:400px"> name='q' where q is the query sent -->
@@ -158,84 +135,112 @@ $cardsql = "SELECT post_id, title, media, excerpt, author_name, published_on
             </form> -->
         <!-- </div> -->
         <main id="main">
-            <div>
                 
-                <div>
-                    <section id="post-info">
-                        <h1>Admin Dashboard.</h1>
-                        <h2> Welcome!</h2>
-                    </section>
+            <div>
+                <section id="post-info">
+                    <h1>Admin Dashboard.</h1>
+                    <h2> Welcome!</h2>
+                </section>
+            </div>
+            <span onclick="openNav()">&#9776; MENU</span>
+
+
+            <div class="calendar-container">
+                <header class="cal-title">
+                    <p id="cal-title"></p>
+                    <div>
+                        <button type="button" id="cal-prev"> &lt; </button>
+                        <button type="button" id="cal-next"> &gt; </button>
+                    </div>
+                </header>
+
+                <div class="cal-body">
+                    <ul class="cal-days">
+                        <li>Sun</li>
+                        <li>Mon</li>
+                        <li>Tue</li>
+                        <li>Wed</li>
+                        <li>Thur</li>
+                        <li >Fri</li>
+                        <li>Sat</li>
+                    </ul>
+                    <ul class="calender-dates" id="cal-grid"></ul>
+                    <div id="cal-posts">
+                        Click a day to see its posts.
+                    </div>
                 </div>
-                <span onclick="openNav()">&#9776; MENU</span>
+            </div>
 
-                <div style=" align-content: center;">
-                    <!-- welcome placeholder if no posts -->
-                    <?php if ($cardCount === 0): ?>
 
-                        <div class="slideshow-container">
-                                <div style="text-align:center; padding:60px; background:#f0f0f0;">
-                                    <!-- <h2>Welcome to ROBOAI Blog</h2> -->
-                                    <p>No posts yet,<a href="create.php">Create Post</a></p>
-                                </div>
-                        </div>
-                        
+
+            <div style=" align-content: center;">
+                <!-- welcome placeholder if no posts -->
+                <?php if ($cardCount === 0): ?>
+
+                    <div class="slideshow-container">
+                            <div style="text-align:center; padding:60px; background:#f0f0f0;">
+                                <!-- <h2>Welcome to ROBOAI Blog</h2> -->
+                                <p>No posts yet,<a href="create.php">Create Post</a></p>
+                            </div>
+                    </div>
                     
-                           
-                    <?php elseif ($cardCount > 0): ?>
+                
+                       
+                <?php elseif ($cardCount > 0): ?>
 
-                        <section class="container my-4">
-                            <?php foreach ($cards as $card): ?>
-                                <div class="card mb-3" style="max-width: 800px;">
-                                    <article class="row g-0">
-                                        <div class="col-md-3">
-                                        <?php if (!empty($card['media'])): ?>
-                                            <img class="img-fluid rounded-start w-100 h-100" 
+                    <section class="container my-4">
+                        <?php foreach ($cards as $card): ?>
+                            <div class="card mb-3" style="max-width: 800px;">
+                                <article class="row g-0">
+                                    <div class="col-md-3">
+                                    <?php if (!empty($card['media'])): ?>
+                                        <img class="img-fluid rounded-start w-100 h-100" 
                                             src="/ROBOAI/<?=htmlspecialchars($card['media']) ?>" alt="<?= htmlspecialchars($card['title']) ?>" 
                                             style=" object-fit: cover; max-height:250px;">
 
-                                        <?php else: ?>
-                                            <div class="d-flex align-items-center; justify-content bg-light h-100 p-4">
-                                                <p>No image</p>
-                                            </div>
-                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        <div class="d-flex align-items-center; justify-content bg-light h-100 p-4">
+                                            <p>No image</p>
                                         </div>
+                                    <?php endif; ?>
+                                    </div>
 
-                                        <div class="col-md-9">
-                                            <div class="card-body">
-                                                <span class="post-author card-text">
-                                                    By <?=  htmlspecialchars($card['author_name'] ?? '') ?> | <?= date('d M Y', strtotime($card['published_on'])) ?>
-                                                </span><br>
+                                    <div class="col-md-9">
+                                        <div class="card-body">
+                                            <span class="post-author card-text">
+                                                By <?=  htmlspecialchars($card['author_name'] ?? '') ?> | <?= date('d M Y', strtotime($card['published_on'])) ?>
+                                            </span><br>
 
-                                                <h3 class="card-title h5 mt-2">
-                                                    <?= htmlspecialchars($card['title']) ?>
-                                                </h3>
+                                            <h3 class="card-title h5 mt-2">
+                                                <?= htmlspecialchars($card['title']) ?>
+                                            </h3>
 
-                                                <p class="excerpt card-text">
-                                                    <?=  htmlspecialchars($card['excerpt'] ?? '') ?>
-                                                </p>
-                                                
-                                                <a class="readme" href="../post_details.php?id=<?= (int)$card['post_id'] ?>">
-                                                    Read more
-                                                </a>
-                                            </div>
+                                            <p class="excerpt card-text">
+                                                <?=  htmlspecialchars($card['excerpt'] ?? '') ?>
+                                            </p>
+                                            
+                                            <a class="readme" href="../post_details.php?id=<?= (int)$card['post_id'] ?>">
+                                                Read more
+                                            </a>
                                         </div>
-                                    </article>
-                                </div>
-                            <?php endforeach; ?>
-                            
-                            
-                            <!-- see more link, takes you to the posts_categories list -->
-                            <div style="text-align:center; margin-top:20px;">
-                                <a href="admin_posts.php" class="see-more-btn">
-                                    Manage Posts &rarr;
-                                </a>
+                                    </div>
+                                </article>
                             </div>
+                        <?php endforeach; ?>
+                        
+                        
+                        <!-- see more link, takes you to the posts_categories list -->
+                        <div style="text-align:center; margin-top:20px;">
+                            <a href="admin_posts.php" class="see-more-btn">
+                                Manage Posts &rarr;
+                            </a>
+                        </div>
 
-                        </section>
-                    <?php endif; ?>
-                    
-                </div>
-                <br>
+                    </section>
+                <?php endif; ?>
+                
+            </div>
+            <br>
 
         </main>
 
@@ -256,6 +261,102 @@ $cardsql = "SELECT post_id, title, media, excerpt, author_name, published_on
                 document.getElementById("main").style.marginLeft = "0";
                 document.body.style.backgroundColor = "White";
             }
+        </script>
+
+        <script>
+            const postsByDay = <?php echo json_encode($posts_by_day, JSON_HEX_TAG | JSON_HEX_AMP |JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
+            console.log(postsByDay);
+
+            const now = new Date();
+            const todayKey = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+
+            let viewYear = new Date().getFullYear();
+            let viewMonth = new Date().getMonth();
+
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+            function renderCalender() {
+                const row = document.getElementById('cal-grid');
+                row.innerHTML = ''; 
+
+                document.getElementById('cal-title').textContent = monthNames[viewMonth] + ' ' + viewYear;
+
+
+                const firstWeekday = new Date(viewYear, viewMonth, 1). getDay();
+                for (let i = 0; i < firstWeekday; i++) {
+                    const blank = document.createElement('li')
+                    row.appendChild(blank);
+                }
+                const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+                for (let n = 1; n <= daysInMonth; n++) {
+                    const dayCell = document.createElement('li');
+                     dayCell.textContent = n;
+                    row.appendChild(dayCell);
+
+                    const monthText = String(viewMonth + 1).padStart(2, '0');
+                    const dayText = String(n).padStart(2, '0');
+                    const key = viewYear + '-' + monthText + '-' + dayText;
+
+                    if (postsByDay[key]) {
+                        dayCell.classList.add('has-posts');
+                    }
+
+                    if (key === todayKey) {
+                        dayCell.classList.add('today');
+                    }
+                    dayCell.addEventListener('click', () => {
+                    const panel = document.getElementById('cal-posts');
+                    panel.innerHTML = '';
+            
+                    const dayposts = postsByDay[key] || [];
+
+                    if (dayposts.length === 0) {
+                        panel.textContent = 'No posts on this day.';
+                        return;
+                    }
+                        const heading = document.createElement('p');
+                         heading.textContent = 'Posts on ' + key;
+                        panel.appendChild(heading);
+
+
+                        dayposts.forEach(function (p) {
+                        const line = document.createElement('p');
+                        const link = document.createElement('a');
+                        link.textContent = p.title;
+
+                        link.href = '../post_details.php?id=' + Number(p.post_id);
+                        line.appendChild(link);
+                        panel.appendChild(line);
+                        line.append( ' (' + p.status + ')' );
+
+                    });
+                });
+
+                }
+            }
+            renderCalender();
+
+            // let viewMonth = 0;
+            // let viewYear = 1;
+            // renderCalender();
+
+            document.getElementById('cal-next').addEventListener('click', () => {
+                viewMonth ++;
+                if (viewMonth > 11) {
+                    viewMonth = 0;
+                    viewYear++;                      
+                }
+                renderCalender();                      
+            });
+            document.getElementById('cal-prev').addEventListener('click', () => {
+                viewMonth --;
+                if (viewMonth < 0) {
+                    viewMonth = 11;
+                    viewYear--;                   
+                }
+                renderCalender();
+            });
+            
         </script>
     </body>
 </html>

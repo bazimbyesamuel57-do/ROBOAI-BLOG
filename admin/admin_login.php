@@ -59,9 +59,9 @@ if(isset($_POST['submit'])){
 
         <header>
              <div class="log-content">
-                <p class="site-title">
+                <p style="margin-left: 500px;">
                     <!-- <a href="#" class="logo">ROBOAI</a> -->
-                    <a href="#"><img class="log" src="/ROBOAI/images/logo.index.png" alt="Roboai Logo"></a>
+                    <a href="#"><img  style="height: 200px;" class="log" src="/ROBOAI/images/logo.index.png" alt="Roboai Logo"></a>
                 </p>
             </div>
         </header>
@@ -92,5 +92,7 @@ if(isset($_POST['submit'])){
                 <button type="submit" name="submit">Login</button>
             </form>
         </div>
+
+                <footer class="footer">ROBOAI Blog 2026 | Email: ROBOAIgen@gmail.com | contact: +004566000<footer>
     </body>
 </html>

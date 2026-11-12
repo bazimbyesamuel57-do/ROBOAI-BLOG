@@ -150,16 +150,25 @@ $result = mysqli_stmt_get_result($stmt);
         <link rel="stylesheet" href="admin.css">
     </head>
     <body>
+        <header class="blog-header">
+            <div class="logo">
+                <!-- <a href="#" class="logo">ROBOAI</a> -->
+                <a href="#"><img style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
+            </div>
+                <div class="log-auth">
+                    <a class="log-auth-btn" href="admin_login.php">Logout</a>
+                </div>
+        </header>
+     
 
-        <div class="log-content">
-                <p class="site-title">
-                    <!-- <a href="#" class="logo">ROBOAI</a> -->
-                    <a href="#"><img class="log" src="/ROBOAI/images/logo.index.png" alt="Roboai Logo"></a>
-                </p>
-        </div>
-        <button style="float:right; margin-right:10px;">
+        <!-- <div style=" margin-top: 1px; margin-bottom:150px; margin-left:20px; background-color: aquamarine;"> -->
+            <!-- <a href="#" class="logo">ROBOAI</a> -->
+            <!-- <span style="float:inline-start;"><a href="#"><img style="height: 50px;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a></span>
+            <span style="margin-left: 50px; background-color:aquamarine;"><p style="float:inline-end;"><a href="admin_login.php">Logout</a></p></span>
+        </div> -->
+        <!-- <div style="float:right; margin-right:10px;">
             <a href="admin_login.php">Logout</a>
-        </button>
+            </div> -->
 
 
         <div id="mySidenav" class="sidenav">
@@ -179,15 +188,16 @@ $result = mysqli_stmt_get_result($stmt);
             <h1 style="text-align: center;" > Manage Posts</h1>
             
             <span onclick="openNav()">&#9776; MENU</span>
-            <div class="top-link">
+            <div class="top-link" style="max-width: 900px;">
+
                 <span>
-                    <a href="admin_dashboard.php">Dashboard</a>
+                    <a style="float: left;" href="admin_dashboard.php">Dashboard</a>
                 </span>
-                <span style="margin-left: 250px">
-                    <a href="create.php">&plus; Add a post</a>
+                <span >
+                    <a style="margin-left: 250px;" href="create.php">&plus; Add a post</a>
                 </span>
-                <span style="margin-left: 100px;">
-                    <a  href="admin_contactfeed.php">Contact us Messages</a>
+                <span>
+                    <a style="float:right;" href="admin_contactfeed.php">Contact us Messages</a>
                 </span>
             </div>
 

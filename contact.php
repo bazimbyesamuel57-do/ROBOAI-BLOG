@@ -52,9 +52,15 @@ if (isset($_POST['submit'])) {   // the isset($_POST ['submit ]) checks the form
 
     <body class="contact">
         <heading>
-             <!--logo -->
-            <!-- <a href="home.html">ROBOAI</a> -->
-            <a href="home.php"><img class="log" src="images/logo.index.png" alt="Roboai Logo"></a>
+            <div class="blog-header">
+                <div class="logo">
+                    <!-- <a href="#" class="logo">ROBOAI</a> -->
+                    <a href="#"><img style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
+                </div>
+                <!-- <div class="log-auth">
+                    <a class="log-auth-btn" href="admin_login.php">Logout</a>
+                </div> -->
+            </div>
        
             <nav class="topnav">
                 <a href="home.php">Home</a>

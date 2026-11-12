@@ -59,13 +59,15 @@ $author_image = htmlspecialchars($post['author_image'] ?? '');
     <body>
 
         <header>
-            <div class="title-area">
-                <p class="site-title">
+            <div class="blog-header">
+                <div class="logo">
                     <!-- <a href="#" class="logo">ROBOAI</a> -->
-                    <a href="home.php"><img class="log" src="images/logo.index.png" alt="Roboai Logo"></a>
-                </p>
+                    <a href="#"><img style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
+                </div>
+                <!-- <div class="log-auth">
+                    <a class="log-auth-btn" href="admin_login.php">Logout</a>
+                </div> -->
             </div>
-             <!--logo -->
              <div>
                 <nav class="topnav">
                     <a href="home.php">Home</a>
@@ -103,7 +105,7 @@ $author_image = htmlspecialchars($post['author_image'] ?? '');
 
         <div id="comment-form">
             <section>
-                <div class="container">
+                <div class="container" style="max-width: 800px;">
                     <h3>Leave a Comment</h3>
 
                     <?php 
@@ -135,12 +137,12 @@ $author_image = htmlspecialchars($post['author_image'] ?? '');
                                 <input class="control-form" type="email" id="email" name="email" placeholder="your.email@123.example.com" required>
                             </div>
                             <!--comment textarea-->
-                            <div class="group-form">
+                            <div class="group-form mb-5">
                                 <label class="form-label" for="comment">Comment:</label>
-                                <textarea class="control-form"  rows="3" id="comment" name="comment" placeholder="Write your comment here..." required aria-label="write a comment"></textarea>
+                                <textarea class="control-form"  rows="5" id="comment" name="comment" placeholder="Write your comment here..." required aria-label="write a comment"></textarea>
                                 <input type="hidden" name="post_id" value="<?php echo $id; ?>">
                             </div>
-                                <button type="submit" class="btn mb-3"style="background-color: lightslategray; color: black; margin-top: 30px;">Post Comment</button>
+                                <button type="submit" class="btn mb-3"style="background-color: lightslategray; color: black; margin-top: 35px;">Post Comment</button>
                             
                         </form>
                         <p id="comment-error" style="color: red;"></p>

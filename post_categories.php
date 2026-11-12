@@ -108,12 +108,15 @@ function pageUrl(int $p, int $cat, string$q) {
     <body>
 
         <header>
-            <div class="title-area">
-                <p class="site-title">
+            <div class="blog-header">
+                <div class="logo">
                     <!-- <a href="#" class="logo">ROBOAI</a> -->
-                    <a href="home.php"><img class="log" src="images/logo.index.png" alt="Roboai Logo"></a>
-                </p>
+                <a href="#"><img style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
             </div>
+            <!-- <div class="log-auth">
+                <a class="log-auth-btn" href="admin_login.php">Logout</a>
+            </div> -->
+        </div>
         
             <div>
                 <nav class="topnav">
@@ -175,7 +178,7 @@ function pageUrl(int $p, int $cat, string$q) {
             </form> -->
 
             <!-- posts card lists -->
-            <div class="cat-posts">
+            <div class="container">
                 <?php if  (empty($posts)): ?>
                     <p style="text-align:center; margin-top:40px";>
                         No posts found
@@ -207,10 +210,18 @@ function pageUrl(int $p, int $cat, string$q) {
 
                             <div class="card h-100">
                                     <?php if (!empty($media)): ?>
-                                        <img class="card-img-top" style="height:200px; object-fit:cover;" src="<?= htmlspecialchars($media) ?>"
-                                            alt="<?= $title ?>">
+                                        <div class="img-zoom">
+                                            <a href="post_details.php?id=<?= (int)$id ?>">
+                                                <img class="card-img-top" style="height:200px; object-fit:cover;" src="<?= htmlspecialchars($media) ?>"
+                                                    alt="<?= $title ?>">
+                                            </a>
+                                        </div>
+                                    <?php else: ?>
+                                        <div class="d-flex align-items-center; justify-content bg-light h-100 p-4">
+                                            <p>No image</p>
+                                        </div>
                                     <?php endif; ?>
-                            
+
                                 <div class="card-body">
                                     <p class="card-title">
                                         <a href="post_details.php?id=<?= (int)$id ?>">

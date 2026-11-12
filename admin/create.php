@@ -216,20 +216,17 @@ if (isset($_POST['submit'])) {
         <link href="admin.css" rel="stylesheet">
     </head>
     <body>
-        <header>
-            <div class="log-content">
-                <p class="site-title">
-                    <!-- <a href="#" class="logo">ROBOAI</a> -->
-                    <a href="#"><img class="log" src="/ROBOAI/images/logo.index.png" alt="Roboai Logo"></a>
-                </p>
+        <header class="blog-header">
+            <div class="logo">
+                <!-- <a href="#" class="logo">ROBOAI</a> -->
+                <a href="#"><img style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
             </div>
-            <button style="float:right; margin-right:10px;">
-                <a href="admin_login.php">Logout</a>
-            </button>
+            <div class="log-auth">
+                <a class="log-auth-btn" href="admin_login.php">Logout</a>
+            </div>
         </header>
-
         <div>
-            <h1 style="text-align: center;">Create Post</h1>
+            <h1 style="text-align: center; margin-top:50px;">Create Post</h1>
         </div>
 
         <?php

@@ -34,6 +34,17 @@ if (!$contact_result) {
         <link href="admin.css" rel="stylesheet">
     </head>
     <body>
+
+        <header class="blog-header">
+            <div class="logo">
+                <!-- <a href="#" class="logo">ROBOAI</a> -->
+                <a href="#"><img style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
+            </div>
+            <div class="log-auth">
+                <a class="log-auth-btn" href="admin_login.php">Logout</a>
+            </div>
+        </header>
+
         <div>
             <h2>Contact Messages</h2>
 
