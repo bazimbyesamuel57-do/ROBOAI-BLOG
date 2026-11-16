@@ -457,9 +457,9 @@ body{
 }
 /* blog footer */
 
-.footer {
+/* .footer {
     text-align: center;
-}
+} */
 
 
 /* admin_post page */
@@ -746,5 +746,38 @@ calender-dates li.has-posts:hover {
 
 
 /* styling the create page */
+body.create {
+  box-sizing: inherit;
+}
+
+
+
+
+/* admin_contactfeed */
+/* body.admin_contactfeed {
+  box-sizing: inherit;
+} */
+
+.contactfeed {
+  max-width: 1000px;
+  width:100%;
+  margin: 50px auto 100px;
+  padding: 0 12px;
+}
+.next-prev {
+  text-align: center;
+  color: brown;
+}
+
+
+/* admin_login */
+body.admin_login {
+  box-sizing: inherit;
+}
+
+
+
+
+
 
 

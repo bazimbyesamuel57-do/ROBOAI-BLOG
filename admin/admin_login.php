@@ -65,9 +65,11 @@ if(isset($_POST['submit'])){
                 </p>
             </div>
         </header>
-        <div>
-            <h1 style="text-align:center; margin-top: 100px; margin-bottom: 20px">Admin Login</h1>
-        </div>
+        <!-- <div>
+            <h1 style="text-align:center; margin-top: 10px; margin-bottom: 20px">Admin Login</h1>
+        </div> -->
+
+        
 
         <?php
             if (isset($_GET['registered'])) {
@@ -78,7 +80,12 @@ if(isset($_POST['submit'])){
             }
         ?>
 
-        <div class="container" style="max-width: 350px;">
+        <div class="container" style="max-width: 350px; margin-bottom:150Px;">
+
+        <div>
+            <h1 style="text-align:center; margin-top: 10px; margin-bottom: 20px">Admin Login</h1>
+        </div>
+
             <form action="admin_login.php" method="POST">
                 <!-- Name: <input type="text" name="name" required><br> -->
                  <div>
@@ -92,7 +99,11 @@ if(isset($_POST['submit'])){
                 <button type="submit" name="submit">Login</button>
             </form>
         </div>
+        <a href="../home.php">
+            <p style="text-align:center;">Home</p>
+        </a>
+        
 
-                <footer class="footer">ROBOAI Blog 2026 | Email: ROBOAIgen@gmail.com | contact: +004566000<footer>
+        <footer class="footer">ROBOAI Blog 2026 | <a href="../home.php">HOME</a> | Email: ROBOAIgen@gmail.com | contact: +004566000<footer>
     </body>
 </html>

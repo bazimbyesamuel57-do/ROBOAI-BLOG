@@ -111,15 +111,15 @@ function pageUrl(int $p, int $cat, string$q) {
             <div class="blog-header">
                 <div class="logo">
                     <!-- <a href="#" class="logo">ROBOAI</a> -->
-                <a href="#"><img style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
+                <a href="#"><img class="logo-img" style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
             </div>
             <!-- <div class="log-auth">
                 <a class="log-auth-btn" href="admin_login.php">Logout</a>
             </div> -->
         </div>
         
-            <div>
-                <nav class="topnav">
+            <div class="topnav">
+                <nav style="margin-left: 250px;">
                     <a href="home.php">Home</a>
                     <a class="active" href="post_categories.php">Post/Categories</a>
                     <a href="about_us.html">About Us</a>
@@ -268,7 +268,7 @@ function pageUrl(int $p, int $cat, string$q) {
 
         
         <div>
-            <footer class="footer">ROBOAI Blog 2026 | Home | About | Contact |</footer>
+            <footer class="footer">ROBOAI Blog 2026 | <a href="home.php">Home</a> | <a href="about_us.html">About</a> | <a href="contact.php">Contact</a> |</footer>
         </div>
     
     </body>

@@ -288,7 +288,8 @@ $result = mysqli_stmt_get_result($stmt);
                 <div class="pageCount">
                     <p style="text-align: center;">Page <?php echo $page; ?> of <?php echo $total_pages; ?></p>
                     <div class="next-prev">
-                        <?php if ($page > 1) { ?><a style="color: brown;" href="<?php echo page_link($filters, $page -1); ?>">Prev |</a><?php } ?>
+                        <?php if ($page > 1) { ?><a style="color: brown;" href="<?php echo page_link($filters, $page -1); ?>">Prev</a><?php } ?>
+                        <?php if ($page > 1 && $page < $total_pages) {?><span> | </span><?php } ?>
                         <?php if ($page < $total_pages) { ?><a style="color:brown" href="<?php echo page_link($filters, $page + 1); ?>">Next</a><?php } ?>
                     </div>
                 </div>

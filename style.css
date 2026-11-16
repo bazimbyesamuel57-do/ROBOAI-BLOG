@@ -74,6 +74,12 @@ main {
   color: gray;
   border-color: #000000; /* Inverts color on hover */
 }
+
+.logo-img {
+    height: 50px;
+    width: auto;
+    margin-left: 500px;
+}
 /* .log { */
     /* background-image: url (images/logo.index.png) !important; */
     /* width: 100px; */
@@ -126,6 +132,7 @@ p {
     /* margin-left: 10px;
     margin-right: 10px; */
     text-align: center;
+    /* padding-left: 16px; */
     
 }
 
@@ -136,6 +143,8 @@ p {
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
+    padding-left: 40px;
+    padding-right: 40px;
 }
 
 .topnav a:hover {
@@ -820,12 +829,13 @@ body.about_us {
     /* margin-bottom: 16px; */
     padding: inherit;
     margin: auto;
+    margin-left: 300px;
 }
 
-.card-box {
+.abox {
     /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
     /* margin: 8px; */
-    width: 40%;
+    width: 250px;
 }
 
 .profile-img {
@@ -834,7 +844,7 @@ body.about_us {
     width: 50%; */
     align-items: left;
     width: 150%;
-    height: 350px;
+    height: 300px;
     /* margin-bottom: 7%; */
     object-fit: cover;
     display: block;
@@ -857,15 +867,16 @@ body.about_us {
     align-items: right;
     text-align: left; */
 
-    width: 500%;
+    width: 500px;
+    height: 10px;
     text-align: left;
     font: size 2px;
     color:black;
-    line-height: 2.9;
-    /* margin-bottom: 10px; */
+    line-height: 1.5;
+    margin-bottom: 10px;
     margin-left: 120%;
-    padding-bottom: 30%;
-    padding-left: 50%;
+    /* padding-bottom: 30%;
+    padding-left: 50%; */
     
 }
 .container::after, .prof-box::after {

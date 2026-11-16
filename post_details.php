@@ -62,14 +62,14 @@ $author_image = htmlspecialchars($post['author_image'] ?? '');
             <div class="blog-header">
                 <div class="logo">
                     <!-- <a href="#" class="logo">ROBOAI</a> -->
-                    <a href="#"><img style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
+                    <a href="#"><img class="logo-img" style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
                 </div>
                 <!-- <div class="log-auth">
                     <a class="log-auth-btn" href="admin_login.php">Logout</a>
                 </div> -->
             </div>
-             <div>
-                <nav class="topnav">
+             <div class="topnav">
+                <nav style="margin-left: 250px;">
                     <a href="home.php">Home</a>
                     <a href="post_categories.php">Post/Categories</a>
                     <a href="about_us.html">About Us</a>

@@ -61,6 +61,8 @@ if ($totalPosts > 4) {
 
         
         <link rel="stylesheet" href="style.css">
+
+        <!-- <a href="helper.php"></a> -->
     </head>
 
     <body>
@@ -71,7 +73,7 @@ if ($totalPosts > 4) {
         <div class="blog-header">
             <div class="logo">
                 <!-- <a href="#" class="logo">ROBOAI</a> -->
-                <a href="#"><img style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
+                <a href="#"><img class="logo-img" style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
             </div>
             <!-- <div class="log-auth">
                 <a class="log-auth-btn" href="admin_login.php">Logout</a>
@@ -79,21 +81,21 @@ if ($totalPosts > 4) {
         </div>
           
             <div class="topnav">
-                <nav>
+                <nav style="margin-left:250px;">
                     <a class="active" href="#">Home</a>
                     
                     <a href='post_categories.php'>Post/Categories</a>
-                    <div class="dropdown">
+                    <!-- <div class="dropdown">
                         <button class="dropbtn">News&Trends 
                             <i class="fa fa-caret-down"></i>
                         </button>
                         <div class="dropdown-content">
                             <a href="#">News in the Tech world</a>
-                            <!-- <a href="#">link2</a> -->
+                            
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="dropdown">
+                    <!-- <div class="dropdown">
                         <button class="dropbtn">Resources 
                             <i class="fa fa-caret-down"></i>
                         </button>
@@ -101,7 +103,7 @@ if ($totalPosts > 4) {
                             <a href="#">AI trends</a>
                             <a href="#">Robotics trends</a>
                         </div>
-                    </div>
+                    </div> -->
                     <a href="about_us.html">About Us</a>
                     <a href="contact.php">Contact Us</a>
                 </nav>
