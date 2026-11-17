@@ -471,16 +471,16 @@ body{
 /* Admin side menu */
 /* The side navigation menu */
 .sidenav {
-  height: 650px; /* 100% Full-height */
-  width: 0; /* 0 width - change this with JavaScript */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
+  height: 100%; 
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0; 
   left: 0;
-  background-color: gray; /* Black*/
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 60px; /* Place content 60px from the top */
-  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  background-color: gray; 
+  overflow-y: auto; 
+  padding-top: 60px; 
+  transition: 0.5s; 
 }
 
 /* The navigation menu links */
@@ -507,18 +507,28 @@ body{
   margin-left: 50px;
 }
 
-/* Style page content
+/* Style page content*/
 #main {
   transition: margin-left .5s;
   padding: 20px;
 }
 
+@media screen and (max-width: 600px) {
+  .sidenav a {font-size: 20px;}
+}
+@media screen and (max-width: 768px) {
+  #main {
+    margin-left: 0 !important;
+  }
+}
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
 
+
+/* admin_posts */
 
 body.admin_posts {
   box-sizing: inherit;
@@ -527,14 +537,16 @@ body.admin_posts {
 
 .top-link {
   /* text-align: center; */
-  max-width: 100px;
-  margin-left: 100px;
-  margin-top: 50px;
-  margin-bottom: 100px ;
+  max-width: 900px;
   font-weight:300;
   font-size: large;
-  /* float:inline-end; */
-  /* padding-inline: 50px; */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  justify-content: space-between ;
+  margin: 30px auto 20px;
+  padding: 0 12px;
+
   a:link{
     text-decoration: none;
   }
@@ -550,38 +562,46 @@ body.admin_posts {
 }
 /* the form */
 .admin-filter {
-  margin-left:50px;
+  /* margin-left:50px; */
   /* margin-right: 100px; */
   /* float: right; */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  justify-content: space-between ;
+  margin: 0 auto 20px;
+  padding: 0 12px;
 }
 
 input[type=text] {
   border: 1px solid black;
   border-radius: 4px;
-  padding: 10px;
+  padding: 5px;
+  flex: 1 1 150px;
 }
 
 select.category {
-  padding: 12px;
+  padding: 5px;
+  flex: 1 1 150px;
 
 }
 
 select.status {
-  padding: 12px;
+  padding: 5px;
+  flex: 1 1 150px;
 
 }
 
 input[type=date] {
-  padding: 10px;
+  padding: 5px;
+  flex: 1 1 150px;
+
 }
 
 /* table */
-table {
+.table {
   border-collapse: collapse;
-  width: 400px;
-  height:50px;
-  margin-left: 30px;
-  margin-right: 40px;
+  /* max-width: 1000px; */
 }
 
 td {
@@ -592,9 +612,6 @@ th, td {
   padding: 6px;
 }
 
-div.tablecontainer {
-  overflow-x: auto;
-}
 
 p, h1, h2 {
   font-family: inherit;

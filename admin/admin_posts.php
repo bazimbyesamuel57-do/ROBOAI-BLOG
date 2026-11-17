@@ -188,16 +188,16 @@ $result = mysqli_stmt_get_result($stmt);
             <h1 style="text-align: center;" > Manage Posts</h1>
             
             <span onclick="openNav()">&#9776; MENU</span>
-            <div class="top-link" style="max-width: 900px;">
+            <div class="top-link">
 
                 <span>
-                    <a style="float: left;" href="admin_dashboard.php">Dashboard</a>
+                    <a href="admin_dashboard.php">Dashboard</a>
                 </span>
                 <span >
-                    <a style="margin-left: 250px;" href="create.php">&plus; Add a post</a>
+                    <a href="create.php">&plus; Add a post</a>
                 </span>
                 <span>
-                    <a style="float:right;" href="admin_contactfeed.php">Contact us Messages</a>
+                    <a href="admin_contactfeed.php">Contact us Messages</a>
                 </span>
             </div>
 
@@ -237,10 +237,10 @@ $result = mysqli_stmt_get_result($stmt);
                         <option value="published"<?php if ($f_status === 'published') echo ' selected'; ?>>Published</option>
                     </select>
 
-                    <input type="date" name="published_on" value="<?php echo htmlspecialchars($f_published_on); ?>"><br>
+                    <input type="date" name="published_on" value="<?php echo htmlspecialchars($f_published_on); ?>">
 
                     <button style="background-color:lightgray; width:100px; margin-top: 1px;" type="submit">Filter</button>
-                    <a style="color: red; margin-left: 10px;" href="admin_posts.php">Reset</a>
+                    <a style="color: red;" href="admin_posts.php">Reset</a>
 
                 </form>
                     <?php if  ($total == 0) { ?>
@@ -252,8 +252,8 @@ $result = mysqli_stmt_get_result($stmt);
                     <?php } elseif ($page > $total_pages) { ?>
                         <p>No more posts <a href="<?php echo page_link($filters, 1); ?>">Back to first page</a></p>
                     <?php } else { ?>
-                        <p style="margin-left: 50px;"><?php echo $total; ?> post(s) found</p>
-                    <div>
+                        <p><?php echo $total; ?> post(s) found</p>
+                    <div class="table-responsive">
                         <table border="1" class="table table-hover">
                             <tr style="background-color: aquamarine;">
                                 <th>Title</th>
