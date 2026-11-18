@@ -66,7 +66,7 @@ if(isset($_POST['submit'])) {
     <body>
 
         <header class="blog-header">
-            <div class="logo">
+            <div>
                 <!-- <a href="#" class="logo">ROBOAI</a> -->
                 <a href="#"><img style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
             </div>
@@ -75,35 +75,33 @@ if(isset($_POST['submit'])) {
             </div>
         </header>
 
-        <div>
+        <div class="mb-5">
             <h1 style="text-align: center;">Admin Registration</h1>
         </div>
         
-
-        <?php if (!empty($error))
-             echo '<p style="color:red;">' . htmlspecialchars($error) . '</p>'; 
-        ?>
         <div class="container" style="max-width: 500px;">
+            
+            <?php if (!empty($error))
+            echo '<p style="color:red;">' . htmlspecialchars($error) . '</p>'; 
+            ?>
+
             <form action="admin_register.php" method="POST">
                 <div class="mb-3">
-                    <label class="form-label">Name</label><br>
-                    <input class="form-control" type="text" name="name" required><br>
+                    <label class="form-label">Name</label>
+                    <input class="form-control" type="text" name="name" value="<?php echo htmlspecialchars($_POST['name'] ?? ''); ?>" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Email</label><br>
-                    <input class="form-control" type="email" name="email" required><br>
+                    <label class="form-label">Email</label>
+                    <input class="form-control" type="email" name="email" value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Password</label><br>
-                    <input class="form-control" type="password" name="password" required><br>
+                    <label class="form-label">Password</label>
+                    <input class="form-control" type="password" name="password" autocomplete="new-password" required>
                 </div>
-                <input type="submit" name="submit" value="Register">
+                <button class="btn btn-primary w-100 mt-1" type="submit" name="submit">Register</button>
             </form>
         </div>
 
-
-        <div>
-            <footer class="footer">ROBOAI Blog 2026 | <a href="admin_dashboard.php">Dashboard</a> | <a href="admin_posts.php">Manage Posts</a> | Register | <a href="admin_login.php">LogOut</a> |</footer>
-        </div>
+        <footer class="footer">ROBOAI Blog 2026 | <a href="admin_dashboard.php">Dashboard</a> | <a href="admin_posts.php">Manage Posts</a> | Register | <a href="admin_login.php">LogOut</a> |</footer>
     </body>
 </html>

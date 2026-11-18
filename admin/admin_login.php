@@ -59,9 +59,9 @@ if(isset($_POST['submit'])){
 
         <header>
              <div class="log-content">
-                <p style="margin-left: 500px;">
+                <p>
                     <!-- <a href="#" class="logo">ROBOAI</a> -->
-                    <a href="#"><img  style="height: 200px;" class="log" src="/ROBOAI/images/logo.index.png" alt="Roboai Logo"></a>
+                    <a href="#"><img  class="img-logo" class="log" src="/ROBOAI/images/logo.index.png" alt="Roboai Logo"></a>
                 </p>
             </div>
         </header>
@@ -69,41 +69,38 @@ if(isset($_POST['submit'])){
             <h1 style="text-align:center; margin-top: 10px; margin-bottom: 20px">Admin Login</h1>
         </div> -->
 
-        
-
-        <?php
+        <div class="container mb-5" style="max-width: 350px;">
+            <?php
             if (isset($_GET['registered'])) {
                 echo '<p style="color:green;">Account Created. Please log in.</p>';
             }
             if ($error !== '') {
                 echo '<p style="color:red;">' . htmlspecialchars($error) . '</p>';
             }
-        ?>
+            ?>
 
-        <div class="container" style="max-width: 350px; margin-bottom:150Px;">
-
-        <div>
+        <div class="mb-3">
             <h1 style="text-align:center; margin-top: 10px; margin-bottom: 20px">Admin Login</h1>
         </div>
 
             <form action="admin_login.php" method="POST">
                 <!-- Name: <input type="text" name="name" required><br> -->
-                 <div>
+                 <div class="mb-3">
                     <label class="form-label">Email</label><br>
                     <input class="form-control" type="email" name="email" required><br>
                 </div>
-                <div>
+                <div class="mb-2">
                     <label class="form-label">Password</label><br>
                     <input class="form-control" type="password" name="password" required><br>
                 </div>
-                <button type="submit" name="submit">Login</button>
+                <button class="btn btn-primary w-100 mt-1" type="submit" name="submit">Login</button>
             </form>
-        </div>
-        <a href="../home.php">
-            <p style="text-align:center;">Home</p>
-        </a>
-        
 
-        <footer class="footer">ROBOAI Blog 2026 | <a href="../home.php">HOME</a> | Email: ROBOAIgen@gmail.com | contact: +004566000<footer>
+            <a href="../home.php">
+                <p style="text-align:center;">Home</p>
+            </a>
+        </div>        
+
+        <footer class="footer">ROBOAI Blog 2026 | <a href="../home.php">HOME</a> | Email: ROBOAIgen@gmail.com | contact: +004566000</footer>
     </body>
 </html>

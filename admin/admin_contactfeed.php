@@ -69,7 +69,7 @@ $result = mysqli_stmt_get_result($stmt);
         <header class="blog-header">
             <div class="logo">
                 <!-- <a href="#" class="logo">ROBOAI</a> -->
-                <a href="#"><img style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
+                <a href="#"><img class="blog-header-img" style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
             </div>
             <div class="log-auth">
                 <a class="log-auth-btn" href="admin_login.php">Logout</a>
@@ -114,8 +114,7 @@ $result = mysqli_stmt_get_result($stmt);
             </div>
             <?php } ?>
         </div>
-        <div class="footer">
-            <footer class="footer">ROBOAI Blog 2026 | Dashboard | <a href="admin_posts.php">Manage Posts</a> | <a href="admin_register.php">Register</a> | <a href="admin_login.php">LogOut</a> |</footer>
-        </div>
+        
+        <footer class="footer">ROBOAI Blog 2026 | Dashboard | <a href="admin_posts.php">Manage Posts</a> | <a href="admin_register.php">Register</a> | <a href="admin_login.php">LogOut</a> |</footer>
     </body>
 </html>

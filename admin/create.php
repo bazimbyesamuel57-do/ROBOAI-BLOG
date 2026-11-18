@@ -221,7 +221,7 @@ if (isset($_POST['submit'])) {
         <header class="blog-header">
             <div class="logo">
                 <!-- <a href="#" class="logo">ROBOAI</a> -->
-                <a href="#"><img style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
+                <a href="#"><img class="blog-header-img" style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
             </div>
             <div class="log-auth">
                 <a class="log-auth-btn" href="admin_login.php">Logout</a>
@@ -232,7 +232,7 @@ if (isset($_POST['submit'])) {
         </div>
 
 
-        <div class="container" style="max-width:800px;">
+        <div class="container mb-5" style="max-width:800px;">
             <?php
             if (isset($_GET['saved'])) {
                 echo '<p style="color:green;">Post add successfully!</p>';
