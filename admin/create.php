@@ -118,6 +118,8 @@ if (isset($_POST['submit'])) {
 
             if ($_FILES['image']['error'] !==UPLOAD_ERR_OK) {
                 $message = 'The image failed.';
+            } elseif ($_FILES['image']['size'] > 2 * 1024 * 1024) {
+                $message = 'The image must be 2 MB or smaller';
             } elseif (!in_array($ext, $allowed)) {
                 $message = 'Only jpg, png, gif or webp images are allowed.';
             } elseif (getimagesize($_FILES['image']['tmp_name']) ===false) {
@@ -229,35 +231,37 @@ if (isset($_POST['submit'])) {
             <h1 style="text-align: center; margin-top:50px;">Create Post</h1>
         </div>
 
-        <?php
-        if (isset($_GET['saved'])) {
-            echo '<p style="color:green;">Post add successfully!</p>';
-        }
-        if ($message !== '') {
-            echo '<p style="color:red;">' . htmlspecialchars($message) . '</p>';
-        }
-        ?>
+
         <div class="container" style="max-width:800px;">
+            <?php
+            if (isset($_GET['saved'])) {
+                echo '<p style="color:green;">Post add successfully!</p>';
+            }
+            if ($message !== '') {
+                echo '<p style="color:red;">' . htmlspecialchars($message) . '</p>';
+            }
+            ?>
+
             <form action="create.php" method="POST" enctype="multipart/form-data"> <!--multipart/form-data for file uploads-->
                 <div class="mb-3">
-                    <label class="form-label">Post title</label><br>
-                    <input class="form-control" type="text" name="title" placeholder="Give the post title here!" value="<?php echo htmlspecialchars($_POST['title'] ?? $draft['title'] ?? ''); ?>" required><br>
+                    <label class="form-label">Post title</label>
+                    <input class="form-control" type="text" name="title" placeholder="Give the post title here!" value="<?php echo htmlspecialchars($_POST['title'] ?? $draft['title'] ?? ''); ?>" required>
                 </div>
                 
                 <div class="mb-3">
-                    <label class="form-label">Excerpt</label><br>
-                    <textarea class="form-control" rows="6" name="excerpt" placeholder="write the excerpt for the post here!" required><?php echo htmlspecialchars($_POST['excerpt'] ?? $draft['excerpt'] ?? ''); ?></textarea><br>
+                    <label class="form-label">Excerpt</label>
+                    <textarea class="form-control" rows="6" name="excerpt" placeholder="write the excerpt for the post here!" required><?php echo htmlspecialchars($_POST['excerpt'] ?? $draft['excerpt'] ?? ''); ?></textarea>
                 </div>
                 
                 <div class="mb-3">
-                    <label class="form-label">Enter Post Content</label><br>
-                    <textarea class="form-control" rows="9" name="content" placeholder="write the post content here!" required><?php echo htmlspecialchars($_POST['content'] ?? $draft['content'] ?? ''); ?></textarea> <br>
+                    <label class="form-label">Enter Post Content</label>
+                    <textarea class="form-control" rows="9" name="content" placeholder="write the post content here!" required><?php echo htmlspecialchars($_POST['content'] ?? $draft['content'] ?? ''); ?></textarea>
                 </div>
 
                 <div class="mb-2">
-                    <label class="form-label">Choose Author</label><br>
+                    <label class="form-label">Choose Author</label>
                     <select class="form-select form-select-lg mb-2" name="author_id">
-                        <option selected>--choose an author--</option>
+                        <option value="0" selected>--choose an author--</option>
                             <?php while ($a = mysqli_fetch_assoc($author)) { ?>
                                 <option value="<?php echo $a['author_id']; ?>"
                                 <?php if ($chosen_author === (int) $a['author_id']) echo ' selected'; ?>>
@@ -265,20 +269,20 @@ if (isset($_POST['submit'])) {
                                 </option>
                             <?php } ?>
                     </select>
-                    <button type="submit" name="go_to_author"> + New author</button>
+                    <button type="submit" class="btn btn-secondary" name="go_to_author"> + New author</button>
                     
                     <!-- <input type="text" name="author_name" placeholder="Author name" required><br> -->
                 </div>
 
                 <div class="mb-2">
-                    <label class="form-label">Insert image</label><br>
-                    <input class="form-control" type="file" name="image" multiple> <br> <!--selecting file/ image for the post-->
+                    <label class="form-label">Insert image</label>
+                    <input class="form-control" type="file" name="image"> <!--selecting file/ image for the post-->
                 </div>
 
-                <div>
-                    <label class="form-label">Select category</label><br>
+                <div class="mb-2">
+                    <label class="form-label">Select category</label>
                     <select class="form-select form-select-lg mb-2" id="category" name="category_id">
-                        <option selected>--select category--</option>
+                        <option selected value="0">--select category--</option>
                         <?php
                         while ($row =mysqli_fetch_assoc($result))
                             { ?>
@@ -288,23 +292,25 @@ if (isset($_POST['submit'])) {
                         </option>
                          <!--option selection fetched from the database-->
                         <?php }  ?> 
-                    </select> <br>
-                    <label class="form-label">Or Enter category</label><br>
-                    <input class="form-control" type="text" name="new_category_name" placeholder="A category is not under the list" value="<?php echo htmlspecialchars($_POST['new_category_name'] ?? $draft['new_category_name'] ?? ''); ?>"><br>
+                    </select>
+                    <div class="mb-2">
+                        <label class="form-label">Or Enter category</label>
+                        <input class="form-control" type="text" name="new_category_name" placeholder="A category is not under the list" value="<?php echo htmlspecialchars($_POST['new_category_name'] ?? $draft['new_category_name'] ?? ''); ?>">
+                    </div>
                 </div>    
                 
                 <div class="mb-2">
-                    <label class="form-label">Status</label><br>
+                    <label class="form-label">Status</label>
                     <?php $savedStatus = $_POST['status_selection'] ?? $draft['status_selection'] ?? 'draft'; ?>
                     <select class="form-select form-select-lg mb-2" name="status_selection">
-                        <!-- <option value="default">--select--</option> -->
                         <option value="draft" <?php if ($savedStatus === 'draft') echo 'selected'; ?>>Draft</option>
                         <option value="published" <?php if ($savedStatus === 'published') echo 'selected'; ?>>Published</option>
                     </select>
-                    <!-- <input type="text" name="admin_username"> -->
                 </div>
-                <button type="submit" name="submit">Save</button>
-                <a href="admin_posts.php">Cancel</a>
+                <div>
+                    <button type="submit" class="btn btn-primary mt-2" name="submit">Save</button>
+                    <a class="btn btn-secondary mt-2" href="admin_posts.php">Cancel</a>
+                </div>
             </form>
         </div>
 

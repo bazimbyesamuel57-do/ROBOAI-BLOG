@@ -689,7 +689,7 @@ p, h1, h2 {
     height:160px;
     transition: transform 0.4s ease;
 } */
-.col-md-3 img {
+.col-lg-3 img {
   transition: transform 0.4s ease;
 }
 
@@ -698,7 +698,7 @@ p, h1, h2 {
 } */
 
 
-.col-md-3 {
+.col-lg-3 {
     overflow: hidden;
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
@@ -708,7 +708,7 @@ p, h1, h2 {
 } */
 
 @media (prefers-reduced-motion: reduce) {
-    .card, .col-md-3 img { transition: none; }
+    .card, .col-lg-3 img { transition: none; }
 }
 
 

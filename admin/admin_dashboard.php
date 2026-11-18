@@ -146,7 +146,7 @@ While ($row = mysqli_fetch_assoc($calResult)) {
 
             <div class="container my-4">
                 <div class="row g-4">
-                    <div class="col-lg-8">
+                    <div class="col-md-8">
                         <div style=" align-content: center;">
                             <!-- welcome placeholder if no posts -->
                             <?php if ($cardCount === 0): ?>
@@ -166,7 +166,7 @@ While ($row = mysqli_fetch_assoc($calResult)) {
                                     <?php foreach ($cards as $card): ?>
                                         <div class="card mb-3 mx-auto" style="max-width: 800px;">
                                             <article class="row g-0">
-                                                <div class="col-md-3">
+                                                <div class="col-lg-3">
                                                 <?php if (!empty($card['media'])): ?>
                                                     <img class="img-fluid rounded-start w-100 h-100" 
                                                         src="/ROBOAI/<?=htmlspecialchars($card['media']) ?>" alt="<?= htmlspecialchars($card['title']) ?>" 
@@ -179,7 +179,7 @@ While ($row = mysqli_fetch_assoc($calResult)) {
                                                 <?php endif; ?>
                                                 </div>
 
-                                                <div class="col-md-9">
+                                                <div class="col-lg-9">
                                                     <div class="card-body">
                                                         <span class="post-author card-text">
                                                             By <?=  htmlspecialchars($card['author_name'] ?? '') ?> | <?= date('d M Y', strtotime($card['published_on'])) ?>
@@ -215,7 +215,7 @@ While ($row = mysqli_fetch_assoc($calResult)) {
                             
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-md-4">
                         <div class="calendar-container">
                             <header class="cal-title">
                                 <p id="cal-title"></p>
