@@ -40,6 +40,7 @@ $content = nl2br(htmlspecialchars($post['content']));
 $author_bio =htmlspecialchars($post['author_bio'] ?? '');
 $author_image = htmlspecialchars($post['author_image'] ?? '');
 
+
 //showing it
 // echo "<h1>" . htmlspecialchars($post['title']) . "</h1>";
 

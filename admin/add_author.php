@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
             } else {
                 $new_name = uniqid('author_') . '.' . $ext;
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $author_dir . $new_name)) {
-                    $author_image = 'images/authors/' . $new_name;
+                     $author_image = 'images/authors/' . $new_name;
                 } else {
                     $message = 'Could not save the image.';
                 }
@@ -75,7 +75,7 @@ if (isset($_POST['submit'])) {
             }
             $message = 'Error: ' . mysqli_stmt_error($stmt);
             if ($author_image !== ''){
-                unlink('images/authors/' .$author_image);
+                unlink('../' . $author_image);
             } 
         }
     }
@@ -105,36 +105,38 @@ if (isset($_POST['submit'])) {
             <h1 style="text-align: center;">Enter New Author</h1>
         </div>
 
-        <div class="container" style="width:800px;">
+        <div class="container" style="max-width:800px;">
             <?php
             if (isset($_GET['saved'])) {
-                echo '<p style="color:green;">Author added. You can choose them below.</p>';
+                echo '<p style="color:green;">Author added.</p>';
             }
             if ($message !== '') {
                 echo '<p style="color:red;">' . htmlspecialchars($message) . '</p>';
                 
             }
             ?>
+
             <form action="add_author.php" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="from" value="<?php echo htmlspecialchars($from); ?>">
                 <div class="mb-3">
-                    <label class="form-label">Name:</label><br>
-                    <input class="form-control" type="text" name="author_name" placeholder="Enter Author name..." maxlength="255" value="<?php echo htmlspecialchars($_POST['author_name'] ?? ''); ?>" required><br>
+                    <label class="form-label">Name:</label>
+                    <input class="form-control" type="text" name="author_name" placeholder="Enter Author name..." maxlength="255" value="<?php echo htmlspecialchars($_POST['author_name'] ?? ''); ?>" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Biography:</label><br>
-                    <textarea class="form-control form-control-lg" row="8" name="author_bio" placeholder="Enter author's bio..."><?php echo htmlspecialchars($_POST['author_bio'] ?? ''); ?></textarea><br>
+                    <label class="form-label">Biography:</label>
+                    <textarea class="form-control form-control-lg" rows="8" name="author_bio" placeholder="Enter author's bio..."><?php echo htmlspecialchars($_POST['author_bio'] ?? ''); ?></textarea>
                 </div>
                 <!-- <select>
                     <option></option>
                 </select> -->
                 <div class="mb-3">
-                <label class="form-label">Insert image:</label><br>
-                <input class="form-control" type="file" name="image" accept="image/*"><br>
-                <input type="hidden" name="from" value="<?php echo htmlspecialchars($from); ?>">
+                <label class="form-label">Insert image:</label>
+                <input class="form-control" type="file" name="image" accept="image/*">
+                <!-- <input type="hidden" name="from" value="<?php echo htmlspecialchars($from); ?>"> -->
                 </div>
 
-                <button type="submit" name="submit">Save author</button>
-                <a href="<?php echo $from === 'create' ? 'create.php' : 'admin_posts.php'; ?>">Cancel</a>
+                <button class="btn btn-primary mt-2" type="submit" name="submit">Save author</button>
+                <a class="btn btn-secondary mt-2" href="<?php echo $from === 'create' ? 'create.php' : 'admin_posts.php'; ?>">Cancel</a>
             </form>
         </div>
 
