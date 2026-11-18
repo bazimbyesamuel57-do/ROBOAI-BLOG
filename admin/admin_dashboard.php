@@ -144,104 +144,106 @@ While ($row = mysqli_fetch_assoc($calResult)) {
             </div>
             <span onclick="openNav()">&#9776; MENU</span>
 
+            <div class="container my-4">
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        <div style=" align-content: center;">
+                            <!-- welcome placeholder if no posts -->
+                            <?php if ($cardCount === 0): ?>
 
-            <div class="calendar-container">
-                <header class="cal-title">
-                    <p id="cal-title"></p>
-                    <div>
-                        <button type="button" id="cal-prev"> &lt; </button>
-                        <button type="button" id="cal-next"> &gt; </button>
+                                <div class="slideshow-container">
+                                        <div style="text-align:center; padding:60px; background:#f0f0f0;">
+                                            <!-- <h2>Welcome to ROBOAI Blog</h2> -->
+                                            <p>No posts yet,<a href="create.php">Create Post</a></p>
+                                        </div>
+                                </div>
+                                
+                            
+                                
+                            <?php elseif ($cardCount > 0): ?>
+
+                                <section>
+                                    <?php foreach ($cards as $card): ?>
+                                        <div class="card mb-3 mx-auto" style="max-width: 800px;">
+                                            <article class="row g-0">
+                                                <div class="col-md-3">
+                                                <?php if (!empty($card['media'])): ?>
+                                                    <img class="img-fluid rounded-start w-100 h-100" 
+                                                        src="/ROBOAI/<?=htmlspecialchars($card['media']) ?>" alt="<?= htmlspecialchars($card['title']) ?>" 
+                                                        style=" object-fit: cover; max-height:250px;">
+
+                                                <?php else: ?>
+                                                    <div class="d-flex align-items-center justify-content-center bg-light h-100 p-4">
+                                                        <p>No image</p>
+                                                    </div>
+                                                <?php endif; ?>
+                                                </div>
+
+                                                <div class="col-md-9">
+                                                    <div class="card-body">
+                                                        <span class="post-author card-text">
+                                                            By <?=  htmlspecialchars($card['author_name'] ?? '') ?> | <?= date('d M Y', strtotime($card['published_on'])) ?>
+                                                        </span><br>
+
+                                                        <h3 class="card-title h5 mt-2">
+                                                            <?= htmlspecialchars($card['title']) ?>
+                                                        </h3>
+
+                                                        <p class="excerpt card-text">
+                                                            <?=  htmlspecialchars($card['excerpt'] ?? '') ?>
+                                                        </p>
+                                                        
+                                                        <a class="readme" href="../post_details.php?id=<?= (int)$card['post_id'] ?>">
+                                                            Read more
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                        </div>
+                                    <?php endforeach; ?>
+                                    
+                                    
+                                    <!-- see more link, takes you to the posts_categories list -->
+                                    <div style="text-align:center; margin-top:20px;">
+                                        <a href="admin_posts.php" class="see-more-btn">
+                                            Manage Posts &rarr;
+                                        </a>
+                                    </div>
+
+                                </section>
+                            <?php endif; ?>
+                            
+                        </div>
                     </div>
-                </header>
+                    <div class="col-lg-4">
+                        <div class="calendar-container">
+                            <header class="cal-title">
+                                <p id="cal-title"></p>
+                                <div>
+                                    <button type="button" id="cal-prev"> &lt; </button>
+                                    <button type="button" id="cal-next"> &gt; </button>
+                                </div>
+                            </header>
 
-                <div class="cal-body">
-                    <ul class="cal-days">
-                        <li>Sun</li>
-                        <li>Mon</li>
-                        <li>Tue</li>
-                        <li>Wed</li>
-                        <li>Thur</li>
-                        <li >Fri</li>
-                        <li>Sat</li>
-                    </ul>
-                    <ul class="calender-dates" id="cal-grid"></ul>
-                    <div id="cal-posts">
-                        Click a day to see its posts.
+                            <div class="cal-body">
+                                <ul class="cal-days">
+                                    <li>Sun</li>
+                                    <li>Mon</li>
+                                    <li>Tue</li>
+                                    <li>Wed</li>
+                                    <li>Thur</li>
+                                    <li >Fri</li>
+                                    <li>Sat</li>
+                                </ul>
+                                <ul class="calender-dates" id="cal-grid"></ul>
+                                <div id="cal-posts">
+                                    Click a day to see its posts.
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-
-
-            <div style=" align-content: center;">
-                <!-- welcome placeholder if no posts -->
-                <?php if ($cardCount === 0): ?>
-
-                    <div class="slideshow-container">
-                            <div style="text-align:center; padding:60px; background:#f0f0f0;">
-                                <!-- <h2>Welcome to ROBOAI Blog</h2> -->
-                                <p>No posts yet,<a href="create.php">Create Post</a></p>
-                            </div>
-                    </div>
-                    
-                
-                       
-                <?php elseif ($cardCount > 0): ?>
-
-                    <section class="container my-4">
-                        <?php foreach ($cards as $card): ?>
-                            <div class="card mb-3" style="max-width: 800px;">
-                                <article class="row g-0">
-                                    <div class="col-md-3">
-                                    <?php if (!empty($card['media'])): ?>
-                                        <img class="img-fluid rounded-start w-100 h-100" 
-                                            src="/ROBOAI/<?=htmlspecialchars($card['media']) ?>" alt="<?= htmlspecialchars($card['title']) ?>" 
-                                            style=" object-fit: cover; max-height:250px;">
-
-                                    <?php else: ?>
-                                        <div class="d-flex align-items-center; justify-content bg-light h-100 p-4">
-                                            <p>No image</p>
-                                        </div>
-                                    <?php endif; ?>
-                                    </div>
-
-                                    <div class="col-md-9">
-                                        <div class="card-body">
-                                            <span class="post-author card-text">
-                                                By <?=  htmlspecialchars($card['author_name'] ?? '') ?> | <?= date('d M Y', strtotime($card['published_on'])) ?>
-                                            </span><br>
-
-                                            <h3 class="card-title h5 mt-2">
-                                                <?= htmlspecialchars($card['title']) ?>
-                                            </h3>
-
-                                            <p class="excerpt card-text">
-                                                <?=  htmlspecialchars($card['excerpt'] ?? '') ?>
-                                            </p>
-                                            
-                                            <a class="readme" href="../post_details.php?id=<?= (int)$card['post_id'] ?>">
-                                                Read more
-                                            </a>
-                                        </div>
-                                    </div>
-                                </article>
-                            </div>
-                        <?php endforeach; ?>
-                        
-                        
-                        <!-- see more link, takes you to the posts_categories list -->
-                        <div style="text-align:center; margin-top:20px;">
-                            <a href="admin_posts.php" class="see-more-btn">
-                                Manage Posts &rarr;
-                            </a>
-                        </div>
-
-                    </section>
-                <?php endif; ?>
-                
-            </div>
-            <br>
-
         </main>
 
 

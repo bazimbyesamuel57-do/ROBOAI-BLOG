@@ -300,3 +300,38 @@ Use placeholders for database credentials in the repo; document the demo login i
 - A global `img { height: 160px; object-fit: cover }` rule affected every image on the site (logo, slideshow); it was replaced by a rule scoped to `.card-img-top`.
 - Duplicate rules and an unused `overflow` rule were removed during cleanup.
 Also add one line to your list of files changed: style.css (hover and zoom), and to the screenshots checklist: "card hovered" and "image zoomed".
+
+
+Here is the section for your log and README, as facts you can reword. It follows the numbering of your project log (section 15).
+
+## 15. Contact messages pagination and responsive admin pages
+
+### Pagination on admin_contactfeed.php
+- 10 messages per page. `$page` is read from `?page=` (at least 1), `$offset = ($page - 1) * $per_page`.
+- Two queries: `SELECT COUNT(*) FROM contact_us` for the total, and a prepared `SELECT ... ORDER BY contact_us_id DESC LIMIT ? OFFSET ?` (bound as two integers) for one page.
+- Three cases are handled: no messages ("No messages yet."), a page number past the end ("No more messages" with a link to page 1), and the normal table with "Page X of Y" and Prev / Next links.
+- The separator between Prev and Next only shows when both links exist.
+- The same pattern is used on admin_posts.php, where the active filters are also kept in the Prev / Next links (`page_link()` with `http_build_query`).
+
+### Responsive layout (admin_contactfeed.php and admin_posts.php)
+- Centered content blocks use `max-width`, `width: 100%` and `margin: 0 auto` instead of fixed pixel margins.
+- Wide tables sit in Bootstrap's `table-responsive` wrapper, so only the table scrolls sideways on a phone and the page does not.
+- The global `table { width: 400px; margin-left: 30px; ... }` rule was removed because it affected every table on the site.
+- The three top links and the filter form are flex containers with `flex-wrap` and `gap`, so their items wrap on narrow screens.
+- Pagination is centered with `text-align: center` instead of `margin-left: 580px`.
+- Side menu: `#main` is no longer pushed on screens up to 768 px (`@media (max-width: 768px) { #main { margin-left: 0 !important; } }`), so the menu opens over the content. The `!important` is needed to win against the inline margin that `openNav()` sets. `closeNav()` always resets the margin. The menu has `height: 100%` and `overflow-y: auto`.
+- Tested at 375 px, 768 px and a wide desktop width using the browser's device toolbar.
+
+### Problems found and fixed
+| Problem | Cause | Fix |
+|---|---|---|
+| Fatal error after copying the pagination block | The block still referred to `posts`, `$where_sql`, `$types` and `$params` | Adapted the queries and bindings to `contact_us` |
+| Page count was wrong | The count query read the `posts` table (`FROM posts contact_us`) | `FROM contact_us` |
+| A stray "1" between Prev and Next | `<?= $a && $b ?>` prints the boolean | `if` around a ` | ` separator |
+| Layout broke when pages had no messages | An outer `div` was closed in only one of three branches | One closing tag after the whole `if` |
+| Big gap on the left on phones | Inline `margin-left: 250px` from `openNav()` stayed on small screens | Media query with `!important`; `closeNav()` always resets |
+| The `#main` styles were ignored | A comment was never closed and swallowed the rule | Closed the comment |
+| Media query ignored | `(max-width)` had no value | `(max-width: 600px)` |
+
+### Files changed
+admin_contactfeed.php, admin_posts.php, admin.css
