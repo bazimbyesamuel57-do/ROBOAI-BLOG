@@ -357,3 +357,105 @@ For your log (section 15):
 - Contact: max-width form, email input type, values kept after an error, redirect after a successful send (no duplicate on refresh).
 - About us: wrapping team cards instead of floats and fixed margins.
 - Footer: sticky footer using a flex column body and `min-height: 100dvh`.
+
+
+Database setup
+The database is roboai_blog_db. The file schema.sql contains the structure (tables) and the sample data, including a demo admin account.
+
+Import (first time or to reset)
+Start Apache and MySQL in the XAMPP Control Panel.
+Open phpMyAdmin: http://localhost/phpmyadmin.
+Click the Import tab (at the top, with no database selected, because the file creates the database itself).
+Click Choose file and select schema.sql. Keep the format SQL and the character set utf-8.
+Click Import at the bottom.
+When it finishes, roboai_blog_db appears in the left list.
+Importing again replaces the tables (the file drops and recreates them), so any data you added after the export is lost.
+
+Connection settings
+The connection is defined in connect.php (host localhost, user root, empty password, port 3307). If your MySQL runs on the default port 3306, change the port there.
+
+Demo admin login
+Email: <demo admin email>
+Password: <demo admin password>
+Images
+The database stores image paths only. The picture files are in images/ and images/authors/, so keep these folders when you copy the project.
+
+Troubleshooting
+Message	What to do
+"Table already exists"	The file was exported without the DROP TABLE option. Re-export with it, or delete the old database first
+Foreign key error during import	On the Import page, untick Enable foreign key checks, then import again
+File too large	Increase upload_max_filesize and post_max_size in php.ini, then restart Apache
+
+
+
+Here is each file, one at a time. Create them in the project folder (C:\xampp\htdocs\ROBOAI), so it looks like this:
+
+ROBOAI/
+├── backup_db.bat        ← file 1
+├── restore_db.bat       ← file 2
+├── roboai_db/           ← the folder for the dump (the backup creates it if missing)
+│   └── database.sql     ← created by file 1
+├── admin/
+├── images/
+└── ...
+How to create a .bat file correctly
+
+Open Notepad (or VS Code) and paste the content.
+Notepad: File, Save as, set "Save as type" to All files, and type the name with .bat at the end (for example backup_db.bat). Otherwise Windows saves it as backup_db.bat.txt.
+In File Explorer, turn on "File name extensions" (View, Show) to check the real ending.
+File 1: backup_db.bat (database to file)
+
+@echo off
+cd /d "%~dp0"
+if not exist roboai_db mkdir roboai_db
+"C:\xampp\mysql\bin\mysqldump.exe" -u root --port=3307 --databases roboai_blog_db > roboai_db\database.sql
+if errorlevel 1 (
+    echo Backup FAILED. Is MySQL running on port 3307?
+) else (
+    echo Backup saved to roboai_db\database.sql
+)
+pause
+File 2: restore_db.bat (file to database)
+
+@echo off
+cd /d "%~dp0"
+echo This replaces the current roboai_blog_db with roboai_db\database.sql
+echo Close this window to cancel.
+pause
+"C:\xampp\mysql\bin\mysql.exe" -u root --port=3307 < roboai_db\database.sql
+if errorlevel 1 (
+    echo Restore FAILED.
+) else (
+    echo Restore finished.
+)
+pause
+File 3 (optional): a section in your README
+
+## Database backup and restore (Windows with XAMPP)
+- `backup_db.bat`: double-click to save the current database to `roboai_db\database.sql`.
+- `restore_db.bat`: double-click to replace the current database with that file (this overwrites the current data).
+- Requirements: XAMPP's MySQL is running on port 3307, and XAMPP is installed in `C:\xampp`.
+- The standard way to load `schema.sql` is the phpMyAdmin **Import** tab (see "Database setup").
+If your setup differs, change only these values
+
+Value	Where	Change it if
+C:\xampp\mysql\bin\	both batch files	XAMPP is installed in another folder
+--port=3307	both batch files	your MySQL uses the default port 3306 (then delete the part)
+-u root	both batch files	your MySQL user is not root; if it has a password, add -p and enter it when asked
+Run them in this order to test:
+
+Start MySQL in XAMPP.
+Double-click backup_db.bat. It should end with "Backup saved...". Open roboai_db\database.sql and check for six CREATE TABLE lines and a fresh "Dump completed" date.
+Add a test comment on a post. Run the backup again, and check the new row is in the file.
+Delete that comment in phpMyAdmin. Double-click restore_db.bat, press a key to continue, and the comment is back.
+
+Good. Backup and restore both work, and you have a tested way to get the database back. That is also a solid answer to "what happens if the data gets damaged?" in your documentation.
+
+Commit backup_db.bat, restore_db.bat and the latest roboai_db/database.sql with a message like "Add database backup and restore scripts". Make a fresh backup right before you commit, so the file matches your latest data.
+
+For your log (decisions and challenges):
+
+### Database backup and restore
+- `backup_db.bat` runs `mysqldump --databases` and writes `roboai_db\database.sql`; `restore_db.bat` loads it with the `mysql` client.
+- Challenge: the first backup file never changed. A `.sql` file does not update the database by itself (only a restore does), the batch file wrote to a different folder than the one I was checking, errors were invisible without `pause`, and the dump lacked `CREATE DATABASE` / `USE`.
+- Fix: `cd /d "%~dp0"`, create the folder if missing, `--databases`, a success or failure message, and a separate restore script with a confirmation pause.

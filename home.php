@@ -65,9 +65,6 @@ if ($totalPosts > 4) {
     </head>
 
     <body class="home">
-        <!-- <h1>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h1>
-        <h1>This is a protected dashboard page.</h1>
-        <a href="logout.php">Log Out</a> -->
         <header>
         <div class="blog-header">
             <div class="logo">

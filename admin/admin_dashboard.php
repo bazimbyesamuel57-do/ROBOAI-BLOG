@@ -105,10 +105,6 @@ While ($row = mysqli_fetch_assoc($calResult)) {
     </head>
 
     <body>
-        <!-- <h1>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h1>
-        <h1>This is a protected dashboard page.</h1>
-        <a href="logout.php">Log Out</a> -->
-
         <header class="blog-header">
             <div class="logo">
                 <!-- <a href="#" class="logo">ROBOAI</a> -->
