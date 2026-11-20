@@ -105,7 +105,7 @@ function pageUrl(int $p, int $cat, string$q) {
          
         
     </head>
-    <body>
+    <body class="post_categories">
 
         <header>
             <div class="blog-header">

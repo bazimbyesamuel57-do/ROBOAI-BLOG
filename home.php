@@ -62,22 +62,17 @@ if ($totalPosts > 4) {
         
         <link rel="stylesheet" href="style.css">
 
-        <!-- <a href="helper.php"></a> -->
     </head>
 
-    <body>
+    <body class="home">
         <!-- <h1>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h1>
         <h1>This is a protected dashboard page.</h1>
         <a href="logout.php">Log Out</a> -->
         <header>
         <div class="blog-header">
             <div class="logo">
-                <!-- <a href="#" class="logo">ROBOAI</a> -->
                 <a href="#"><img class="logo-img" style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
             </div>
-            <!-- <div class="log-auth">
-                <a class="log-auth-btn" href="admin_login.php">Logout</a>
-            </div> -->
         </div>
           
             <div class="topnav">
@@ -96,26 +91,7 @@ if ($totalPosts > 4) {
                 <button class="hsearch-button" type="submit">Search</button>
             </form>
         </div>
-        <!-- <div id="sidenav" class="sidenav"> hover side bar -->
-            <!-- <a href="#" id="home">Home</a>
-            <a href="post_categories.html" id="categories">Categories</a>
-            <a href="#" id="posts">Posts</a>
-        </div> -->
-        <!-- <div class="Menubar">
-            <a href="#home">Menu</a>
-            <a href="#news">Categories</a>
-            <a href="#Posts">Posts</a>
-            <div class="dropdown">
-                <button class="dropbtn">Menu
-                <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
-                    <a href="#">Home</a>
-                    <a href="#">Categories</a>
-                    <a href="#">Posts</a>
-                </div>
-            </div>
-        </div> -->
+
         <main>
             <div>
                 <div>

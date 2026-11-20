@@ -343,3 +343,17 @@ For your log (section 15):
 - Home slideshow changed from fade to sliding: all slides sit in a flex row (`.slides-track`) inside an `overflow: hidden` window; `showSlides()` moves the row with `translateX(-(index-1) * 100%)` and a CSS transition. Removing the display toggling also removed the blank flash between slides.
 - Slide image height is set in CSS (350 px, 220 px on phones) instead of inline.
 - Known limitation: wrapping from the last slide to the first slides backwards across all pictures.
+
+A point for the log and README (no urgent change): the $where here is built from a string, with (int) for the category and mysqli_real_escape_string for the search. That is acceptable, but the rest of the project uses prepared statements. If you have time, convert this page for consistency, and note it as a known limitation otherwise.
+
+
+For your log (section 15):
+
+### Visitor pages responsiveness
+- Shared header: centered logo, flex-wrap navigation, search box and button in one flex row with equal height.
+- Home: sliding slideshow (flex track + translateX); cards 1 / 3 per row (`row-cols-1 row-cols-md-3`); hover effects only on devices with a mouse.
+- Categories: centered flex filter, `row-cols-1 row-cols-sm-2 row-cols-lg-4`, balanced layout.
+- Post details: flex author box, constant image heights per breakpoint, comment form fields full width.
+- Contact: max-width form, email input type, values kept after an error, redirect after a successful send (no duplicate on refresh).
+- About us: wrapping team cards instead of floats and fixed margins.
+- Footer: sticky footer using a flex column body and `min-height: 100dvh`.
