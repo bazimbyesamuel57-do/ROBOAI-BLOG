@@ -70,7 +70,7 @@ $author_image = htmlspecialchars($post['author_image'] ?? '');
                 </div> -->
             </div>
              <div class="topnav">
-                <nav style="margin-left: 250px;">
+                <nav>
                     <a href="home.php">Home</a>
                     <a href="post_categories.php">Post/Categories</a>
                     <a href="about_us.html">About Us</a>
@@ -83,22 +83,27 @@ $author_image = htmlspecialchars($post['author_image'] ?? '');
             <p>By <?php echo $author; ?> on <?php echo $date; ?></p>
 
             <!-- the image in the post -->
+             <div class="mb-3">
             <?php if (!empty($media)) { ?>
-                <img src="<?php echo $media; ?>" alt="<?php echo $title; ?>" style="max-width: 100%;">
+                <img class="post-img" src="<?php echo $media; ?>" alt="<?php echo $title; ?>">
             <?php } ?>
+            </div>
 
-            <div><?php echo $content; ?></div>
+            <!--post article-->
+            <div class=" post-body mb-3"><?php echo $content; ?></div>
 
             <!-- author bio  -->
             <div class ="author-box">
                 <?php if (!empty($author_image)) { ?>
-                    <img src="<?php echo $author_image; ?>" alt="<?php echo $author; ?>"
-                    style="width:80px; height:80px; border-radius:50%; object-fit:cover;">
+                    <img class="author-box-img" src="<?php echo $author_image; ?>" alt="<?php echo $author; ?>"
+                    >
                 <?php } ?>
-                <p><strong>About <?php echo $author; ?></strong></p>
+                <div class="author-text">
+                    <p><strong>About <?php echo $author; ?></strong></p>
                 <?php if (!empty($author_bio)) { ?>
                     <p><?php echo $author_bio; ?></p>
                 <?php } ?>
+                </div>
             </div>
 
             <p><a href="post_categories.php">&larr; Back to all posts</a></p> 
@@ -128,22 +133,22 @@ $author_image = htmlspecialchars($post['author_image'] ?? '');
                     
                         <form id="comment-form-js" method="POST" action="script.php">
                             <!--Name input-->
-                            <div class="mb-3">
+                            <div class=" group-form mb-3">
                                 <label class="form-label" for="name">Name:</label>
-                                <input type="text" id="name" name="name" placeholder="Your Name" required maxlength="30">
+                                <input class="control-form" type="text" id="name" name="name" placeholder="Your Name" required maxlength="30">
                             </div>
                             <!--Email Inpuut-->
-                            <div class="group-form">
+                            <div class="group-form mb-3">
                                 <label class="form-label" for="email">Email:</label>
                                 <input class="control-form" type="email" id="email" name="email" placeholder="your.email@123.example.com" required>
                             </div>
                             <!--comment textarea-->
-                            <div class="group-form mb-5">
+                            <div class="group-form mb-3">
                                 <label class="form-label" for="comment">Comment:</label>
                                 <textarea class="control-form"  rows="5" id="comment" name="comment" placeholder="Write your comment here..." required aria-label="write a comment"></textarea>
                                 <input type="hidden" name="post_id" value="<?php echo $id; ?>">
                             </div>
-                                <button type="submit" class="btn mb-3"style="background-color: lightslategray; color: black; margin-top: 35px;">Post Comment</button>
+                                <button type="submit" class="btn btn-secondary mt-3"style="color: black;">Post Comment</button>
                             
                         </form>
                         <p id="comment-error" style="color: red;"></p>
@@ -206,9 +211,7 @@ $author_image = htmlspecialchars($post['author_image'] ?? '');
                     
             </section>
         </div>
-        <div>
-            <footer class="footer">ROBOAI Blog 2026 | Home | About | Contact |</footer>
-        </div>
+        <footer class="footer">ROBOAI Blog 2026 | Home | About | Contact |</footer>
 
 
         <script>

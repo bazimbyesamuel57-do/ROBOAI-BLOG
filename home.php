@@ -81,29 +81,9 @@ if ($totalPosts > 4) {
         </div>
           
             <div class="topnav">
-                <nav style="margin-left:250px;">
-                    <a class="active" href="#">Home</a>
-                    
+                <nav>
+                    <a class="active" href="home.php">Home</a>
                     <a href='post_categories.php'>Post/Categories</a>
-                    <!-- <div class="dropdown">
-                        <button class="dropbtn">News&Trends 
-                            <i class="fa fa-caret-down"></i>
-                        </button>
-                        <div class="dropdown-content">
-                            <a href="#">News in the Tech world</a>
-                            
-                        </div>
-                    </div> -->
-
-                    <!-- <div class="dropdown">
-                        <button class="dropbtn">Resources 
-                            <i class="fa fa-caret-down"></i>
-                        </button>
-                        <div class="dropdown-content">
-                            <a href="#">AI trends</a>
-                            <a href="#">Robotics trends</a>
-                        </div>
-                    </div> -->
                     <a href="about_us.html">About Us</a>
                     <a href="contact.php">Contact Us</a>
                 </nav>
@@ -112,7 +92,7 @@ if ($totalPosts > 4) {
         </header>
         <div>
             <form class="hsearchtab" action="post_categories.php" method="GET"> <!--search.php ods the filename where the files are picked and method use GET for search -->
-                <input class="hsearch" type="text" name="q" placeholder="search post..." style="width:400px;" required> <!--name='q' where q is the query sent-->
+                <input class="hsearch" type="text" name="q" placeholder="search post..." required> <!--name='q' where q is the query sent-->
                 <button class="hsearch-button" type="submit">Search</button>
             </form>
         </div>
@@ -155,7 +135,7 @@ if ($totalPosts > 4) {
                         <?php if ($slideCount === 0): ?>
 
                             <div class="slideshow-container">
-                                <div class="slides fade">
+                                <div class="slides">
                                     <div class="number">1/1</div>
                                     <div style="text-align:center; padding:60px; background:#f0f0f0;">
                                         <h2>Welcome to ROBOAI Blog</h2>
@@ -165,21 +145,23 @@ if ($totalPosts > 4) {
                             </div>
                         <?php else: ?>
                             <div class="slideshow-container">
-                                
+                                <div class="slide-window">
+                                    <div class="slides-track" id="slidesTrack">
                                 <?php foreach ($slides as $i => $slide): ?>
-                                    <div class="slides fade">
-                                        <div class="number">
-                                            <?= $i + 1 ?>/<?= $slideCount ?>
+                                        <div class="slides">
+                                            <div class="number">
+                                                <?= $i + 1 ?>/<?= $slideCount ?>
+                                            </div>
+                                            <a href="post_details.php?id=<?= (int)$slide['post_id'] ?>">
+                                                <img class="slide-img" src="<?= htmlspecialchars($slide['media']) ?>" alt="<?= htmlspecialchars($slide['title']) ?>">
+                                            </a>
+                                            <div class="text" style="bottom: 30px;">
+                                                <?=  htmlspecialchars($slide['title']) ?>
+                                            </div>
                                         </div>
-                                        <a href="post_details.php?id=<?= (int)$slide['post_id'] ?>">
-                                            <img src="<?= htmlspecialchars($slide['media']) ?>" alt="<?= htmlspecialchars($slide['title']) ?>" style="width: 100%; height:350px; object-fit:cover;">
-                                        </a>
-                                        <div class="text" style="bottom: 30px;">
-                                            <?=  htmlspecialchars($slide['title']) ?>
-                                        </div>
-                                    </div>
                                 <?php endforeach; ?>
-                                
+                                    </div>
+                                </div>
                                     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
 
                                     <a class="next" onclick="plusSlides(1)">&#10095;</a>
@@ -199,7 +181,7 @@ if ($totalPosts > 4) {
                     <?php if ($totalPosts > 4 && $cardCount > 0): ?>
 
                         <section class="mt-4">
-                            <div class="row row-cols-3 g-3">
+                            <div class="row row-cols-1 row-cols-md-3 g-3">
                             <?php foreach ($cards as $card): ?>
                                 <div class="col" style="min-width:0;">
                                     <article class="card h-100">
@@ -270,25 +252,23 @@ if ($totalPosts > 4) {
             function showSlides(n) {
                 const slides = document.getElementsByClassName("slides");
                 const dots   = document.getElementsByClassName("dot");
+                const track = document.getElementById("slidesTrack");
 
-                if (slides.length === 0) return;
+                if (slides.length === 0 || !track) return;
 
                 if (n > slides.length) slideIndex = 1;
                 if (n < 1)             slideIndex = slides.length;
 
-                for (let i = 0; i < slides.length; i++)
-                    slides[i].style.display = "none";
-
                 for (let i = 0; i < dots.length; i++)
                     dots[i].className = dots[i].className.replace(" active", "");
 
-                slides[slideIndex - 1].style.display = "block";
+                track.style.transform = "translateX(" + (-(slideIndex - 1) * 100) + "%)";
                 if (dots.length > 0)
                     dots[slideIndex - 1].className += " active";
  
             }
             //auto slide every 2 seconds
-            setInterval(() => plusSlides(1), 2000);
+            setInterval(() => plusSlides(1), 5000);
         </script>
     </body>
 </html>

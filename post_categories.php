@@ -119,7 +119,7 @@ function pageUrl(int $p, int $cat, string$q) {
         </div>
         
             <div class="topnav">
-                <nav style="margin-left: 250px;">
+                <nav>
                     <a href="home.php">Home</a>
                     <a class="active" href="post_categories.php">Post/Categories</a>
                     <a href="about_us.html">About Us</a>
@@ -131,7 +131,7 @@ function pageUrl(int $p, int $cat, string$q) {
         <div>
             <!-- search bar with actegory filter -->
              <form class="hsearchtab" method="GET" action="post_categories.php">
-                <input class="hsearch" type="text" name="q" placeholder="search posts..." value="<?= htmlspecialchars($search) ?>" style="width: 400px;" required>
+                <input class="hsearch" type="text" name="q" placeholder="search posts..." value="<?= htmlspecialchars($search) ?>" required>
                 <button class="hsearch-button" type="submit" >Search</button>
 
                 <input type="hidden" name="category" value="<?= (int)$categoryFilter ?>">
@@ -140,7 +140,7 @@ function pageUrl(int $p, int $cat, string$q) {
             <div class="cat-filter">
                 <label>FIND BY CATEGORIES:</label>
                 <div class="btn-group">
-                    <button class="btn dropdown-toggle" type="button"
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                         <?php
                         $current = 'All';
@@ -153,7 +153,7 @@ function pageUrl(int $p, int $cat, string$q) {
                         ?>
                     </button>
 
-                    <ul class="dropdown-menu" style="max-height:250px; overflow-y:auto;">
+                    <ul class="dropdown-menu btn dropdown-toggle" style="max-height:250px; overflow-y:auto;">
                         <li>
                             <a class="dropdown-item <?= $categoryFilter === 0 ? 'active' : '' ?>"
                             href="<?= pageUrl(1, 0, $search) ?>">All</a>
@@ -180,17 +180,18 @@ function pageUrl(int $p, int $cat, string$q) {
             <!-- posts card lists -->
             <div class="container">
                 <?php if  (empty($posts)): ?>
-                    <p style="text-align:center; margin-top:40px";>
+                    <p style="text-align:center; margin-top:40px;">
                         No posts found
                         <?= $search !== '' ? ' for <strong>' . htmlspecialchars($search) . '</strong>' : '' ?>
                         <?php if ($categoryFilter > 0):
                             foreach ($categories as $cat) {
                                 if((int)$cat['category_id'] === $categoryFilter) {
-                                    echo "in <strong>" . htmlspecialchars($cat['category_name']) . '</strong>';
+                                    echo "in <strong>" . htmlspecialchars($cat['category_name']) . '</strong>'; 
                                     break;
                                 }
                             }
                         endif; ?>.
+                        <a href="post_categories.php">back</a>
                     </p>
                 
                 <?php else: ?>
@@ -217,7 +218,7 @@ function pageUrl(int $p, int $cat, string$q) {
                                             </a>
                                         </div>
                                     <?php else: ?>
-                                        <div class="d-flex align-items-center; justify-content bg-light h-100 p-4">
+                                        <div class="d-flex align-items-center justify-content-center bg-light h-100 p-4">
                                             <p>No image</p>
                                         </div>
                                     <?php endif; ?>
@@ -244,32 +245,30 @@ function pageUrl(int $p, int $cat, string$q) {
                 <?php endif; ?>                        
          
              
-            <!-- the previous and next pagination -->
-            <?php if ($totalPages > 1): ?>
-                <div>
-                    <?php if ($page > 1): ?> 
-                        <a href="<?= pageUrl($page - 1, $categoryFilter, $search) ?>">
-                            &laquo; Previous
-                        </a>
-                    <?php endif; ?>
+                <!-- the previous and next pagination -->
+                <?php if ($totalPages > 1): ?>
+                    <div class="text-center my-4">
+                        <?php if ($page > 1): ?> 
+                            <a href="<?= pageUrl($page - 1, $categoryFilter, $search) ?>">
+                                &laquo; Previous
+                            </a>
+                        <?php endif; ?>
 
-                    <span style="margin:0 15px;">
-                        Page <?= $page ?> of <?= $totalPages ?>&nbsp;(<?=  $totalPosts ?> posts)
-                    </span>
+                        <span style="margin:0 15px;">
+                            Page <?= $page ?> of <?= $totalPages ?>&nbsp;(<?=  $totalPosts ?> posts)
+                        </span>
 
-                    <?php if ($page < $totalPages): ?>
-                        <a href="<?= pageUrl($page + 1, $categoryFilter, $search) ?>">
-                            Next &raquo;
-                        </a>
-                    <?php endif; ?>
-                </div>
-            <?php endif; ?>
+                        <?php if ($page < $totalPages): ?>
+                            <a href="<?= pageUrl($page + 1, $categoryFilter, $search) ?>">
+                                Next &raquo;
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
         </diV>
 
-        
-        <div>
-            <footer class="footer">ROBOAI Blog 2026 | <a href="home.php">Home</a> | <a href="about_us.html">About</a> | <a href="contact.php">Contact</a> |</footer>
-        </div>
+        <footer class="footer">ROBOAI Blog 2026 | <a href="home.php">Home</a> | <a href="about_us.html">About</a> | <a href="contact.php">Contact</a> |</footer>
     
     </body>
 </html>

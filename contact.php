@@ -6,10 +6,10 @@ $message = '';
 // reading the fields into variables
 if (isset($_POST['submit'])) {   // the isset($_POST ['submit ]) checks the form actually submitted beform reading anything
     // read fields
-    $firstname = trim($_POST['firstname']);
-    $lastname = trim($_POST['lastname']);
-    $email = trim($_POST['email']);
-    $subject =trim($_POST['subject']);
+    $firstname = trim($_POST['firstname'] ?? '');
+    $lastname = trim($_POST['lastname'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $subject =trim($_POST['subject'] ?? '');
 
 
     //validation, checking the data before saving
@@ -33,11 +33,17 @@ if (isset($_POST['submit'])) {   // the isset($_POST ['submit ]) checks the form
         mysqli_stmt_bind_param($stmt, 'ssss', $firstname, $lastname, $email, $subject);
 
         if (mysqli_stmt_execute($stmt)) {
-            $message = 'Thanks for reaching out, sent successfully!';
+            header("Location: contact.php?sent=1");
+            exit;
         } else {
             $message = 'Error: ' . mysqli_stmt_error($stmt);
+
         }
     }
+}
+//message when successful
+if (isset($_GET['sent'])) {
+    $message = 'Thanks for reaching out, sent successfully!';
 }
 ?>
 
@@ -51,7 +57,7 @@ if (isset($_POST['submit'])) {   // the isset($_POST ['submit ]) checks the form
 </head>
 
     <body class="contact">
-        <heading>
+        <header>
             <div class="blog-header">
                 <div class="logo">
                     <!-- <a href="#" class="logo">ROBOAI</a> -->
@@ -62,14 +68,14 @@ if (isset($_POST['submit'])) {   // the isset($_POST ['submit ]) checks the form
                 </div> -->
             </div>
             <div class="topnav">       
-                <nav style="margin-left: 250px;">
+                <nav>
                     <a href="home.php">Home</a>
                     <a href="post_categories.php">Post/Categories</a>
                     <a href="about_us.html">About Us</a>
                     <a class="active" href="contact.php">Contact Us</a>
                 </nav>
             </div>
-        </heading>
+        </header>
        
 
         <div class="container">
@@ -87,19 +93,17 @@ if (isset($_POST['submit'])) {   // the isset($_POST ['submit ]) checks the form
             <div class="box">
                 <form action="contact.php" method="POST">
                     <label for="fname">First Name</label>
-                    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+                    <input type="text" value="<?php echo htmlspecialchars($_POST['firstname'] ?? ''); ?>" id="fname" name="firstname" placeholder="Your name..">
                     <label for="lname">Last Name</label>
-                    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+                    <input type="text" value="<?php echo htmlspecialchars($_POST['lastname'] ?? ''); ?>" id="lname" name="lastname" placeholder="Your last name..">
                     <label for="email">Email</label>
-                    <input type="text" id="email" name="email" placeholder="Enter your email..">
+                    <input type="email" value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>" id="email" name="email" placeholder="Enter your email..">
                     <label for="subject">Subject</label>
-                    <textarea id="subject" name="subject" placeholder="Write something.." style="height:170px"></textarea>
+                    <textarea id="subject" name="subject" placeholder="Write something.." style="height:170px"><?php echo htmlspecialchars($_POST['subject'] ?? ''); ?></textarea>
                     <input type="submit" value="Submit" name="submit">
                 </form>
             </div>
         </div>
-
-        <footer class="footer">ROBOAI Blog 2026 | <a href="home.html">Home</a> | <a href="about_us.html">About Us</a></footer>
-
+        <footer class="footer">ROBOAI Blog 2026 | <a href="home.php">Home</a> | <a href="about_us.html">About Us</a></footer>
     </body>
 </html>

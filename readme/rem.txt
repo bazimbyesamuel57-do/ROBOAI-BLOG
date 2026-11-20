@@ -335,3 +335,11 @@ Here is the section for your log and README, as facts you can reword. It follows
 
 ### Files changed
 admin_contactfeed.php, admin_posts.php, admin.css
+
+
+
+For your log (section 15):
+
+- Home slideshow changed from fade to sliding: all slides sit in a flex row (`.slides-track`) inside an `overflow: hidden` window; `showSlides()` moves the row with `translateX(-(index-1) * 100%)` and a CSS transition. Removing the display toggling also removed the blank flash between slides.
+- Slide image height is set in CSS (350 px, 220 px on phones) instead of inline.
+- Known limitation: wrapping from the last slide to the first slides backwards across all pictures.
