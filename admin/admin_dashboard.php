@@ -1,4 +1,6 @@
 <?php
+
+require 'auth.php';
 // require 'connect.php';
 
 $host = "localhost";
@@ -111,7 +113,7 @@ While ($row = mysqli_fetch_assoc($calResult)) {
                 <a href="#"><img class="blog-header-img" style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
             </div>
             <div class="log-auth">
-                <a class="log-auth-btn" href="admin_login.php">Logout</a>
+                <a class="log-auth-btn" href="admin_logout.php">Logout</a>
             </div>
         </header>
 
@@ -121,7 +123,7 @@ While ($row = mysqli_fetch_assoc($calResult)) {
                 <a href="admin_posts.php">Manage Posts</a>
                 <a href="create.php">Create Posts</a>
                 <a href="admin_contactfeed.php">Contact Messages</a>
-                <a href="admin_login.php">Logout</a>
+                <a href="admin_logout.php">Logout</a>
             </div>
             
         <!-- <div> -->
@@ -243,7 +245,7 @@ While ($row = mysqli_fetch_assoc($calResult)) {
         </main>
 
 
-        <footer class="footer">ROBOAI Blog 2026 | Dashboard | <a href="admin_posts.php">Manage Posts</a> | <a href="admin_register.php">Register</a> | <a href="admin_login.php">LogOut</a> |</footer>
+        <footer class="footer">ROBOAI Blog 2026 | Dashboard | <a href="admin_posts.php">Manage Posts</a> | <a href="admin_register.php">Register</a> | <a href="admin_logout.php">LogOut</a> |</footer>
 
         <script>
             /*sidenave with opacity*/
@@ -356,5 +358,6 @@ While ($row = mysqli_fetch_assoc($calResult)) {
             });
             
         </script>
+        <script src="nocache.js"></script>
     </body>
 </html>

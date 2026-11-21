@@ -1,4 +1,6 @@
 <?php
+
+require 'auth.php';
 // require 'connect.php';
 
 $host = "localhost";
@@ -156,7 +158,7 @@ $result = mysqli_stmt_get_result($stmt);
                 <a href="#"><img class="blog-header-img" style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
             </div>
                 <div class="log-auth">
-                    <a class="log-auth-btn" href="admin_login.php">Logout</a>
+                    <a class="log-auth-btn" href="admin_logout.php">Logout</a>
                 </div>
         </header>
      
@@ -177,7 +179,7 @@ $result = mysqli_stmt_get_result($stmt);
             <a href="admin_posts.php">Manage Posts</a>
             <a href="create.php">Create Posts</a>
             <a href="admin_contactfeed.php">Contact Messages</a>
-            <a href="admin_login.php">Logout</a>
+            <a href="admin_logout.php">Logout</a>
         </div>
 
         <!-- <span onclick="openNav()">&#10143;</span> -->
@@ -298,7 +300,7 @@ $result = mysqli_stmt_get_result($stmt);
             </div>
         </div>
 
-        <footer class="footer">ROBOAI Blog 2026 | <a href="admin_dashboard.php">Dashboard</a> | Manage Posts | <a href="admin_register.php">Register</a> | <a href="admin_login.php">LogOut</a> |</footer>
+        <footer class="footer">ROBOAI Blog 2026 | <a href="admin_dashboard.php">Dashboard</a> | Manage Posts | <a href="admin_register.php">Register</a> | <a href="admin_logout.php">LogOut</a> |</footer>
 
         <script>
             /*sidenave with opacity*/
@@ -315,6 +317,7 @@ $result = mysqli_stmt_get_result($stmt);
                 document.body.style.backgroundColor = "White";
             }
         </script>
+        <script src="nocache.js"></script>
     </body>
 
 </html>

@@ -1,4 +1,6 @@
 <?php 
+
+require 'auth.php';
 // require '/connect.php';
 
 $host = "localhost";
@@ -98,7 +100,7 @@ if (isset($_POST['submit'])) {
                 <a href="#"><img class="blog-header-img" style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
             </div>
             <div class="log-auth">
-                <a class="log-auth-btn" href="admin_login.php">Logout</a>
+                <a class="log-auth-btn" href="admin_logout.php">Logout</a>
             </div>
         </header>
         <div>
@@ -140,6 +142,7 @@ if (isset($_POST['submit'])) {
             </form>
         </div>
 
-        <footer class="footer">ROBOAI Blog 2026 | Dashboard | <a href="admin_posts.php">Manage Posts</a> | <a href="admin_register.php">Register</a> | <a href="admin_login.php">LogOut</a> |</footer>
+        <footer class="footer">ROBOAI Blog 2026 | Dashboard | <a href="admin_posts.php">Manage Posts</a> | <a href="admin_register.php">Register</a> | <a href="admin_logout.php">LogOut</a> |</footer>
+        <script src="nocache.js"></script>
     </body>
 </html>

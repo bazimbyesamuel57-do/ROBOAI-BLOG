@@ -1,4 +1,8 @@
 <?php
+
+
+require 'auth.php';
+
 // require 'connect.php';
 $host = "localhost";
 $user = "root";

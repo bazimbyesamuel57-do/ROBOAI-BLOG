@@ -459,3 +459,16 @@ For your log (decisions and challenges):
 - `backup_db.bat` runs `mysqldump --databases` and writes `roboai_db\database.sql`; `restore_db.bat` loads it with the `mysql` client.
 - Challenge: the first backup file never changed. A `.sql` file does not update the database by itself (only a restore does), the batch file wrote to a different folder than the one I was checking, errors were invisible without `pause`, and the dump lacked `CREATE DATABASE` / `USE`.
 - Fix: `cd /d "%~dp0"`, create the folder if missing, `--databases`, a success or failure message, and a separate restore script with a confirmation pause.
+
+
+
+For the README, a short paragraph under "Authentication" will do:
+
+what you chose (admin accounts in the database, passwords hashed, creating an admin is only possible for a logged-in admin, there is no public registration)
+why (a small team can share the blog; no visitor accounts are needed; the registration is restricted to keep the attack surface small)
+what you left out on purpose (visitor accounts, password reset, roles beyond admin)\
+
+| Problem | Cause | Fix |
+|---|---|---|
+| After logout, the back button or a reload still showed protected pages | Several "Logout" links pointed to `admin_login.php`, so the session was never destroyed; separately, Edge restored pages from its back-forward cache | All Logout links go to `admin_logout.php`; `auth.php` sends no-cache headers; a `pageshow` script reloads pages restored from the cache |
+| Guard always redirected even when logged in | A typo: `$SESSION` instead of `$_SESSION` | Corrected the variable name |
