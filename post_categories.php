@@ -62,32 +62,6 @@ function pageUrl(int $p, int $cat, string$q) {
         return 'post_categories.php?' . http_build_query($params);
 }
 
-
-// $sql = "SELECT * FROM posts WHERE status = 'published' ORDER BY published_on DESC";
-// $result = mysqli_query($conn, $sql);
-
-// if (!$result) {
-//     die("Query failed: " . mysqli_error($conn));
-// }
-
-// while ($row = mysqli_fetch_assoc($result)) {
-//     $id = $row["post_id"];
-//     $published_on = htmlspecialchars($row["published_on"]);
-//     $author_name = htmlspecialchars($row["author_name"]);
-//     $category_id = $row["category_id"];
-//     $title = htmlspecialchars($row["title"]);
-//     $excerpt = htmlspecialchars($row["excerpt"]);
-//     $media = $row["media"];
-    // $content = htmlspecialchars($row["content"]);
-
-    // echo "<p><a href ='post_details.php?id=$id'>$title</a></p>";
-    // echo "{$row['title']} <br>";
-    // echo "<img src = 'image/{$row['media']}'><br>";
-    // echo "{$row['excerpt']} <br>";
-    // echo "{$row['published_on']} <br><hr>";
-    
-// }
-
 ?>
 
 <!DOCTYPE html>
@@ -110,12 +84,8 @@ function pageUrl(int $p, int $cat, string$q) {
         <header>
             <div class="blog-header">
                 <div class="logo">
-                    <!-- <a href="#" class="logo">ROBOAI</a> -->
                 <a href="#"><img class="logo-img" style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
             </div>
-            <!-- <div class="log-auth">
-                <a class="log-auth-btn" href="admin_login.php">Logout</a>
-            </div> -->
         </div>
         
             <div class="topnav">
@@ -172,11 +142,6 @@ function pageUrl(int $p, int $cat, string$q) {
         </div>
 
         <diV>
-            <!-- <form class="searchtab" action="search.php" method="GET"> search.php ods the filename where the files are picked and method use GET for search -->
-                <!-- <input type="text" name="q" placeholder="search post..."> name='q' where q is the query sent -->
-                <!-- <button type="submit">Search</button>
-            </form> -->
-
             <!-- posts card lists -->
             <div class="container">
                 <?php if  (empty($posts)): ?>

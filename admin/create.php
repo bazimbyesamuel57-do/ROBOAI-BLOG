@@ -73,9 +73,8 @@ if (isset($_POST['submit'])) {
     $author_id = (int) ($_POST['author_id'] ?? 0);
     $category_id = (int) ($_POST['category_id'] ?? 0);
     $new_category_name = trim($_POST['new_category_name'] ?? '');
-    // $category_name = trim($_POST['category_name']);
     $status = $_POST['status_selection'] ?? $draft['status_selection'] ?? 'draft';
-    $admin_id = 1; // temporary, it must be an id that exists in the admin table
+    $admin_id = $_SESSION['admin_id'];
     
 
     if ($title === '' || $excerpt === '' || $content === '') {
@@ -132,24 +131,7 @@ if (isset($_POST['submit'])) {
                 }
             }
         }
-    
 
-        // $media =$_FILES['image']['name'];
-        // //temporary file location
-        // $temp_location = $_FILES['image']['tmp_name'];
-        // // our file location
-        // $our_location = "image/";
-        // }
-        //using the function
-        // if (!empty($name)) {
-        //     move_uploaded_file($temp_location, $our_location.$name);
-        // }
-        // $sql1 = "SELECT id from categories where category_name= '$category_name'";
-        // $result1 = mysqli_query($conn, $sql1);
-        // if($result1->num_rows>0) {
-        //     $row = mysqli_fetch_assoc($result1);
-        //     $idforcategory = $row['category_id'];
-        //     }
         // a typed category
         if ($message === '' && $new_category_name !== '') {
             $c_stmt = mysqli_prepare($conn, "SELECT category_id FROM categories WHERE category_name = ?");
@@ -188,13 +170,6 @@ if (isset($_POST['submit'])) {
             else {
                 $message= "Error: " . mysqli_stmt_error($stmt);
             }
-
-        // $sql2 = "INSERT INTO posts(title, excerpt, content, media)VALUES('$title','$excerpt', '$content', '$category_name')";
-
-        // $result2 = mysqli_query($conn, $sql2);
-        // if($result2){
-        //     echo "post added successfully!";
-        // }
         
         }
     }
@@ -219,7 +194,6 @@ if (isset($_POST['submit'])) {
     <body>
         <header class="blog-header">
             <div class="logo">
-                <!-- <a href="#" class="logo">ROBOAI</a> -->
                 <a href="#"><img class="blog-header-img" style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
             </div>
             <div class="log-auth">
@@ -269,8 +243,6 @@ if (isset($_POST['submit'])) {
                             <?php } ?>
                     </select>
                     <button type="submit" class="btn btn-secondary" name="go_to_author"> + New author</button>
-                    
-                    <!-- <input type="text" name="author_name" placeholder="Author name" required><br> -->
                 </div>
 
                 <div class="mb-2">
@@ -313,7 +285,7 @@ if (isset($_POST['submit'])) {
             </form>
         </div>
 
-        <footer class="footer">ROBOAI Blog 2026 | Dashboard | <a href="admin_posts.php">Manage Posts</a> | <a href="admin_register.php">Register</a> | <a href="admin_logout.php">LogOut</a> |</footer>
+        <footer class="footer">ROBOAI Blog 2026 | Dashboard | <a href="admin_posts.php">Manage Posts</a> | <a href="admin_logout.php">LogOut</a> |</footer>
         <script src="nocache.js"></script>
     </body>
 </html>

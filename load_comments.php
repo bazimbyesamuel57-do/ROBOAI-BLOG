@@ -14,6 +14,16 @@ if ($post_id < 1) {
     exit;
 }
 
+$check = mysqli_prepare($conn, "SELECT 1 FROM posts WHERE post_id = ? AND status = 'published'");
+mysqli_stmt_bind_param($check, 'i', $post_id);
+mysqli_stmt_execute($check);
+
+if (mysqli_stmt_get_result($check) -> num_rows === 0) {
+    http_response_code(404);
+    echo json_encode(['ok' => false, 'error' => 'Post not available.']);
+    exit;
+}
+
 // 2. prepare, bind 'ii', execute, get the result
 $c_stmt = mysqli_prepare($conn,
     "SELECT Name, Date_Time, Message

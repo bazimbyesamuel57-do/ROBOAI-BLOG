@@ -63,9 +63,6 @@ if (isset($_GET['sent'])) {
                     <!-- <a href="#" class="logo">ROBOAI</a> -->
                     <a href="#"><img class="logo-img" style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
                 </div>
-                <!-- <div class="log-auth">
-                    <a class="log-auth-btn" href="admin_login.php">Logout</a>
-                </div> -->
             </div>
             <div class="topnav">       
                 <nav>

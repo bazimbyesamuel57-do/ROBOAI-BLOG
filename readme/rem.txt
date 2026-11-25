@@ -472,3 +472,71 @@ what you left out on purpose (visitor accounts, password reset, roles beyond adm
 |---|---|---|
 | After logout, the back button or a reload still showed protected pages | Several "Logout" links pointed to `admin_login.php`, so the session was never destroyed; separately, Edge restored pages from its back-forward cache | All Logout links go to `admin_logout.php`; `auth.php` sends no-cache headers; a `pageshow` script reloads pages restored from the cache |
 | Guard always redirected even when logged in | A typo: `$SESSION` instead of `$_SESSION` | Corrected the variable name |
+
+### Draft posts
+- `post_details.php` shows a draft only when an admin session exists (`WHERE p.post_id = ? AND (p.status = 'published' OR ? = 1)`); admins get the admin menu, drafts get a notice, no comment block, and `no-store` caching.
+- `load_comments.php` and `script.php` check on the server that the post is published before returning or saving comments, so a draft cannot be read or commented on by guessing its id.
+- Challenge: `AND`/`OR` precedence, a boolean flag bound as an array, and a check placed after the INSERT. Fixed with parentheses, a numeric flag, and the check before the INSERT.
+
+
+
+Write one section, "Authentication and security". I'll review it when you paste it. Cover these points, each in a sentence or two:
+
+Point	What to say
+Decision	Accounts live in the admin table; there is no visitor registration; why you chose this
+Passwords	Hashed with password_hash, checked with password_verify; the demo login for testing
+Access control	The auth.php guard on every admin page; a real logout; admin-only registration
+Drafts	Visible only to a logged-in admin, on the page, in the comment loader and in the comment saver
+SQL injection	Prepared statements everywhere, except the category search (escaped and cast to integers); be exact
+Output	htmlspecialchars on everything printed
+Known limits	Name what you did not build (for example password reset, login attempt limits, tokens against forged form posts, HTTPS locally
+
+
+Security and drafts: what was built (notes)
+1. Decision: accounts and roles
+No visitor accounts. Only admins can log in.
+Admin accounts are stored in the admin table (not hard-coded).
+Registering a new admin is possible only for a logged-in admin (admin_register.php is behind the guard, reached from the "Add admin" menu entry). No public link to it exists anywhere.
+Reason (to put in my own words): the task allows a single hard-coded admin, a protected admin area, or a fuller system; I chose a small database-backed system because the login and password hashing were already built.
+2. Passwords
+Stored hashed with password_hash(); checked with password_verify().
+session_regenerate_id(true) after a successful login.
+Demo account for testing: name RoboAIdemo; email and password to be listed in the README (use a fake demo password, not a real one).
+3. Access control (the guard)
+admin/auth.php: starts the session if needed, sends no-cache headers, checks $_SESSION['admin_id'], redirects to admin_login.php and exits.
+require 'auth.php'; is the first PHP line of every admin page (not admin_login.php, not admin_logout.php).
+admin_logout.php: empties $_SESSION, destroys the session, redirects to the login page. All Logout links point to it.
+create.php now uses $_SESSION['admin_id'] as the post author instead of a fixed id.
+4. Draft posts
+post_details.php: the query is WHERE p.post_id = ? AND (p.status = 'published' OR ? = 1); the second value is 1 only when an admin session exists. Visitors asking for a draft get "Post not found."
+Admins see the admin menu on every post page, plus a "Draft preview" notice on drafts, no comment form or list on drafts, and a no-store cache header.
+load_comments.php and script.php check on the server that the post is published before returning or saving comments, so drafts cannot be read or commented on by guessing the id (checked with a console request).
+5. Other protections
+SQL injection: prepared statements in the admin pages, post_details.php, the comment scripts, login and register; the category search in post_categories.php builds its query with mysqli_real_escape_string and integer casts (be exact about this in the README).
+Output: htmlspecialchars on printed values; comments are inserted in the page with textContent/text nodes in JavaScript.
+Forms: server-side validation of length and email; contact form redirects after a successful send (no duplicate on refresh).
+6. Problems met and fixes (for the challenges table)
+Problem	Cause	Fix
+Guard always redirected	Typo $SESSION instead of $_SESSION	Corrected
+Pages still shown after logout	Some Logout links pointed to the login page, so the session stayed alive; Edge restored pages from its back-forward cache	All links go to admin_logout.php; no-cache headers; reload script where needed
+Admin saw the first post of the table instead of the requested one	AND/OR precedence in the SQL	Parentheses around the status condition
+Admin could not see drafts	The flag was an empty array, bound as an integer	$isAdminFlag = $isAdmin ? 1 : 0
+Whole comment script failed	await outside an async function (misplaced closing brackets)	Handler closed after its last line, inside if (form)
+Draft check had no effect	The check ran after the INSERT, and its result was never tested	Moved before the INSERT, and respond(..., 'unavailable')
+Links with ?id= showed "No post selected."	Live Server / Five Server did not pass query strings to PHP	Test through XAMPP Apache at http://localhost/ROBOAI/
+7. Not built (state honestly as known limitations)
+Password reset and password change
+Limits on login attempts
+Tokens against forged form submissions (verify whether the admin forms have them)
+HTTPS (local development runs on plain HTTP)
+Roles beyond "admin"
+8. How I tested
+Logged out: every admin address redirects to the login page; a draft shows "Post not found."; the comment loader and saver refuse a draft id.
+Logged in: all admin pages open; a draft opens with the notice; "Add admin" creates an account and I stay logged in.
+Logout, then the back button: redirected to the login page (also in Edge).
+Backup and restore of the database with backup_db.bat and restore_db.bat; log in with the demo admin after a restore.
+
+For your notes, add this row to the challenges table:
+
+Problem	Cause	Fix
+"Column 'admin_id' cannot be null" when creating a post	create.php no longer set the author id after the hard-coded 1 was removed; the value was not read from the session	$admin_id = $_SESSION['admin_id']; after require 'auth.php';

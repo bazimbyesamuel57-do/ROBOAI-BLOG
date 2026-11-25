@@ -37,7 +37,7 @@ if(isset($_POST['submit'])) {
         mysqli_stmt_bind_param($stmt, 'sss', $name, $email, $hash);
 
         if (mysqli_stmt_execute($stmt)){
-            header("Location: admin_login.php?registered=1");
+            header("Location: admin_register.php?registered=1");
             exit;
         }
         if (mysqli_stmt_errno($stmt) === 1062) {
@@ -57,7 +57,7 @@ if(isset($_POST['submit'])) {
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Admin Registration</title>
+        <title>Add Admin</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -82,8 +82,14 @@ if(isset($_POST['submit'])) {
         
         <div class="container" style="max-width: 500px;">
             
-            <?php if (!empty($error))
-            echo '<p style="color:red;">' . htmlspecialchars($error) . '</p>'; 
+            <?php
+            if (isset($_GET['registered'])) {
+                echo '<p style="color:green;">Admin account created successful.</p>';
+            }
+
+            if (!empty($error)) {
+                echo '<p style="color:red;">' . htmlspecialchars($error) . '</p>'; 
+            }
             ?>
 
             <form action="admin_register.php" method="POST">
@@ -103,7 +109,7 @@ if(isset($_POST['submit'])) {
             </form>
         </div>
 
-        <footer class="footer">ROBOAI Blog 2026 | <a href="admin_dashboard.php">Dashboard</a> | <a href="admin_posts.php">Manage Posts</a> | Register | <a href="admin_logout.php">LogOut</a> |</footer>
+        <footer class="footer">ROBOAI Blog 2026 | <a href="admin_dashboard.php">Dashboard</a> | <a href="admin_posts.php">Manage Posts</a> | <a href="admin_logout.php">LogOut</a> |</footer>
         <script src="nocache.js"></script>
     </body>
 </html>

@@ -24,7 +24,6 @@ $id = (int) $_GET['id'];
 
 //requsting for the post from the database (draft include)
 $stmt = mysqli_prepare($conn,
-// "SELECT post_id FROM posts WHERE post_id = ? AND status = 'published'");
     "SELECT title, excerpt, content, author_id, author_name, category_id, status, media 
     FROM posts 
     WHERE post_id = ?");
@@ -62,13 +61,11 @@ $message = '';
 $image_dir = '../images/';
 
 if (isset($_POST['submit'])) {
-    // $post_id = (int) ($_POST['post_id'] ?? 0);
     $title = trim($_POST['title'] ?? '');
     $excerpt = trim($_POST['excerpt'] ?? '');
     $content = trim($_POST['content'] ?? '');
-    // $author_name = trim($_POST['author_name'] ?? '');
     $author_id = (int) ($_POST['author_id'] ?? 0);
-    // $media = $_POST['media'] ?? 0;
+
     //reads the form ihe form
     $category_id = (int) ($_POST['category_id'] ?? 0);
     $status = $_POST['status_selection'] ?? '';
@@ -183,7 +180,6 @@ if (isset($_POST['submit'])) {
     <body>
         <header class="blog-header">
             <div class="logo">
-                <!-- <a href="#" class="logo">ROBOAI</a> -->
                 <a href="#"><img class="blog-header-img" style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
             </div>
             <div class="log-auth">
@@ -228,12 +224,9 @@ if (isset($_POST['submit'])) {
                                 </option>
                             <?php } ?>
                     </select>
-                    <!-- <label class="form-label">Author Name</label>
-                    <input class="form-control" type="text" name="author_name" placeholder="Author name" value="<?php echo htmlspecialchars($post['author_name']); ?>" required> -->
                 </div>
 
                 <div class="mb-3">
-                <!-- <input type="file" name="image"> <br> selecting file/ image for the post -->
                     <label class="form-label"> Add/Change Image</label>
                     <?php
                         if  (!empty($post['media'])) { ?>
@@ -262,19 +255,16 @@ if (isset($_POST['submit'])) {
                 <div class="mb-3">
                     <label class="form-label">Status</label>
                     <select class="form-select" name="status_selection">
-                    <!-- <h3>Status</h3> -->
-                        <!-- <option value="select status">--select status--</option> -->
                         <option value="draft"<?php if ($post['status'] === 'draft') echo " selected"; ?>>Draft</option>
                         <option value="published"<?php if ($post['status'] === 'published') echo " selected"; ?>>Published</option>
                     </select>
                 </div>
-                <!-- <input type="text" name="admin_username"> -->
                 <button class="btn btn-primary mt-2" type="submit" value="update post" name="submit">Save</button>
                 <a class="btn btn-secondary mt-2" href="admin_posts.php">Cancel</a>
             </form>
         </div>
 
-        <footer class="footer">ROBOAI Blog 2026 | Dashboard | <a href="admin_posts.php">Manage Posts</a> | <a href="admin_register.php">Register</a> | <a href="admin_logout.php">LogOut</a> |</footer>
+        <footer class="footer">ROBOAI Blog 2026 | Dashboard | <a href="admin_posts.php">Manage Posts</a> | <a href="admin_logout.php">LogOut</a> |</footer>
         <script src="nocache.js"></script>
     </body>
 </html>

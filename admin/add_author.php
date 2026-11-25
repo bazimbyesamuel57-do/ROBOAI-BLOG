@@ -96,7 +96,6 @@ if (isset($_POST['submit'])) {
     <body>
         <header class="blog-header">
             <div class="logo">
-                <!-- <a href="#" class="logo">ROBOAI</a> -->
                 <a href="#"><img class="blog-header-img" style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
             </div>
             <div class="log-auth">
@@ -128,13 +127,9 @@ if (isset($_POST['submit'])) {
                     <label class="form-label">Biography:</label>
                     <textarea class="form-control form-control-lg" rows="8" name="author_bio" placeholder="Enter author's bio..."><?php echo htmlspecialchars($_POST['author_bio'] ?? ''); ?></textarea>
                 </div>
-                <!-- <select>
-                    <option></option>
-                </select> -->
                 <div class="mb-3">
-                <label class="form-label">Insert image:</label>
-                <input class="form-control" type="file" name="image" accept="image/*">
-                <!-- <input type="hidden" name="from" value="<?php echo htmlspecialchars($from); ?>"> -->
+                    <label class="form-label">Insert image:</label>
+                    <input class="form-control" type="file" name="image" accept="image/*">
                 </div>
 
                 <button class="btn btn-primary mt-2" type="submit" name="submit">Save author</button>
@@ -142,7 +137,7 @@ if (isset($_POST['submit'])) {
             </form>
         </div>
 
-        <footer class="footer">ROBOAI Blog 2026 | Dashboard | <a href="admin_posts.php">Manage Posts</a> | <a href="admin_register.php">Register</a> | <a href="admin_logout.php">LogOut</a> |</footer>
+        <footer class="footer">ROBOAI Blog 2026 | Dashboard | <a href="admin_posts.php">Manage Posts</a> | <a href="admin_logout.php">LogOut</a> |</footer>
         <script src="nocache.js"></script>
     </body>
 </html>

@@ -21,7 +21,6 @@ $error = '';
 
 //submitting the form
 if(isset($_POST['submit'])){ 
-    // $name = $_POST['name'];
     $email = trim($_POST['email'] ?? '');
     $pass = $_POST['password'] ?? '';
 
@@ -35,9 +34,9 @@ if(isset($_POST['submit'])){
         $_SESSION['admin_id'] = $row['admin_id'];
         $_SESSION['name'] = $row['name'];
 
-         header("Location: admin_dashboard.php");
-         exit;
-            // echo "login successfull!";
+        header("Location: admin_dashboard.php");
+        exit;
+        
     }
     $error = 'Invalid email or password.';
 }
@@ -60,15 +59,10 @@ if(isset($_POST['submit'])){
         <header>
              <div class="log-content">
                 <p>
-                    <!-- <a href="#" class="logo">ROBOAI</a> -->
                     <a href="#"><img  class="img-logo" class="log" src="/ROBOAI/images/logo.index.png" alt="Roboai Logo"></a>
                 </p>
             </div>
         </header>
-        <!-- <div>
-            <h1 style="text-align:center; margin-top: 10px; margin-bottom: 20px">Admin Login</h1>
-        </div> -->
-
         <div class="container mb-5" style="max-width: 350px;">
             <?php
             if (isset($_GET['registered'])) {
@@ -84,7 +78,6 @@ if(isset($_POST['submit'])){
         </div>
 
             <form action="admin_login.php" method="POST">
-                <!-- Name: <input type="text" name="name" required><br> -->
                  <div class="mb-3">
                     <label class="form-label">Email</label><br>
                     <input class="form-control" type="email" name="email" required><br>

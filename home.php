@@ -195,12 +195,12 @@ if ($totalPosts > 4) {
                         </section>
                     <?php endif; ?>
                 </div>
-                      <!-- see more link, takes you to the posts_categories list -->
-                            <div style="text-align:center; margin-top:20px;">
-                                <a href="post_categories.php" class="see-more-btn">
-                                    See More Posts &rarr;
-                                </a>
-                            </div>
+                <!-- see more link, takes you to the posts_categories list -->
+                <div style="text-align:center; margin-top:20px;">
+                    <a href="post_categories.php" class="see-more-btn">
+                        See More Posts &rarr;
+                    </a>
+                </div>
                     
             </div>
             <br>

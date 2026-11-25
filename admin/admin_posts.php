@@ -16,18 +16,6 @@ if (!$conn ) {
 
 }
 
-// session_start();
-
-// redirect back to the login page
-// session_destroy(); 
-// if (!isset($_SESSION['admin_id'])) {
-//     header("Location: admin_login.php");
-// }
-// else {
-//     echo "Welcome: {$_SESSION['name']}";
-    
-// }
-
 $per_page = 5;
 $page = max(1, (int) ($_GET['page'] ?? 1));
 $offset = ($page - 1) * $per_page;
@@ -47,13 +35,7 @@ $d =DateTime::createfromFormat('Y-m-d', $f_published_on);
 if (!$d || $d->format('Y-m-d') !== $f_published_on) {
     $f_published_on = '';
 }
-// if ($f_status !== 'draft' && $f_status !== 'published') {
-//     $f_status = '';
-// }
-// $d = DateTime::createFromFormat('Y-m-d', $f_published_on);
-// if (!$d || $d->format('Y-m-d') !== $f_published_on) {
-//     $f_published_on = '';
-// }
+
 
 // build the WHERE from the filters that are filled in
 $where  = [];
@@ -161,32 +143,18 @@ $result = mysqli_stmt_get_result($stmt);
                     <a class="log-auth-btn" href="admin_logout.php">Logout</a>
                 </div>
         </header>
-     
-
-        <!-- <div style=" margin-top: 1px; margin-bottom:150px; margin-left:20px; background-color: aquamarine;"> -->
-            <!-- <a href="#" class="logo">ROBOAI</a> -->
-            <!-- <span style="float:inline-start;"><a href="#"><img style="height: 50px;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a></span>
-            <span style="margin-left: 50px; background-color:aquamarine;"><p style="float:inline-end;"><a href="admin_login.php">Logout</a></p></span>
-        </div> -->
-        <!-- <div style="float:right; margin-right:10px;">
-            <a href="admin_login.php">Logout</a>
-            </div> -->
-
-
         <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="admin_dashboard.php">Dashboard</a>
             <a href="admin_posts.php">Manage Posts</a>
             <a href="create.php">Create Posts</a>
             <a href="admin_contactfeed.php">Contact Messages</a>
+            <a href="admin_register.php">Add admin</a>
             <a href="admin_logout.php">Logout</a>
         </div>
-
-        <!-- <span onclick="openNav()">&#10143;</span> -->
         
 
         <div id="main">
-            <!-- <h1 style="text-align: center;">Admin</h1> -->
             <h1 style="text-align: center;" > Manage Posts</h1>
             
             <span onclick="openNav()">&#9776; MENU</span>
@@ -300,7 +268,7 @@ $result = mysqli_stmt_get_result($stmt);
             </div>
         </div>
 
-        <footer class="footer">ROBOAI Blog 2026 | <a href="admin_dashboard.php">Dashboard</a> | Manage Posts | <a href="admin_register.php">Register</a> | <a href="admin_logout.php">LogOut</a> |</footer>
+        <footer class="footer">ROBOAI Blog 2026 | <a href="admin_dashboard.php">Dashboard</a> | Manage Posts | <a href="admin_logout.php">LogOut</a> |</footer>
 
         <script>
             /*sidenave with opacity*/

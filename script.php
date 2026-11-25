@@ -17,6 +17,7 @@
     'name_long'    => 'Name must be 30 characters or less.',
     'comment_long' => 'Comment must be 1000 characters or less.',
     'bad_email'    => 'Please enter a valid email address.',
+    'unavailable'  => 'Post not available.'
 ];
 
 function respond($is_ajax, $post_id, $code = '', $data = []) {
@@ -40,10 +41,10 @@ function respond($is_ajax, $post_id, $code = '', $data = []) {
         exit;
     }
 
-    $name =trim($_POST['name']);
-    $email =trim($_POST['email']);
-    $comment =trim($_POST['comment']);
-    $post_id = (int) $_POST['post_id'];
+    $name =trim($_POST['name'] ?? '');
+    $email =trim($_POST['email'] ?? '');
+    $comment =trim($_POST['comment'] ?? '');
+    $post_id = (int) ($_POST['post_id'] ?? 0);
 
     // spaces only name/ comment
     if ($name === '' || $comment === '') {
@@ -75,11 +76,21 @@ function respond($is_ajax, $post_id, $code = '', $data = []) {
         // exit;
         respond($is_ajax, $post_id, 'bad_email');
     }
+// only published posts accept comments
+    $check = mysqli_prepare($conn, "SELECT 1 FROM posts WHERE post_id = ? AND status = 'published'");
+    if (!$check) {
+        die("Prepare failed: " . mysqli_error($conn));
+    }
+    mysqli_stmt_bind_param($check, 'i', $post_id);
+    mysqli_stmt_execute($check);
+
+    if (mysqli_stmt_get_result($check)->num_rows === 0) {
+    respond($is_ajax, $post_id, 'unavailable');
+    }
 
     //the insert statement to the database
     $stmt = mysqli_prepare($conn,
      "INSERT INTO comments (`Name`, `Email`, `Message`,`post_id` ) VALUES(?, ?, ?, ?)"); // the ??? are the palceholder, 
-
 
     if (!$stmt) {
         die("Prepare failed: " . mysqli_error($conn));

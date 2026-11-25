@@ -28,33 +28,10 @@ if (!$totalResult) {
 $totalPosts = (int) mysqli_fetch_assoc($totalResult)['total'];
 
 
-//Silde show section(4 posts)
-// posts withonly images show up, skipping the those with no images
-// $slidesql = "SELECT post_id, title, media
-//             FROM posts
-//             WHERE status = 'published' AND media <> ''
-//             ORDER BY published_on DESC
-//             LIMIT 4";
-
-// $slideResult = mysqli_query($conn, $slidesql);
-// if (!$slideResult) {
-//     die ("Slide query failed: " . mysqli_error($conn));
-// }
-// $slides = mysqli_fetch_all($slideResult, MYSQLI_ASSOC);
-// $slideCount =count($slides);
-
-
 // card(3)
 //only fetched when there are more than 4 leaving the 4 in the slides and show the next 3 posts 
 $cards = [];
 $cardCount = 0;
-
-// if ($totalPosts > 0) {
-    // $cardsql = "SELECT post_id, title, media, excerpt, author_name, published_on
-    //             FROM posts
-    //             WHERE status = 'published'
-    //             ORDER BY published_on DESC
-    //             LIMIT 3 OFFSET 4";
 
 
 $cardsql = "SELECT post_id, title, media, excerpt, author_name, published_on
@@ -86,9 +63,8 @@ While ($row = mysqli_fetch_assoc($calResult)) {
         'title' => $row['title'],
         'status' => $row['status']
     ];
-    // echo $row['title'] . ' was posted on ' . $row['day'] . '<br>';
 }
-// print_r($posts_by_day); echo '</prev>'; 
+
 ?>
 
 
@@ -123,15 +99,9 @@ While ($row = mysqli_fetch_assoc($calResult)) {
                 <a href="admin_posts.php">Manage Posts</a>
                 <a href="create.php">Create Posts</a>
                 <a href="admin_contactfeed.php">Contact Messages</a>
+                <a href="admin_register.php">Add Admin</a>
                 <a href="admin_logout.php">Logout</a>
             </div>
-            
-        <!-- <div> -->
-            <!-- <form class="hsearchtab" action="admin_posts.php" method="GET"> search.php ods the filename where the files are picked and method use GET for search -->
-                <!-- <input class="hsearch" type="text" name="q" placeholder="search post..." style="width:400px"> name='q' where q is the query sent -->
-                <!-- <button class="hsearch-button" type="submit">Search</button>
-            </form> -->
-        <!-- </div> -->
         <main id="main">
                 
             <div>
@@ -245,7 +215,7 @@ While ($row = mysqli_fetch_assoc($calResult)) {
         </main>
 
 
-        <footer class="footer">ROBOAI Blog 2026 | Dashboard | <a href="admin_posts.php">Manage Posts</a> | <a href="admin_register.php">Register</a> | <a href="admin_logout.php">LogOut</a> |</footer>
+        <footer class="footer">ROBOAI Blog 2026 | Dashboard | <a href="admin_posts.php">Manage Posts</a> | <a href="admin_register.php">Add admin</a> | <a href="admin_logout.php">LogOut</a> |</footer>
 
         <script>
             /*sidenave with opacity*/
@@ -335,10 +305,6 @@ While ($row = mysqli_fetch_assoc($calResult)) {
                 }
             }
             renderCalender();
-
-            // let viewMonth = 0;
-            // let viewYear = 1;
-            // renderCalender();
 
             document.getElementById('cal-next').addEventListener('click', () => {
                 viewMonth ++;

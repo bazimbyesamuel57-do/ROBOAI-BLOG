@@ -17,15 +17,6 @@ if (!$conn ) {
 }
 
 
-//fetching contact_us messages
-// $contact_result = mysqli_query($conn,
-//     "SELECT contact_us_id, firstname, lastname, email, subject
-//     FROM contact_us
-//     ORDER BY contact_us_id DESC");
-// if (!$contact_result) {
-//     die ('contact  query failed: ' . mysqli_error($conn));
-// }
-
 $per_page = 10;
 $page = max(1, (int) ($_GET['page'] ?? 1));
 $offset = ($page - 1) * $per_page;
@@ -70,15 +61,25 @@ $result = mysqli_stmt_get_result($stmt);
 
         <header class="blog-header">
             <div class="logo">
-                <!-- <a href="#" class="logo">ROBOAI</a> -->
                 <a href="#"><img class="blog-header-img" style="height: 50px; width: auto;" src="/ROBOAI/images/logo2.index.png" alt="Roboai Logo"></a>
             </div>
             <div class="log-auth">
                 <a class="log-auth-btn" href="admin_logout.php">Logout</a>
             </div>
         </header>
+            <div id="mySidenav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <a href="admin_dashboard.php">Dashboard</a>
+                <a href="admin_posts.php">Manage Posts</a>
+                <a href="create.php">Create Posts</a>
+                <a href="admin_contactfeed.php">Contact Messages</a>
+                <a href="admin_register.php">Add Admin</a>
+                <a href="admin_logout.php">Logout</a>
+            </div>
 
+        <span onclick="openNav()">&#9776; MENU</span>
         <div class="contactfeed">
+
             <h2 style="text-align: center;">Contact Messages</h2>
 
             <?php if ($total === 0) { ?>
@@ -117,7 +118,22 @@ $result = mysqli_stmt_get_result($stmt);
             <?php } ?>
         </div>
         
-        <footer class="footer">ROBOAI Blog 2026 | Dashboard | <a href="admin_posts.php">Manage Posts</a> | <a href="admin_register.php">Register</a> | <a href="admin_logout.php">LogOut</a> |</footer>
+        <footer class="footer">ROBOAI Blog 2026 | Dashboard | <a href="admin_posts.php">Manage Posts</a> | <a href="admin_logout.php">LogOut</a> |</footer>
         <script src="nocache.js"></script>
+        <script>
+            /*sidenave with opacity*/
+            function openNav() {
+                /* adding background and setting style. opening nav*/
+                document.getElementById("mySidenav").style.width = "250px";
+                document.getElementById("main").style.marginLeft = "250px";
+                document.body.style.backgroundColor = "white";
+            }
+            function closeNav() {
+                /*closinfg nave styling and background*/
+                document.getElementById("mySidenav").style.width = "0";
+                document.getElementById("main").style.marginLeft = "0";
+                document.body.style.backgroundColor = "White";
+            }
+        </script>
     </body>
 </html>

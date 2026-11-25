@@ -38,13 +38,9 @@ main {
 /* logo */
 .blog-header {
   display: flex;
-  /* justify-content: space-between; */
   align-items: center;
   padding: 15px 3px;
-  /* background-color: aquamarine; */
-  /* border-bottom: 3px solid black; */
   margin: auto;
-  /* align-content: center; */
   justify-content: center
 }
 
@@ -274,10 +270,7 @@ body.home{
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-/* .card:hover {
-    transform: scale(1.04);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-} */
+
 
 /* image zoom */
 .card-img-top {
@@ -286,9 +279,6 @@ body.home{
     transition: transform 0.4s ease;
 }
 
-/* .card:hover .card-img-top {
-    transform: scale(1.06);
-} */
 
 
 .img-zoom {
@@ -296,9 +286,8 @@ body.home{
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
 }
-/* .img-zoom:hover img {
-    transform: scale(1.06);
-} */
+
+
 @media (hover: hover) {
     .card:hover { transform: scale(1.04); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
     .img-zoom:hover img { transform: scale(1.06); }
@@ -441,7 +430,7 @@ body.contact .container {
 }
 
 
-/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+/* Responsive layout */
 @media screen and (max-width: 600px) {
   .column, input[type=submit] {
     width: 100%;
